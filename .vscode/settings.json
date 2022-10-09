@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "mlx.h": "c",
+        "stdlib.h": "c",
+        "cstdlib": "c",
+        "sstream": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}
