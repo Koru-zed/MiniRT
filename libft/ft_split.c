@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mait-jao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 18:17:03 by mait-jao          #+#    #+#             */
-/*   Updated: 2021/11/19 04:42:35 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/10/09 20:24:11 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,6 @@ static int	ft_count_str(const char *str, char c)
 			i++;
 	}
 	return (count);
-}
-
-static char	*ft_str_begin_to_fin(char *str, int begin, int fin)
-{
-	int		i;
-	char	*dst;
-
-	if (!str)
-		return (NULL);
-	i = 0;
-	dst = (char *)malloc(sizeof(char) * (fin - begin + 1));
-	if (!dst)
-		return (NULL);
-	while (begin < fin)
-		dst[i++] = str[begin++];
-	dst[i] = '\0';
-	return (dst);
 }
 
 static char	**ft_free(char **arry, size_t j)

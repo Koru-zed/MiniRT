@@ -6,7 +6,7 @@
 #    By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 01:39:45 by mait-jao          #+#    #+#              #
-#    Updated: 2022/10/09 14:40:01 by mait-jao         ###   ########.fr        #
+#    Updated: 2022/10/09 20:17:27 by mait-jao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ FILES =	ft_atoi.c\
 		ft_strdup.c\
 		ft_striteri.c\
 		ft_strjoin.c\
+		ft_str_begin_to_fin.c\
 		ft_strjoin_free_s1.c\
 		ft_strlcat.c\
 		ft_strlcpy.c\

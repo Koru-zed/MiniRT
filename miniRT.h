@@ -20,6 +20,7 @@ typedef struct _data {
 
     struct _data *prev;
     char    *array;
+    char    **pars;
     int     check_empty;
     struct _data *next;
 
@@ -29,7 +30,7 @@ typedef struct _Ambient_light
 {
     float   ratio;//ambient lighting ratio in range [0.0,1.0]:
     size_t  color[3];//R,G,B colors in range [0-255]: 255, 255, 255
-    size_t    repetition;
+    size_t  repetition;
 } t_Ambient;
 
 typedef struct _Camera
@@ -37,7 +38,7 @@ typedef struct _Camera
     float   cordinates[3];//x,y,z coordinates of the view
     float   orientation[3];//3d normalized orientation vector. In range [-1,1] 
     size_t  fov;//Horizontal field of view in degrees in range [0,180]
-    size_t    repetition;
+    size_t  repetition;
 } t_Camera;
 
 typedef struct _Light
@@ -74,14 +75,14 @@ typedef struct _Cylinder
 typedef struct _minirt {
 
     int         fd;
-    size_t        check;
+    int         check;
     char        *file;
     t_Ambient   *Ambient;
     t_Camera    *Camera;
     t_Light     *Light;
-    t_Sphere    *Sphere;
-    t_Plane     *Plane;
-    t_Cylinder  *Cylinder;
+    t_Sphere    **Sphere;
+    t_Plane     **Plane;
+    t_Cylinder  **Cylinder;
     t_data      *data;
 
 }   t_minirt;

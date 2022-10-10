@@ -3,7 +3,7 @@
 #include "libft.h"
 #include <math.h>
 
-double	ft_atod(const char *str, int *index)
+double	ft_atod(const char *str, int *check)
 {
 	double	value;
     double  power;
@@ -12,36 +12,33 @@ double	ft_atod(const char *str, int *index)
 	value = 0.0;
     power = 1.0;
 	signe = 1.0;
-	if (str[*index] == '-' || str[*index] == '+')
+	if (*str == '-' || *str == '+')
 	{
-		if (str[*index] == '-')
+		if (*str == '-')
 			signe = -signe;
-		// {
-		// 	printf("# Nigative value #");
-        //     return (-1);
-        // }
-        *index += 1;
+        str++;
 	}
-	while (ft_isdigit(str[*index]))
+	while (*str && ft_isdigit(*str))
 	{
-		value = (value * 10.0) + (str[*index] - '0');
+		value = (value * 10.0) + (*str - '0');
 		str++;
 	}
-    if ((str[*index++]) == '.')
+    if ((str++ == '.')
 	{
-		while (ft_isdigit(str[*index]))
+		while (*str && ft_isdigit(*str))
 		{
 			value = (value * 10.0) + (str[*index] - '0');
 			power++;
 			str++;
 		}
 	}
-    if (ft_isalpha(str[*index]))
+    if (*str)
     {
+		*check = -1;
         ft_putstr_fd("# Bad value #", 1);
-        exit(EXIT_FAILURE);
+		return (0);
+        // exit(EXIT_FAILURE);
     }
-	return (value * pow(10.0, -(power - 1) * signe));
+	return (value * pow(10.0, -(power - 1)) * signe);
 }
-
 // Converet string to double and return indice of last char converted to double

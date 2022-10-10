@@ -25,7 +25,7 @@ RED = \033[1;91m
 
 all : ${NAME}
 
-${NAME} : ${OBJES}
+${NAME} : ${OBJES} ${LIBFT}
 	 ${CC} ${CFLAGS} ${LIBFT} $^ -o $@
 	@ echo "       ${YELLOW}}}}.....${GREEN}!Compile :-> fdf <-: Successe!${YELLOW}.....{{{${WHITE}"
 
