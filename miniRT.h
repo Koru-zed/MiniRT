@@ -46,7 +46,7 @@ typedef struct _Light
     float   cordinates[3];//x,y,z coordinates of the view
     float   brightenss;//the light brightness ratio in range [0.0,1.0]
     size_t  color[3];//R,G,B colors in range [0-255]: 255, 255, 255
-    size_t    repetition;
+    size_t   repetition;
 } t_Light;
 
 typedef struct _Sphere
@@ -80,9 +80,9 @@ typedef struct _minirt {
     t_Ambient   *Ambient;
     t_Camera    *Camera;
     t_Light     *Light;
-    t_Sphere    **Sphere;
-    t_Plane     **Plane;
-    t_Cylinder  **Cylinder;
+    t_Sphere    *Sphere;
+    t_Plane     *Plane;
+    t_Cylinder  *Cylinder;
     t_data      *data;
 
 }   t_minirt;

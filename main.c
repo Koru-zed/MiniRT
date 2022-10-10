@@ -34,34 +34,43 @@ void fill_data(t_data *p_data, t_data *n_data, int fd)
         fill_data(p_data, n_data, fd);
 }
 
-void    free_mini(t_mini *mini)
+void    free_mini(t_minirt *mini)
 {
-    t_data *next_data;
+    int     i;
+    t_data  *next_data;
 
+    i = -1;
     next_data = NULL;
     if (mini->Ambient)
-        mini->Ambient;
+        free(mini->Ambient);
     if (mini->Camera)
-        mini->Camera;
+        free(mini->Camera);
     if (mini->Light)
-        mini->Light;
+        free(mini->Light);
     if (mini->Sphere)
-        mini->Sphere;
+        free(mini->Sphere);
     if (mini->Plane)
-        mini->Plane;
+        free(mini->Plane);
     if (mini->Cylinder)
-        mini->Cylinder;
-    while (data)
+        free(mini->Cylinder);
+    while (mini->data)
     {
-        next_data = data->next;
-        if (data->array)
-            free(data->array);
-        free(data);
+        next_data = mini->data->next;
+        if (mini->data->array)
+            free(mini->data->array);
+        if (mini->data->pars)
+        {
+            while (mini->data->pars[++i])
+                free(mini->data->pars[i]);
+            free(mini->data->pars);
+        }
+        free(mini->data);
+        mini->data = next_data;
     }
     free(mini);
 }
 
-void    set_cordinates(char const *cord, float *table)
+void    set_cordinates(char const *cord, float *table, t_minirt *mini)
 {
     int     i;
     int     size;
@@ -76,9 +85,9 @@ void    set_cordinates(char const *cord, float *table)
         free_mini(mini);
         exit(EXIT_FAILURE);
     }
-    table[0] = ft_atod(arr[0]);
-    table[1] = ft_atod(arr[1]);
-    table[2] = ft_atod(arr[2]);
+    table[0] = ft_atod(arr[0], &mini->check);
+    table[1] = ft_atod(arr[1], &mini->check);
+    table[2] = ft_atod(arr[2], &mini->check);
     if (mini->check == -1)
     {
         free_mini(mini);
@@ -86,7 +95,7 @@ void    set_cordinates(char const *cord, float *table)
     }
 }
 
-void    set_orientation(char const *colors, float *table)
+void    set_orientation(char const *colors, float *table, t_minirt *mini)
 {
     int     i;
     int     size;
@@ -101,9 +110,9 @@ void    set_orientation(char const *colors, float *table)
         free_mini(mini);
         exit(EXIT_FAILURE);
     }
-    table[0] = ft_atod(arr[0]);
-    table[1] = ft_atod(arr[1]);
-    table[2] = ft_atod(arr[2]);
+    table[0] = ft_atod(arr[0], &mini->check);
+    table[1] = ft_atod(arr[1], &mini->check);
+    table[2] = ft_atod(arr[2], &mini->check);
     while (table[++i])
     {
         if (mini->check == -1)
@@ -111,7 +120,7 @@ void    set_orientation(char const *colors, float *table)
             free_mini(mini);
             exit(EXIT_FAILURE);
         }
-        if (table[i] < -1 && table[i] > 1))
+        if (table[i] < -1 && table[i] > 1)
         {
             ft_putstr_fd("Error : out of range [-1.0;1.0]", 1);
             mini->check = -1;
@@ -119,13 +128,11 @@ void    set_orientation(char const *colors, float *table)
     }
 }
 
-void    set_color(char const *colors, size_t *table)
+void    set_color(char const *colors, size_t *table, t_minirt *mini)
 {
     int     size;
     char    **arr;
-    
-    i = 0;
-    j = i;
+
     arr = ft_split(colors, ',');
     size =sizeof(arr) / sizeof(char *);
     if (size != 3)
@@ -150,7 +157,7 @@ void    get_Ambient_lightning(t_minirt *mini, t_data *data)
     if (!mini->Ambient->repetition)
     {
         mini->Ambient->repetition = 1;
-        mini->Ambient->ratio = ft_atod(&(data->pars[0]), mini->check);
+        mini->Ambient->ratio = ft_atod(data->pars[1], &mini->check);
         if (mini->check == -1  || !(mini->Ambient->ratio >= 0 && mini->Ambient->ratio <= 1))
         {
             if (mini->check != -1)
@@ -158,7 +165,7 @@ void    get_Ambient_lightning(t_minirt *mini, t_data *data)
             free_mini(mini);
             exit(EXIT_FAILURE);
         }
-        set_color(data->pars[1], mini->Ambient->color)
+        set_color(data->pars[2], mini->Ambient->color, mini);
         return ;
     }
     ft_putstr_fd("Munltiple Ambient", 1);
@@ -166,16 +173,16 @@ void    get_Ambient_lightning(t_minirt *mini, t_data *data)
     exit(EXIT_FAILURE);
 }
 
-void    get_Camera(t_minirt mini, t_data *data)
+void    get_Camera(t_minirt *mini, t_data *data)
 {   
     if (!mini->Camera->repetition)
     {
         mini->Camera->repetition = 1;
-        set_cordinates(data->pars[0], mini->Camera->cordinates);
+        set_cordinates(data->pars[1], mini->Camera->cordinates, mini);
         // check_cordinates(mini->Cylinder->cordinates, 0.0, 0.0, 20.6);
-        set_orientation(data->pars[1], mini->Camera->orientation);
-        mini->Camera->fov = ft_atoi(data->pars[2]);
-        if (mini->check || mini->Camera->fov < 0 && mini->Camera->fov > 180)
+        set_orientation(data->pars[2], mini->Camera->orientation, mini);
+        mini->Camera->fov = ft_atoi(data->pars[3]);
+        if (mini->check || (mini->Camera->fov < 0 && mini->Camera->fov > 180))
         {
             ft_putstr_fd("Error : out of range [0;180]", 1);
             free_mini(mini);
@@ -188,34 +195,35 @@ void    get_Camera(t_minirt mini, t_data *data)
     exit(EXIT_FAILURE);
 }
 
-void    get_Light(t_minirt mini, t_data *data)
+void    get_Light(t_minirt *mini, t_data *data)
 {   
     if (!mini->Light->repetition)
     {
         mini->Light->repetition = 1;
-        set_cordinates(data->pars[0], mini->Light->cordinates);
+        set_cordinates(data->pars[1], mini->Light->cordinates, mini);
         // check_cordinates(mini->Cylinder->cordinates, 0.0, 0.0, 20.6);
-        mini->Light->brightness = ft_atod(data->pars[1]);
-        if (mini->check || mini->Light->brightness < 0 && mini->Light->bright > 1)
+        mini->Light->brightenss = ft_atod(data->pars[2], &mini->check);
+        if (mini->check || (mini->Light->brightenss < 0 && mini->Light->brightenss > 1))
         {
             if (mini->check != -1)
                 ft_putstr_fd("Error : out of range [0.0;1.0]", 1);
             free_mini(mini);
             exit(EXIT_FAILURE);
         }
-        set_color(data->pars[2], mini->Light->color);
-        retu
+        set_color(data->pars[3], mini->Light->color, mini);
+        return ;
+    }
     ft_putstr_fd("Munltiple Light", 1);
     free_mini(mini);
     exit(EXIT_FAILURE);
 
 }
 
-void    get_Sphere(t_minirt mini, t_data *data)//**Spher
+void    get_Sphere(t_minirt *mini, t_data *data)//**Spher
 {
-    set_cordinates(data->pars[0], mini->Sphere->cordinates);
+    set_cordinates(data->pars[1], mini->Sphere->cordinates, mini);
     // check_cordinates(mini->Cylinder->cordinates, 0.0, 0.0, 20.6);
-    mini->Sphere->diameter = ft_atod(data->pars[1]);
+    mini->Sphere->diameter = ft_atod(data->pars[2], &mini->check);
     if (mini->check || mini->Sphere->diameter != 12.6)
     {
         if (mini->check != -1)
@@ -223,44 +231,39 @@ void    get_Sphere(t_minirt mini, t_data *data)//**Spher
         free_mini(mini);
         exit(EXIT_FAILURE);
     }
-    set_color(data->pars[2], mini->Sphere->color);
+    set_color(data->pars[3], mini->Sphere->color, mini);
 }
 
-void    get_Plane(t_minirt mini, t_data *data)
+void    get_Plane(t_minirt *mini, t_data *data)
 {
-    set_cordinates(data->pars[0], mini->Plane->cordinates);
+    set_cordinates(data->pars[1], mini->Plane->cordinates, mini);
     // check_cordinates(mini->Cylinder->cordinates, 0.0, 0.0, -10.0);
-    set_orientation(data->pars[1], mini->Plane->orientation);
-    set_color(data->pars[2], mini->Plane->color);
+    set_orientation(data->pars[2], mini->Plane->orientation, mini);
+    set_color(data->pars[3], mini->Plane->color, mini);
 }
 
-void    get_Cylinder(t_minirt mini, t_data *data)
+void    get_Cylinder(t_minirt *mini, t_data *data)
 {
-    set_cordinates(data->pars[0], mini->Cylinder->cordinates);
+    set_cordinates(data->pars[1], mini->Cylinder->cordinates, mini);
     // check_cordinates(mini->Cylinder->cordinates, 50.0, 0.0, 20.6);
-    set_orientation(data->pars[1], mini->Cylinder->orientation);
-    mini->Cylinder->diameter = ft_atod(data->pars[2]);
-    mini->Cylinder->radius = ft_atod(data->pars[3]);
-    if (mini->check || mini->Cylinder->diameter != 14.2 || mini->Cylinder->radius != 21.42)
+    set_orientation(data->pars[2], mini->Cylinder->orientation, mini);
+    mini->Cylinder->diameter = ft_atod(data->pars[3], &mini->check);
+    mini->Cylinder->hright = ft_atod(data->pars[4], &mini->check);
+    if (mini->check || mini->Cylinder->diameter != 14.2 || mini->Cylinder->hright != 21.42)
     {
         if (mini->Cylinder->diameter != 14.2)
             ft_putstr_fd("Error : bad value should be 14.2", 1);
-        else if (mini->Cylinder->radius != 21.42)
+        else if (mini->Cylinder->hright != 21.42)
             ft_putstr_fd("Error : bad value should be 21.42", 1);
         free_mini(mini);
         exit(EXIT_FAILURE);
     }
-    set_color(data->pars[4], mini->Cylinder->color);
+    set_color(data->pars[5], mini->Cylinder->color, mini);
 }
 
 size_t    check_data(t_minirt *mini, t_data *data)
 {
-    int     i;
-    int     j;
-    char    *str;
 
-    j = 0;
-    i = -1;
     // while (data->array[++i] == ' ');
     // while (ft_isalpha(data->array[i + j]))
     //     j++;
@@ -274,19 +277,28 @@ size_t    check_data(t_minirt *mini, t_data *data)
     // {
         if (!ft_strcmp(data->pars[0], ambient))
             get_Ambient_lightning(mini, data);
-        if (!ft_strcmp(data->pars[0], camera))
-            get_Camera(mini, data);
-        if (!ft_strcmp(data->pars[0], light))
-            get_Light(mini, data);
-        if (!ft_strcmp(data->pars[0], plane))
-            get_Plane(mini, data);
-        if (!ft_strcmp(data->pars[0], sphre))
-            get_Sphere(mini, data);
-        if (!ft_strcmp(data->pars[0], cylinder))
-            get_Cylinder(mini, data);
+            {
+                printf("************************\n");
+                printf("repetition [%zu]\n", mini->Ambient->repetition);
+                printf("ratio [%f]\n", mini->Ambient->ratio);
+                printf("R [%zu]\n", mini->Ambient->color[0]);
+                printf("G [%zu]\n", mini->Ambient->color[1]);
+                printf("B [%zu]\n", mini->Ambient->color[2]);
+                printf("************************\n");
+            }
+        // if (!ft_strcmp(data->pars[0], camera))
+        //     get_Camera(mini, data);
+        // if (!ft_strcmp(data->pars[0], light))
+        //     get_Light(mini, data);
+        // if (!ft_strcmp(data->pars[0], plane))
+        //     get_Plane(mini, data);
+        // if (!ft_strcmp(data->pars[0], sphre))
+        //     get_Sphere(mini, data);
+        // if (!ft_strcmp(data->pars[0], cylinder))
+        //     get_Cylinder(mini, data);
     // }
-    if (!check)////////////////////////
-        return 0;
+    // if (!mini->check)////////////////////////
+    //     return 0;
     return 1;
 }
 
