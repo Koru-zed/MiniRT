@@ -6,7 +6,7 @@
 #    By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 01:39:45 by mait-jao          #+#    #+#              #
-#    Updated: 2022/10/10 18:44:04 by mait-jao         ###   ########.fr        #
+#    Updated: 2022/10/11 11:07:49 by mait-jao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ FILES =	ft_atoi.c\
 		ft_isascii.c\
 		ft_isdigit.c\
 		ft_isprint.c\
+		ft_arraylen.c\
 		ft_itoa.c\
 		ft_memchr.c\
 		ft_memcmp.c\

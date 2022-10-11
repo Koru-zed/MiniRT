@@ -23,11 +23,12 @@ double	ft_atod(const char *str, int *check)
 		value = (value * 10.0) + (*str - '0');
 		str++;
 	}
-    if ((str++ == '.')
+    if (*str == '.')
 	{
+		str++;
 		while (*str && ft_isdigit(*str))
 		{
-			value = (value * 10.0) + (str[*index] - '0');
+			value = (value * 10.0) + (*str - '0');
 			power++;
 			str++;
 		}
