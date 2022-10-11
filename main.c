@@ -95,6 +95,70 @@ void    set_cordinates(char const *cord, float *table, t_minirt *mini)
     }
 }
 
+t_Ambient *ft_alloc_Ambient()
+{
+    t_Ambient *ambient;
+
+    ambient = ft_calloc(1, sizeof(t_Ambient));
+    // ambient->color = ft_calloc(3, sizeof(size_t));
+    ft_bzero(ambient->color, 3);
+    return (ambient);
+}
+
+t_Camera *ft_alloc_Camera()
+{
+    t_Camera *camera;
+
+    camera = ft_calloc(1, sizeof(t_Camera));
+    // camera->cordinates = ft_calloc(3, sizeof(float));
+    // camera->orientation = ft_calloc(3, sizeof(float));
+    ft_bzero(camera->cordinates, 3);
+    ft_bzero(camera->orientation, 3);
+    return (camera);
+}
+
+t_Light *ft_alloc_Light()
+{
+    t_Light *light;
+
+    light = ft_calloc(1, sizeof(t_Light));
+    ft_bzero(light->cordinates, 3);
+    ft_bzero(light->color, 3);
+    return (light);
+}
+
+t_Plane *ft_alloc_Light()
+{
+    t_Plane *plane;
+
+    plane = ft_calloc(1, sizeof(t_Plane));
+    ft_bzero(plane->cordinates, 3);
+    ft_bzero(plane->orientation, 3);
+    ft_bzero(plane->color, 3);
+    return (plane);
+}
+
+t_Sphere *ft_alloc_Light()
+{
+    t_Sphere *sphere;
+
+    sphere = ft_calloc(1, sizeof(t_Sphere));
+    ft_bzero(sphere->cordinates, 3);
+    ft_bzero(sphere->color, 3);
+    return (sphere);
+}
+
+t_Cylinder *ft_alloc_Light()
+{
+    t_Cylinder *cylinder;
+
+    cylinder = ft_calloc(1, sizeof(t_Cylinder));
+    ft_bzero(cylinder->cordinates, 3);
+    ft_bzero(cylinder->orientation, 3);
+    ft_bzero(cylinder->color, 3);
+    return (cylinder);
+}
+
 void    set_orientation(char const *colors, float *table, t_minirt *mini)
 {
     int     i;
@@ -222,49 +286,87 @@ int    get_Light(t_minirt *mini, t_data *data)
 
 }
 
+// t_Plane *get_node_Plane(t_Plane *_plane)
+// {
+//     size_t     i;
+//     t_Plane    *node;
+
+//     node = _plane;
+//     i = node->repetition;
+//     while (i--)
+// {        node = node->next;
+//         node = ft_calloc(1, sizeof(t_Plane));
+// }
+//     // t_Plane    *head;
+
+//     // node = *_plane;
+//     // head = node;
+//     // while (--i)
+//     // {
+//     //     node = node->next;
+//     // }
+//     // *_plane = head;
+//     return (node);
+// }
+
 int    get_Plane(t_minirt *mini, t_data *data)
 {
-    set_cordinates(data->pars[1], mini->Plane->cordinates, mini);
-    // check_cordinates(mini->Cylinder->cordinates, 0.0, 0.0, -10.0);
-    set_orientation(data->pars[2], mini->Plane->orientation, mini);
-    set_color(data->pars[3], mini->Plane->color, mini);
+    size_t     i;
+    t_Plane *_plane;
+
+    _plane = mini->Plane;
+    i = mini->Plane->repetition;
+    while (_plane)
+        _plane = _plane->next;
+    _plane = ft_alloc_Plane();
+    set_cordinates(data->pars[1], _plane->cordinates, mini);
+    set_orientation(data->pars[2], _plane->orientation, mini);
+    set_color(data->pars[3], _plane->color, mini);
+    mini->Plane->repetition++;
     return 1;
 }
 
 int    get_Sphere(t_minirt *mini, t_data *data)//**Spher
 {
-    set_cordinates(data->pars[1], mini->Sphere->cordinates, mini);
-    // check_cordinates(mini->Cylinder->cordinates, 0.0, 0.0, 20.6);
-    mini->Sphere->diameter = ft_atod(data->pars[2], &mini->check);
-    if (mini->check || mini->Sphere->diameter != 12.6f)
+    size_t     i;
+    t_Sphere *_sphere;
+
+    _sphere = mini->Sphere;
+    i = mini->Sphere->repetition;
+    while (_sphere)
+        _sphere = _sphere->next;
+    _sphere = ft_alloc_Sphere();
+    set_cordinates(data->pars[1], _sphere->cordinates, mini);
+    _sphere->diameter = ft_atod(data->pars[2], &mini->check);
+    if (mini->check)
     {
-        if (mini->check != -1)
-            ft_putstr_fd("Error : bad value should be 12.6", 1);
         free_mini(mini);
         exit(EXIT_FAILURE);
-
     }
-    set_color(data->pars[3], mini->Sphere->color, mini);
+    set_color(data->pars[3], _sphere->color, mini);
     return 1;
 }
 
 int    get_Cylinder(t_minirt *mini, t_data *data)
 {
-    set_cordinates(data->pars[1], mini->Cylinder->cordinates, mini);
-    // check_cordinates(mini->Cylinder->cordinates, 50.0, 0.0, 20.6);
-    set_orientation(data->pars[2], mini->Cylinder->orientation, mini);
-    mini->Cylinder->diameter = ft_atod(data->pars[3], &mini->check);
-    mini->Cylinder->hright = ft_atod(data->pars[4], &mini->check);
-    if (mini->check || mini->Cylinder->diameter != 14.2f || mini->Cylinder->hright != 21.42f)
+    size_t     i;
+    t_Cylinder *_cylinder;
+
+    _cylinder = mini->Cylinder;
+    i = mini->Cylinder->repetition;
+    while (_cylinder)
+        _cylinder = _cylinder->next;
+    _cylinder = ft_alloc_Cylinder();
+    set_cordinates(data->pars[1], _cylinder->cordinates, mini);
+    set_orientation(data->pars[2], _cylinder->orientation, mini);
+    _cylinder->diameter = ft_atod(data->pars[3], &mini->check);
+    _cylinder->hright = ft_atod(data->pars[4], &mini->check);
+    if (mini->check)
     {
-        if (mini->Cylinder->diameter != 14.2f)
-            ft_putstr_fd("Error : bad value should be 14.2", 1);
-        else if (mini->Cylinder->hright != 21.42f)
-            ft_putstr_fd("Error : bad value should be 21.42", 1);
         free_mini(mini);
         exit(EXIT_FAILURE);
     }
-    set_color(data->pars[5], mini->Cylinder->color, mini);
+    set_color(data->pars[5], _cylinder->color, mini);
     return 1;
 }
 
@@ -390,6 +492,7 @@ void    fill_Info(t_minirt *mini)
     }
 }
 
+
 int main(int ac, char **av)
 {
     int i;
@@ -405,12 +508,12 @@ int main(int ac, char **av)
         miniRT->file = av[1];
         miniRT->fd = open(miniRT->file, O_RDONLY);
         fill_data(NULL, miniRT->data, miniRT->fd);
-        miniRT->Ambient = ft_calloc(1, sizeof(t_Ambient));
-        miniRT->Camera = ft_calloc(1, sizeof(t_Camera));
-        miniRT->Light = ft_calloc(1, sizeof(t_Light));
-        miniRT->Sphere = ft_calloc(1, sizeof(t_Sphere));
-        miniRT->Plane = ft_calloc(1, sizeof(t_Plane));
-        miniRT->Cylinder = ft_calloc(1, sizeof(t_Cylinder));
+        miniRT->Ambient = ft_alloc_Ambient();
+        miniRT->Camera = ft_alloc_Camera();
+        miniRT->Light = ft_alloc_Light();
+        miniRT->Sphere = ft_alloc_Sphere();
+        miniRT->Plane = ft_alloc_Plane();
+        miniRT->Cylinder = ft_alloc_Cylinder();
         fill_Info(miniRT);
     }
     Data = miniRT->data;

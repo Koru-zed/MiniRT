@@ -49,27 +49,33 @@ typedef struct _Light
     size_t   repetition;
 } t_Light;
 
-typedef struct _Sphere
-{
-    float   cordinates[3];//x,y,z coordinates of the view
-    float   diameter;
-    size_t  color[3];//R,G,B colors in range [0-255]: 255, 255, 255
-} t_Sphere;
-
 typedef struct _Plane
 {
-    float   cordinates[3];//x,y,z coordinates of the view
-    float   orientation[3];//3d normalized orientation vector. In range [-1,1] 
-    size_t  color[3];//R,G,B colors in range [0-255]: 255, 255, 255
+    float           cordinates[3];//x,y,z coordinates of the view
+    float           orientation[3];//3d normalized orientation vector. In range [-1,1] 
+    size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
+    size_t          repetition;
+    struct _Plane   *next;
 } t_Plane;
+
+typedef struct _Sphere
+{
+    float           cordinates[3];//x,y,z coordinates of the view
+    float           diameter;
+    size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
+    size_t          repetition;
+    struct _Sphere   *next;
+} t_Sphere;
 
 typedef struct _Cylinder
 {
-    float   cordinates[3];//x,y,z coordinates of the view
-    float   orientation[3];//3d normalized orientation vector. In range [-1,1]
-    size_t  color[3];//R,G,B colors in range [0-255]: 255, 255, 255
-    float   diameter;
-    float   hright;
+    float               cordinates[3];//x,y,z coordinates of the view
+    float               orientation[3];//3d normalized orientation vector. In range [-1,1]
+    size_t              color[3];//R,G,B colors in range [0-255]: 255, 255, 255
+    float               diameter;
+    float               hright;
+    size_t              repetition;
+    struct _Cylinder    *next;
 } t_Cylinder;
 
 typedef struct _minirt {
