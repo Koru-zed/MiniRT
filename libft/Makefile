@@ -6,7 +6,7 @@
 #    By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 01:39:45 by mait-jao          #+#    #+#              #
-#    Updated: 2022/10/11 11:07:49 by mait-jao         ###   ########.fr        #
+#    Updated: 2022/10/12 12:46:02 by mait-jao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ FILES =	ft_atoi.c\
 		ft_memmove.c\
 		ft_memset.c\
 		ft_putchar_fd.c\
+		ft_free_array.c\
 		ft_putendl_fd.c\
 		ft_putnbr_fd.c\
 		ft_putstr_fd.c\

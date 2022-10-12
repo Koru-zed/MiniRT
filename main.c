@@ -11,8 +11,8 @@ int ft_check_valid(char *filename, t_data *data)
         i++;
     if (filename[i] && filename[i] != '\n')
     {
-        data->array = filename;
-        data->pars = ft_split(data->array, ' ');
+        data->info = filename;
+        data->pars = ft_split(data->info, ' ');
         return (1);
     }
     return (0);
@@ -23,7 +23,7 @@ void fill_data(t_data *p_data, t_data *n_data, int fd)
     n_data->check_empty = ft_check_valid(get_next_line(fd), n_data);
     if (n_data->check_empty == -1)
         return ;
-    if (n_data->array)
+    if (n_data->info)
     {
         n_data->prev = p_data;
         n_data->next = ft_calloc(1, sizeof(t_data));
@@ -32,6 +32,62 @@ void fill_data(t_data *p_data, t_data *n_data, int fd)
     }
     else
         fill_data(p_data, n_data, fd);
+}
+
+void free_Sphere(t_Sphere *_Sphere)
+{
+    t_Sphere *tmp;
+
+    tmp = NULL;
+    while (_Sphere)
+    {
+        tmp = _Sphere->next;
+        free(_Sphere);
+        _Sphere = tmp;
+    }
+}
+
+void free_Plane(t_Plane *_Plane)
+{
+    t_Plane *tmp;
+
+    tmp = NULL;
+    while (_Plane)
+    {
+        tmp = _Plane->next;
+        free(_Plane);
+        _Plane = tmp;
+    }
+}
+
+void free_Cylinder(t_Cylinder *_Cylinder)
+{
+    t_Cylinder *tmp;
+
+    tmp = NULL;
+    while (_Cylinder)
+    {
+        tmp =_Cylinder->next;
+        free(_Cylinder);
+        _Cylinder = tmp;
+    }
+}
+
+void free_data(t_data *_data)
+{
+    t_data *next_data;
+
+    next_data = NULL;
+    while (_data)
+    {
+        next_data = _data->next;
+        if (_data->info)
+            free(_data->info);
+        if (_data->pars)
+            ft_free_array(_data->pars);
+        free(_data);
+        _data = next_data;
+    }
 }
 
 void    free_mini(t_minirt *mini)
@@ -47,26 +103,10 @@ void    free_mini(t_minirt *mini)
         free(mini->Camera);
     if (mini->Light)
         free(mini->Light);
-    if (mini->Sphere)
-        free(mini->Sphere);
-    if (mini->Plane)
-        free(mini->Plane);
-    if (mini->Cylinder)
-        free(mini->Cylinder);
-    while (mini->data)
-    {
-        next_data = mini->data->next;
-        if (mini->data->array)
-            free(mini->data->array);
-        if (mini->data->pars)
-        {
-            while (mini->data->pars[++i])
-                free(mini->data->pars[i]);
-            free(mini->data->pars);
-        }
-        free(mini->data);
-        mini->data = next_data;
-    }
+    free_Sphere(mini->Sphere);
+    free_Plane(mini->Plane);
+    free_Cylinder(mini->Cylinder);
+    free_data(mini->Data);
     free(mini);
 }
 
@@ -428,13 +468,13 @@ int    get_Cylinder(t_minirt *mini, t_data *data)
 size_t    check_data(t_minirt *mini, t_data *data)
 {
 
-    // while (data->array[++i] == ' ');
-    // while (ft_isalpha(data->array[i + j]))
+    // while (data->info[++i] == ' ');
+    // while (ft_isalpha(data->info[i + j]))
     //     j++;
     // if (j > 2 && j < 1)
     //     return 0;
-    // str = ft_substr(data->array, i, i + j);
-    // data->array = str;
+    // str = ft_substr(data->info, i, i + j);
+    // data->info = str;
     // if (check_duplicut(mini)) //check  duplicut of data
     //     return 0;
     // while (data->pars[++i])
@@ -545,8 +585,8 @@ void    fill_Info(t_minirt *mini)
 {
     t_data *_data;
 
-    _data = mini->data;
-    while (_data && _data->array)
+    _data = mini->Data;
+    while (_data && _data->info)
     {
         if (!check_data(mini, _data))
             return ;
@@ -563,19 +603,19 @@ int main(int ac, char **av)
 
     (void)ac;
     miniRT = ft_calloc(1, sizeof(t_minirt));
-    miniRT->data = ft_calloc(1, sizeof(t_data));
+    miniRT->Data = ft_calloc(1, sizeof(t_data));
 
     if (av[1])
     {
         miniRT->file = av[1];
         miniRT->fd = open(miniRT->file, O_RDONLY);
-        fill_data(NULL, miniRT->data, miniRT->fd);
+        fill_data(NULL, miniRT->Data, miniRT->fd);
         miniRT->Ambient = ft_calloc(1, sizeof(t_Ambient));
         miniRT->Camera = ft_calloc(1, sizeof(t_Camera));
         miniRT->Light = ft_calloc(1, sizeof(t_Light));
         fill_Info(miniRT);
     }
-    Data = miniRT->data;
+    Data = miniRT->Data;
     while (Data && Data->check_empty == 1)
     {
         i = -1;
@@ -584,4 +624,5 @@ int main(int ac, char **av)
         printf ("\n");
         Data = Data->next;
     }
+    free_mini(miniRT);
 }

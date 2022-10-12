@@ -19,7 +19,7 @@
 typedef struct _data {
 
     struct _data *prev;
-    char    *array;
+    char    *info;//change
     char    **pars;
     int     check_empty;
     struct _data *next;
@@ -89,7 +89,7 @@ typedef struct _minirt {
     t_Sphere    *Sphere;
     t_Plane     *Plane;
     t_Cylinder  *Cylinder;
-    t_data      *data;
+    t_data      *Data;
 
 }   t_minirt;
 

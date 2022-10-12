@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 15:26:06 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/10/11 11:07:35 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/10/12 12:45:22 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		ft_isdigit(int c);
 int		ft_isprint(int c);
 int		ft_isascii(int c);
 size_t	ft_strlen(const	char *s);
+void	ft_free_array(char **arr);
 void	*ft_memset(void *b, int c, size_t len);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
