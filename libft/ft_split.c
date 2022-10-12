@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 18:17:03 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/10/09 20:24:11 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/10/12 21:52:34 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	**ft_spl_ito(char **arry, const char *s, char c)
 	i = 0;
 	j = 0;
 	x = -1;
-	while (i <= ft_strlen(s))
+	while (i <= ft_strlen(s) && s[i] != '\n')
 	{
 		if (s[i] != c && x < 0)
 			x = i;

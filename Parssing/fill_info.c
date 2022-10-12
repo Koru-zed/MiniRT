@@ -105,6 +105,8 @@ size_t    check_data(t_minirt *mini, t_data *data)
         //         printf("B [%zu]\n", rt_last_Cylinder(mini->Cylinder)->color[2]);
         //         printf("************************\n");
         //     }
+        else if (mini->check == -1)
+            return (0);
         else
             return (0);
     return 1;
