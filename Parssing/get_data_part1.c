@@ -1,10 +1,12 @@
-#include "miniRT.h"
+#include "../miniRT.h"
 
 int    get_Ambient_lightning(t_minirt *mini, t_data *data)
 {
     if (!mini->Ambient->repetition)
     {
         mini->Ambient->repetition = 1;
+        if (ft_arrylen(data->pars) != 2)
+            ret
         mini->Ambient->ratio = ft_atod(data->pars[1], &mini->check);
         if (mini->check == -1  || !(mini->Ambient->ratio >= 0.0f && mini->Ambient->ratio <= 1.0f))
         {

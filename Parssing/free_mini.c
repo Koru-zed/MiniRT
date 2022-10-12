@@ -1,4 +1,4 @@
-# include "miniRT.h"
+# include "../miniRT.h"
 
 void free_Sphere(t_Sphere *_Sphere)
 {

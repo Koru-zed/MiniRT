@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "../miniRT.h"
 
 void    set_cordinates(char const *cord, float *table, t_minirt *mini)
 {
@@ -12,6 +12,7 @@ void    set_cordinates(char const *cord, float *table, t_minirt *mini)
     if (size != 3)
     {
         ft_putstr_fd("Error : Unknown information", 1);
+
         free_mini(mini);
         exit(EXIT_FAILURE);
     }

@@ -1,8 +1,9 @@
-#include "miniRT.h"
+#include "../miniRT.h"
 
-t_Plane	*rt_last_Plane(t_Plane *Plane)
+t_Plane		*rt_last_Plane(t_Plane *Plane)
 {
 	t_Plane     *p_lst;
+
 	p_lst = Plane;
 	if (p_lst)
 	{

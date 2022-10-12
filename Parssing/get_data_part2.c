@@ -1,3 +1,5 @@
+ #include "../miniRT.h"
+
 int    get_Plane(t_minirt *mini, t_data *data)
 {
     int     empty;

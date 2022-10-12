@@ -1,6 +1,13 @@
 NAME := miniRT
 
 FILES := get_next_line/get_next_line.c \
+		 Parssing/fill_data.c \
+		 Parssing/free_mini.c \
+		 Parssing/fill_info.c \
+		 Parssing/set_data.c \
+		 Parssing/rt_last_node.c \
+		 Parssing/get_data_part1.c \
+		 Parssing/get_data_part2.c \
 		 main.c
 
 OBJES := ${FILES:.c=.o} 
@@ -26,14 +33,14 @@ RED = \033[1;91m
 all : ${NAME}
 
 ${NAME} : ${OBJES} ${LIBFT}
-	 ${CC} ${CFLAGS} ${LIBFT} $^ -o $@
+	@ ${CC} ${CFLAGS} ${LIBFT}  $^ -o $@
 	@ echo "       ${YELLOW}}}}.....${GREEN}!Compile :-> fdf <-: Successe!${YELLOW}.....{{{${WHITE}"
 
 %.o : %.c
 	@ echo "${BLUE}Generating Minishell objects... ${PURPLE}" $@ "${WHITE}"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-claen : 
+clean : 
 	@ ${RM} ${OBJES}
 	@ echo "${YELLOW}-> ${PURPLE}Delete the object files.....${WHITE}"
 
