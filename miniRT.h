@@ -93,4 +93,24 @@ typedef struct _minirt {
 
 }   t_minirt;
 
+
+void        free_mini(t_minirt *mini);
+void        free_data(t_data *_data);
+void        free_Cylinder(t_Cylinder *_Cylinder);
+void        free_Plane(t_Plane *_Plane);
+void        free_Sphere(t_Sphere *_Sphere);
+
+t_Cylinder	*rt_last_Cylinder(t_Cylinder *Cylinder);
+t_Sphere	*rt_last_Sphere(t_Sphere *Sphere);
+t_Plane	    rt_last_Plane(t_Plane *Plane);
+
+void        set_color(char const *colors, size_t *table, t_minirt *mini);
+void        set_orientation(char const *colors, float *table, t_minirt *mini);
+void        set_cordinates(char const *cord, float *table, t_minirt *mini);
+
+int         get_Light(t_minirt *mini, t_data *data);
+int         get_Camera(t_minirt *mini, t_data *data);
+int         get_Ambient_lightning(t_minirt *mini, t_data *data);
+
+
 #endif
