@@ -40,7 +40,7 @@ int    get_Camera(t_minirt *mini, t_data *data)
         set_cordinates(data->pars[1], mini->Camera->cordinates, mini);
         set_orientation(data->pars[2], mini->Camera->orientation, mini);
         mini->Camera->fov = ft_atoi(data->pars[3]);
-        if (mini->check || (mini->Camera->fov < 0 && mini->Camera->fov > 180))
+        if (mini->check || mini->Camera->fov > 180)
         {
             ft_putstr_fd("Error : out of range [0;180]", 1);
             free_mini(mini);

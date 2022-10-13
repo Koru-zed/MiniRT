@@ -16,9 +16,7 @@ char	*ft_read_str(int fd, char *str_line)
 {
 	int		byte;
 	char	*buff;
-	int		i;
 
-	i = 0;
 	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buff)
 		return (NULL);
@@ -58,11 +56,11 @@ char	*ft_re_line(char *str)
 		s_line[j] = str[j];
 		j++;
 	}
-	if (str[j] == '\n')
-	{
-		s_line[j] = str[j];
-		j++;
-	}
+	// if (str[j] == '\n')//for ignor \n in split with spacce
+	// {
+	// 	s_line[j] = str[j];
+	// 	j++;
+	// }
 	s_line[j] = '\0';
 	return (s_line);
 }

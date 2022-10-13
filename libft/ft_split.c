@@ -24,7 +24,7 @@ static int	ft_count_str(const char *str, char c)
 		if (str[i] != c)
 		{
 			count++;
-			while (str[i] && str[i] != c)
+			while (str[i] && str[i] != c && str[i] != '\n')
 				i++;
 		}
 		if (str[i])
@@ -50,7 +50,7 @@ static char	**ft_spl_ito(char **arry, const char *s, char c)
 	i = 0;
 	j = 0;
 	x = -1;
-	while (i <= ft_strlen(s) && s[i] != '\n')
+	while (i <= ft_strlen(s))
 	{
 		if (s[i] != c && x < 0)
 			x = i;

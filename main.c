@@ -21,6 +21,7 @@ int main(int ac, char **av)
         fill_Info(miniRT);
     }
     Data = miniRT->Data;
+    printf("## Data ##\n");
     while (Data && Data->check_empty == 1)
     {
         i = -1;

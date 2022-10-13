@@ -58,11 +58,6 @@ void free_data(t_data *_data)
 
 void    free_mini(t_minirt *mini)
 {
-    int     i;
-    t_data  *next_data;
-
-    i = -1;
-    next_data = NULL;
     if (mini->Ambient)
         free(mini->Ambient);
     if (mini->Camera)

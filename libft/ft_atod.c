@@ -26,7 +26,7 @@ double	ft_atod(const char *str, int *check)
 	while (*str == '-' || *str == '+')
 	{
 		if (*str == '-')
-			signe *= -1;
+			signe = -signe;
         str++;
 	}
 	while (*str && ft_isdigit(*str))
