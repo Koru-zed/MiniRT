@@ -20,15 +20,15 @@ int main(int ac, char **av)
         miniRT->Light = ft_calloc(1, sizeof(t_Light));
         fill_Info(miniRT);
     }
-    Data = miniRT->Data;
-    printf("## Data ##\n");
-    while (Data && Data->check_empty == 1)
-    {
-        i = -1;
-        while (Data->pars[++i])
-            printf("|%s|  ", Data->pars[i]);
-        printf ("\n");
-        Data = Data->next;
-    }
+//   miniRT Data = miniRT->Data;
+//    printf("## Data ##\n");
+//    while (Data && Data->check_empty == 1)
+//    {
+//        i = -1;
+//        while (Data->pars[++i])
+//            printf("|%s|  ", Data->pars[i]);
+//        printf ("\n");
+//        Data = Data->next;
+//    }
     free_mini(miniRT);
 }
