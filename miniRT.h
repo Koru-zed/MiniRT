@@ -5,9 +5,11 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
-// # include <mlx.h>
+ # include <mlx.h>
 # include "get_next_line/get_next_line.h"
 
+#define W_Y 1000
+#define W_X 580
 # define ambient "A"
 # define camera "C"
 # define light "L"
@@ -15,6 +17,14 @@
 # define sphre "sp"
 # define cylinder "cy"
 
+
+typedef struct	s_mlx {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_mlx;
 
 typedef struct _data {
 
