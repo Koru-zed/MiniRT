@@ -17,6 +17,18 @@
 # define sphre "sp"
 # define cylinder "cy"
 
+typedef struct s_point {
+	float	x;
+	float	y;
+	float	z;
+}	t_point;
+
+typedef struct s_vector {
+	int	x;
+	int	y;
+	int	x1;
+	int	y1;
+}	t_vector;
 
 typedef struct	s_mlx {
 	void	*img;
