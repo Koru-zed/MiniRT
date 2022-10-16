@@ -1,4 +1,4 @@
-#include "../miniRT.h"
+#include "../Include/miniRT.h"
 
 int ft_check_valid(char *filename, t_data *data)
 {

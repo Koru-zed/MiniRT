@@ -1,4 +1,4 @@
-#include "../miniRT.h"
+#include "../Include/miniRT.h"
 
 static void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
 {
@@ -11,16 +11,6 @@ static void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
 
 static int	ft_parameters(t_mlx *info, int *x,int *y)
 {
-	// if (info->form == 35)
-	// {
-	// 	iso_to_cart(info, 0);
-	// 	iso_to_cart(info, 1);
-	// }
-	// else
-	// {
-	// 	cart_to_iso(info, 0);
-	// 	cart_to_iso(info, 1);
-	// }
 	info->d[0] = abs(x[1] - x[0]);
 	info->d[1] = abs(y[1] - y[0]);
 	if (x[0] < x[1])
@@ -36,23 +26,12 @@ static int	ft_parameters(t_mlx *info, int *x,int *y)
 
 static void	set_coordinates_to_draw(t_mlx *info, int *x, int *y)
 {
-	// if (x1 < (info->c - 1))
-	// {
+
 		printf("> %p\n", info);
 		x[0] = 50;
 		y[0] = info->y[0];// = 50;
 		x[1] = 700;
 		y[1] = 175;
-		// draw_line(info);
-	// }
-	// if (y1 < (info->r - 1))
-	// {
-		// info->x[0] = x1;
-		// info->y[0] = y1;
-		// info->x[1] = x1;
-		// info->y[1] = y1 + 1;
-		// draw_line(info);
-	// }
 }
 
 //// Brensham algo ////

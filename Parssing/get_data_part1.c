@@ -1,4 +1,4 @@
-#include "../miniRT.h"
+#include "../Include/miniRT.h"
 
 int    get_Ambient_lightning(t_minirt *mini, t_data *data)
 {

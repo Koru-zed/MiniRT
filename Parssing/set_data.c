@@ -1,4 +1,4 @@
-#include "../miniRT.h"
+#include "../Include/miniRT.h"
 
 void    set_cordinates(char const *cord, float *table, t_minirt *mini)
 {

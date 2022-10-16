@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "Include/miniRT.h"
 # include <sys/time.h>
 
 long long	get_time(void)

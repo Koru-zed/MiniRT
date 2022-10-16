@@ -1,4 +1,4 @@
-#include "../miniRT.h"
+#include "../Include/miniRT.h"
 
 t_Plane		*rt_last_Plane(t_Plane *Plane)
 {
