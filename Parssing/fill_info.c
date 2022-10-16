@@ -1,4 +1,4 @@
-#include "../miniRT.h"
+#include "../Include/miniRT.h"
 
 size_t    check_data(t_minirt *mini, t_data *data)
 {
