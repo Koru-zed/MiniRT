@@ -5,17 +5,18 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
- # include <mlx.h>
+# include <mlx.h>
 # include "get_next_line/get_next_line.h"
 
-#define W_Y 1000
-#define W_X 580
+#define W_Y 1920
+#define W_X 1080
 # define ambient "A"
 # define camera "C"
 # define light "L"
 # define plane "pl"
 # define sphre "sp"
 # define cylinder "cy"
+# define RED 0xfc3d03
 
 typedef struct s_point {
 	float	x;
@@ -24,10 +25,8 @@ typedef struct s_point {
 }	t_point;
 
 typedef struct s_vector {
-	int	x;
-	int	y;
-	int	x1;
-	int	y1;
+	int	x[2];
+	int	y[2];
 }	t_vector;
 
 typedef struct	s_mlx {

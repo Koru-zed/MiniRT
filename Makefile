@@ -16,9 +16,9 @@ CC := cc -g3
 
 LIBFT := libft/libft
 
-CFLAGS := -Wall -Wextra -Werror #-g -fsanitize=address
+CFLAGS := -Wall -Wextra -Werror  -fsanitize=address -g3
 
-# FRAMWORK = -lmlx -framework OpenGL -framework AppKit
+FRAMWORK = -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 RM := /bin/rm -rf
 
@@ -33,12 +33,12 @@ RED = \033[1;91m
 all : ${NAME}
 
 ${NAME} : ${OBJES} ${LIBFT}
-	@ ${CC} ${CFLAGS} ${LIBFT}  $^ -o $@ -lm
+	@ ${CC} ${CFLAGS} ${LIBFT}  -lmlx -framework OpenGL -framework AppKit $^ -o $@
 	@ echo "       ${YELLOW}}}}.....${GREEN}!Compile :-> fdf <-: Successe!${YELLOW}.....{{{${WHITE}"
 
 %.o : %.c
 	@ echo "${BLUE}Generating Minishell objects... ${PURPLE}" $@ "${WHITE}"
-	@$(CC) $(CFLAGS) -c $< -o $@ -lm
+	@$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
 clean : 
 	@ ${RM} ${OBJES}

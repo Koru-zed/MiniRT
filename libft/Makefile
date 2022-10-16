@@ -80,7 +80,7 @@ ${NAME}: ${OBJECTS}
 bonus: ${OBJECTS} ${OBJS_BONUS}
 	@ar -rc ${NAME} ${OBJECTS} ${OBJS_BONUS} -lm
 %.o : %.c
-	${CC} ${CFLAGS} -c $< -o $@ -lm
+	${CC} ${CFLAGS} -c $< -o $@
 clean :
 	@rm -f ${OBJECTS} ${OBJS_BONUS}
 
