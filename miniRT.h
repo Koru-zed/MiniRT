@@ -5,7 +5,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
-// # include <mlx.h>
+# include <mlx.h>
 # include "get_next_line/get_next_line.h"
 
 # define ambient "A"
@@ -18,7 +18,6 @@
 
 typedef struct _data {
 
-    struct _data *prev;
     char    *info;//change
     char    **pars;
     int     check_empty;
@@ -78,6 +77,23 @@ typedef struct _Cylinder
     struct _Cylinder    *next;
 } t_Cylinder;
 
+typedef struct _mlx {
+
+void    *img;
+void    *mlx;
+void    *win;
+char	*addr;
+int		bits_per_pixel;
+int		line_length;
+int		endian;
+int     x[2];
+int     y[2];
+int     d[2];
+int     s[2];
+
+} t_mlx;
+
+
 typedef struct _minirt {
 
     int         fd;
@@ -90,7 +106,7 @@ typedef struct _minirt {
     t_Plane     *Plane;
     t_Cylinder  *Cylinder;
     t_data      *Data;
-
+    t_mlx       *Mlx;
 }   t_minirt;
 
 
@@ -115,10 +131,12 @@ int         get_Plane(t_minirt *mini, t_data *data);
 int         get_Sphere(t_minirt *mini, t_data *data);
 int         get_Cylinder(t_minirt *mini, t_data *data);
 
-void        fill_data(t_data *p_data, t_data *n_data, int fd);
+void        fill_data(t_data *n_data, int fd);
 int         ft_check_valid(char *filename, t_data *data);
 
 size_t      check_data(t_minirt *mini, t_data *data);
 void        fill_Info(t_minirt *mini);
+
+void	    draw_line(t_mlx *info);
 
 #endif
