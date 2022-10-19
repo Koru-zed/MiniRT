@@ -1,40 +1,25 @@
-#ifndef  MINIRT_H  
-# define MINIRT_H 
-
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include <math.h>
-# include <mlx.h>
-# include "get_next_line/get_next_line.h"
-
-#define W_Y 1920
-#define W_X 1080
-# define ambient "A"
-# define camera "C"
-# define light "L"
-# define plane "pl"
-# define sphre "sp"
-# define cylinder "cy"
-# define RED 0xfc3d03
+#pragma once
+#include "miniRT.h"
 
 
-typedef struct s_vector {
-	int	x[2];
-	int	y[2];
-}	t_vector;
+typedef struct	point {
+	float	x;
+	float	y;
+	float	z;
+}	t_point;
 
-typedef struct	s_mlx {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_mlx;
+typedef struct	s_ray {
+	t_point	start;
+	t_point	dir;
+}	t_ray;
+
+typedef struct	s_sphere {
+	t_point	pos;
+	float	radius;
+}	t_sphere;
 
 typedef struct _data {
 
-    struct _data *prev;
     char    *info;//change
     char    **pars;
     int     check_empty;
@@ -94,6 +79,24 @@ typedef struct _Cylinder
     struct _Cylinder    *next;
 } t_Cylinder;
 
+typedef struct _mlx {
+
+void    *img;
+void    *mlx;
+void    *win;
+char	*addr;
+int		bits_per_pixel;
+int		line_length;
+int		endian;
+int     x[2];
+int     y[2];
+int     z[2];
+int     d[2];
+int     s[2];
+
+} t_mlx;
+
+
 typedef struct _minirt {
 
     int         fd;
@@ -106,35 +109,5 @@ typedef struct _minirt {
     t_Plane     *Plane;
     t_Cylinder  *Cylinder;
     t_data      *Data;
-
+    t_mlx       *Mlx;
 }   t_minirt;
-
-
-void        free_mini(t_minirt *mini);
-void        free_data(t_data *_data);
-void        free_Cylinder(t_Cylinder *_Cylinder);
-void        free_Plane(t_Plane *_Plane);
-void        free_Sphere(t_Sphere *_Sphere);
-
-t_Cylinder	*rt_last_Cylinder(t_Cylinder *Cylinder);
-t_Sphere	*rt_last_Sphere(t_Sphere *Sphere);
-t_Plane	    *rt_last_Plane(t_Plane *Plane);
-
-void        set_color(char const *colors, size_t *table, t_minirt *mini);
-void        set_orientation(char const *colors, float *table, t_minirt *mini);
-void        set_cordinates(char const *cord, float *table, t_minirt *mini);
-
-int         get_Light(t_minirt *mini, t_data *data);
-int         get_Camera(t_minirt *mini, t_data *data);
-int         get_Ambient_lightning(t_minirt *mini, t_data *data);
-int         get_Plane(t_minirt *mini, t_data *data);
-int         get_Sphere(t_minirt *mini, t_data *data);
-int         get_Cylinder(t_minirt *mini, t_data *data);
-
-void        fill_data(t_data *p_data, t_data *n_data, int fd);
-int         ft_check_valid(char *filename, t_data *data);
-
-size_t      check_data(t_minirt *mini, t_data *data);
-void        fill_Info(t_minirt *mini);
-
-#endif

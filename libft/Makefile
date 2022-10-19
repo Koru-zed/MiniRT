@@ -6,7 +6,7 @@
 #    By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 01:39:45 by mait-jao          #+#    #+#              #
-#    Updated: 2022/10/12 12:46:02 by mait-jao         ###   ########.fr        #
+#    Updated: 2022/10/16 10:45:41 by mait-jao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,13 @@ BONUS = ft_lstnew_bonus.c\
 		ft_lstiter_bonus.c\
 		ft_lstmap_bonus.c
 
+#colors 
+
+YELLOW = \033[1;93m
+PURPLE = \033[1;95m
+GREEN = \033[1;92m
+WHITE = \033[1;97m
+RED = \033[1;91m
 
 OBJECTS = ${FILES:.c=.o}
 
@@ -75,16 +82,24 @@ CFLAGS = -Wall -Wextra -Werror
 all : ${NAME}
 
 ${NAME}: ${OBJECTS}
-	@ar -rc ${NAME} ${OBJECTS}
+	@ ar -rc ${NAME} ${OBJECTS}
+	@ echo "       ${YELLOW}}}}.....${GREEN}!Create :-> ${NAME} <-: Successe!${YELLOW}.....{{{${WHITE}"
 
 bonus: ${OBJECTS} ${OBJS_BONUS}
-	@ar -rc ${NAME} ${OBJECTS} ${OBJS_BONUS} -lm
+	@ ar -rc ${NAME} ${OBJECTS} ${OBJS_BONUS}
+	
 %.o : %.c
-	${CC} ${CFLAGS} -c $< -o $@
+	@ echo "${BLUE}Generating Minishell objects... ${PURPLE}" $@ "${WHITE}"
+	@ ${CC} ${CFLAGS} -c $< -o $@
+
 clean :
+	@ echo "${YELLOW}-> ${PURPLE}Delete the object files.....${WHITE}"
 	@rm -f ${OBJECTS} ${OBJS_BONUS}
 
 fclean : clean
-	@rm -f ${NAME} 
+	@ echo "${YELLOW}-> ${RED}fclean : Deleting executable done.${WHITE}\n"
+	@ rm -f ${NAME} 
 
 re : fclean all
+
+do : all clean

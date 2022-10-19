@@ -8,17 +8,18 @@ FILES := get_next_line/get_next_line.c \
 		 Parssing/rt_last_node.c \
 		 Parssing/get_data_part1.c \
 		 Parssing/get_data_part2.c \
+		 Draw/drawing.c \
 		 main.c
 
-OBJES := ${FILES:.c=.o} 
+OBJES := ${FILES:.c=.o}
 
 CC := cc -g3
 
 LIBFT := libft/libft
 
-CFLAGS := -Wall -Wextra -Werror  -fsanitize=address -g3
+CFLAGS := -Wall -Wextra -Werror #-g -fsanitize=address
 
-FRAMWORK = -Lmlx -lmlx -framework OpenGL -framework AppKit
+FRAMWORK = -lmlx -framework OpenGL -framework AppKit
 
 RM := /bin/rm -rf
 
@@ -33,8 +34,8 @@ RED = \033[1;91m
 all : ${NAME}
 
 ${NAME} : ${OBJES} ${LIBFT}
-	@ ${CC} ${CFLAGS} ${LIBFT}  -lmlx -framework OpenGL -framework AppKit $^ -o $@
-	@ echo "       ${YELLOW}}}}.....${GREEN}!Compile :-> fdf <-: Successe!${YELLOW}.....{{{${WHITE}"
+	@ ${CC} ${CFLAGS} ${LIBFT} ${FRAMWORK} $^ -o $@
+	@ echo "       ${YELLOW}}}}.....${GREEN}!Compile :-> ${NAME} <-: Successe!${YELLOW}.....{{{${WHITE}"
 
 %.o : %.c
 	@ echo "${BLUE}Generating Minishell objects... ${PURPLE}" $@ "${WHITE}"
@@ -49,5 +50,7 @@ fclean : clean
 	@ echo "${YELLOW}-> ${RED}fclean : Deleting executable done.${WHITE}\n"
 
 re : fclean all
+
+do : all clean
 
 .PHONY : all clean fclean re
