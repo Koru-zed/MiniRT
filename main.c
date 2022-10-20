@@ -48,6 +48,7 @@ void	draw(t_vector v, t_mlx data)
 		yf += y_inc;
 	}
 }*/
+void ray_render(t_minirt *minirt, t_mlx* mlx);
 
 int main(int ac, char **av)
 {
@@ -77,13 +78,14 @@ int main(int ac, char **av)
     miniRT->Mlx->img = mlx_new_image(miniRT->Mlx->mlx, 720, 540);
     miniRT->Mlx->addr = mlx_get_data_addr(miniRT->Mlx->img, &miniRT->Mlx->bits_per_pixel, &miniRT->Mlx->line_length, &miniRT->Mlx->endian);
 	t = get_time();
-	miniRT->Mlx->y[0]= 59;
-	while (miniRT->Mlx->y[0]++ < 300)
-	{
-    	draw_line(miniRT->Mlx);
-	// draw(miniRT->Mlx, y);
-		printf ("y[0] = [%d]\n", miniRT->Mlx->y[0]);
-	}
+//	miniRT->Mlx->y[0]= 59;
+//	while (miniRT->Mlx->y[0]++ < 300)
+//	{
+//    	draw_line(miniRT->Mlx);
+//	// draw(miniRT->Mlx, y);
+//		printf ("y[0] = [%d]\n", miniRT->Mlx->y[0]);
+//	}
+	ray_render(miniRT, miniRT->Mlx);
 	printf ("-----------------------\n");
 	printf("Time measured: %lld ms.\n", get_time() - t);
     mlx_put_image_to_window(miniRT->Mlx->mlx, miniRT->Mlx->win, miniRT->Mlx->img, 0, 0);
@@ -185,18 +187,62 @@ t_point	unit_vector(t_point v){
 		* $ A = \vec d.\vec d $
 		* $ B = 2\vec d.(\vec p_0 - \vec c) $
 		* $ C = (\vec p_0 - \vec c).(\vec p_0 - \vec c) - r^2 $
- */
-/*
+		*
 		  *  We need a vector representing the distance between the start of
  				 * the ray and the position of the circle. < dist >
-         *
-         *
 */
-bool	intersectRaySphere(t_ray *r, t_sphere *s)
+
+t_point vectorScale(float c, t_point v)
 {
+	return mul(c, v);
+}
+
+//bool	intersectRaySphere(t_ray *r, t_sphere *s, float *t)
+//{
+//	bool	retval;
+//	float	A;
+//	t_point	dist;
+//
+//	retval = false;
+//	A = dot(r->dir, r->dir);
+//	dist = sub(r->start, s->pos);
+//	float B = 2 * dot(dist, dist);
+//	float C = dot(dist, dist) - (s->radius * s->radius);
+//	/* * Solving the discriminant */
+//	float discr = B * B - 4 * A * C;
+//	/* * If the discriminant is negative, there are no real roots.
+//	  * Return false in that case as the ray misses the sphere.
+//	  * Return true in all other cases (can be one or two intersections)
+//	  *  t, the solution to the equation represents the closest point
+//	  *  where our ray intersect with the sphere
+//	  */
+//	if (discr < 0)
+//		retval = false;
+//	else
+//	{
+//		float sqrt_discr = sqrtf(discr);
+//		float t0 = (-B + sqrt_discr) / 2;
+//		float t1 = (-B - sqrt_discr) / 2;
+//		//  * we want the closest one
+//		if (t0 > t1)
+//			t0 = t1;
+//		/*  * Verify t0 larger than 0 and less than the original t */
+//		if ((t0 > 0.0001f) && (t0 < *t)){
+//			*t = t0;
+//			retval = true;
+//		}
+//		else
+//			retval = false;
+//	}
+//	return retval;
+//}
+bool intersectRaySphere(t_ray *r, t_sphere *s)
+{
+	bool	retval;
 	float	A;
 	t_point	dist;
 
+	retval = false;
 	A = dot(r->dir, r->dir);
 	dist = sub(r->start, s->pos);
 	float B = 2 * dot(dist, dist);
@@ -206,40 +252,87 @@ bool	intersectRaySphere(t_ray *r, t_sphere *s)
 	/* * If the discriminant is negative, there are no real roots.
 	  * Return false in that case as the ray misses the sphere.
 	  * Return true in all other cases (can be one or two intersections)
+	  *  t, the solution to the equation represents the closest point
+	  *  where our ray intersect with the sphere
 	  */
 	if (discr < 0)
-		return false;
-	return true;
+		retval = false;
+	else
+		retval = true;
+	return retval;
+}
+//t_sphere	init_ray(t_sphere s)
+//{
+///* Position the sphere */
+//	s.pos.x = 200;
+//	s.pos.y = 200;
+//	s.pos.z = 100;
+//	/* Sphere radius */
+//	s.radius = 100;
+//	return s;
+//}
+
+
+/*
+ *  t, represent the length of the closest intersection.
+ */
+void ray_render(t_minirt *minirt, t_mlx *mlx)
+{
+	(void) minirt;
+	(void) mlx;
+	const int image_width = 500;
+	const int image_height = 500;
+	bool	hit;
+
+	// Render
+	t_sphere	sphere;
+	t_ray		r;
+	sphere.pos.x = 200;
+	sphere.pos.y = 200;
+	sphere.pos.z = 100;
+	/* Sphere radius */
+	sphere.radius = 100;
+
+	/* Direction of the ray */
+	r.dir.x = 0;
+	r.dir.y = 0;
+	r.dir.z = 1;
+	/* Start position of the ray, z coordinate */
+	r.start.z = 0;
+	int color;
+	for (int y = image_height-1; y >= 0; --y) {
+		r.start.y = y;
+		for (int x = 0; x < image_width; ++x) {
+			r.start.x = x;
+			hit = intersectRaySphere(&r, &sphere);
+			if (hit)
+			{
+				color = (int)createRGB(255, 0, 0);
+				int X = (x / image_width);
+				int Y = ( y / image_width);
+//				my_mlx_pixel_put(mlx, X, Y, 0xFF0000);
+			} else
+			{
+				int X = (x / image_width);
+				int Y = (y / image_width);
+//				my_mlx_pixel_put(mlx, X, Y, 0x000000);
+			}
+//			printf("x %d, y %d", x, y);
+//			double r = (double)x / (image_width-1);
+//			double g = (double)y / (image_height-1);
+//			double b = 0.25;
+//
+//			int ir = (int)(255.999 * r);
+//			int ig = (int)(255.999 * g);
+//			int ib = (int)(255.999 * b);
+		}
+	}
+
 }
 /*
 
 
 
-void ray_render(t_minirt *minirt, t_mlx mlx)
-{
-	(void) minirt;
-	(void) mlx;
-	const int image_width = 1000;
-	const int image_height = 1000;
-
-	// Render
-
-
-	for (int j = image_height-1; j >= 0; --j) {
-		for (int i = 0; i < image_width; ++i) {
-			double r = (double)i / (image_width-1);
-			double g = (double)j / (image_height-1);
-			double b = 0.25;
-
-			int ir = (int)(255.999 * r);
-			int ig = (int)(255.999 * g);
-			int ib = (int)(255.999 * b);
-			int color = (int)createRGB(ir, ig, ib);
-			my_mlx_pixel_put(&mlx, i, j, color);
-		}
-	}
-
-}
 
 bool	ray_interesct(const t_point origin, const t_point dir, float *t, t_point center, float r)
 {

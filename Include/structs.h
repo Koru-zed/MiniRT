@@ -1,12 +1,31 @@
 #pragma once
 #include "miniRT.h"
+/********* struct for test ********/
 
+
+/*
+ *  we could represent the color by percentage
+ *  between 0.0 to 1.0
+ * */
+typedef struct s_color {
+	float red, green, blue;
+} colour;
 
 typedef struct	point {
 	float	x;
 	float	y;
 	float	z;
 }	t_point;
+
+typedef struct s_material{
+	colour diffuse;
+	float	reflection;
+}	t_material;
+
+typedef struct	s_light {
+	t_point	pos;
+	colour 	intensity;
+}	t_light;
 
 typedef struct	s_ray {
 	t_point	start;
@@ -16,8 +35,10 @@ typedef struct	s_ray {
 typedef struct	s_sphere {
 	t_point	pos;
 	float	radius;
+	int		material;
 }	t_sphere;
 
+/********************/
 typedef struct _data {
 
     char    *info;//change

@@ -45,6 +45,6 @@ int         ft_check_valid(char *filename, t_data *data);
 size_t      check_data(t_minirt *mini, t_data *data);
 void        fill_Info(t_minirt *mini);
 
-void	    draw_line(t_mlx *info);
+void	draw_line(t_mlx *info, int color);
 
 #endif

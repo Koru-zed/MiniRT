@@ -35,7 +35,7 @@ static void	set_coordinates_to_draw(t_mlx *info, int *x, int *y)
 }
 
 //// Brensham algo ////
-void	draw_line(t_mlx *info)
+void	draw_line(t_mlx *info, int color)
 {
 	int	p;
 	int	d;
@@ -46,10 +46,10 @@ void	draw_line(t_mlx *info)
 	p = 2 * info->d[1] - info->d[0];
 	while (x[0] != x[1] || y[0] != y[1])
 	{
-		my_mlx_pixel_put(info, x[0], y[0], 0xFF6600);
+		my_mlx_pixel_put(info, x[0], y[0], color);
 		if (x[0] == x[1] && y[0] == y[1])
 			break ;
-			x[0] += info->s[0];
+		x[0] += info->s[0];
 		if (p < 0)
 			p = p + 2 * info->d[1];
 		else if (p <= info->d[0])
