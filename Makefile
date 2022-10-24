@@ -9,7 +9,7 @@ FILES := get_next_line/get_next_line.c \
 		 Parssing/get_data_part1.c \
 		 Parssing/get_data_part2.c \
 		 Draw/drawing.c \
-		 main.c
+		 Main/main.c
 
 OBJES := ${FILES:.c=.o}
 

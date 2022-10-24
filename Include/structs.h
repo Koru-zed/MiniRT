@@ -10,6 +10,25 @@ typedef struct _data {
 
 }   t_data;
 
+typedef struct {
+
+    float x;
+    float y;
+    float z;
+} t_vector;
+
+// typedef struct {
+
+//     float       raduis;
+//     t_vector    pos;
+// } t_Sphere;
+
+// typedef struct {
+
+//     t_vector	begin;
+//     t_vector    dir;
+// } t_Ray;
+
 typedef struct _Ambient_light
 {
     float   ratio;//ambient lighting ratio in range [0.0,1.0]:
@@ -61,6 +80,7 @@ typedef struct _Cylinder
     size_t              repetition;
     struct _Cylinder    *next;
 } t_Cylinder;
+
 
 typedef struct _mlx {
 

@@ -1,5 +1,5 @@
-#include "Include/miniRT.h"
-# include <sys/time.h>
+#include "../Include/miniRT.h"
+#include <sys/time.h>
 
 long long	get_time(void)
 {
@@ -61,3 +61,4 @@ int main(int ac, char **av)
     
     free_mini(miniRT);
 }
+// int		mlx_pixel_put(void *mlx_ptr, void *win_ptr, int x, int y, int color);
