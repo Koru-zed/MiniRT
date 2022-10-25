@@ -26,8 +26,6 @@ static int	ft_parameters(t_mlx *info, int *x,int *y)
 
 static void	set_coordinates_to_draw(t_mlx *info, int *x, int *y)
 {
-
-		printf("> %p\n", info);
 		x[0] = 50;
 		y[0] = info->y[0];// = 50;
 		x[1] = 700;

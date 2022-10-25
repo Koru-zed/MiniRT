@@ -7,15 +7,11 @@
  *  we could represent the color by percentage
  *  between 0.0 to 1.0
  * */
+/*
 typedef struct s_color {
 	float red, green, blue;
 } colour;
 
-typedef struct	point {
-	float	x;
-	float	y;
-	float	z;
-}	t_point;
 
 typedef struct s_material{
 	colour diffuse;
@@ -27,16 +23,13 @@ typedef struct	s_light {
 	colour 	intensity;
 }	t_light;
 
-typedef struct	s_ray {
-	t_point	start;
-	t_point	dir;
-}	t_ray;
 
 typedef struct	s_sphere {
 	t_point	pos;
 	float	radius;
 	int		material;
 }	t_sphere;
+*/
 
 /********************/
 typedef struct _data {
@@ -47,6 +40,17 @@ typedef struct _data {
     struct _data *next;
 
 }   t_data;
+
+typedef struct	point {
+	float	x;
+	float	y;
+	float	z;
+}	t_point;
+
+typedef struct	s_ray {
+	t_point	start;
+	t_point	dir;
+}	t_ray;
 
 typedef struct _Ambient_light
 {
@@ -73,6 +77,7 @@ typedef struct _Light
 
 typedef struct _Plane
 {
+	t_point	cor;
     float           cordinates[3];//x,y,z coordinates of the view
     float           orientation[3];//3d normalized orientation vector. In range [-1,1] 
     size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
@@ -82,10 +87,11 @@ typedef struct _Plane
 
 typedef struct _Sphere
 {
-    float           cordinates[3];//x,y,z coordinates of the view
-    float           diameter;
-    size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
-    size_t          repetition;
+    float			cordinates[3];//x,y,z coordinates of the center
+    float			diameter;
+    float			radius;
+    size_t			color[3];//R,G,B colors in range [0-255]: 255, 255, 255
+    size_t			repetition;
     struct _Sphere   *next;
 } t_Sphere;
 

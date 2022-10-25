@@ -10,7 +10,7 @@ FILES := get_next_line/get_next_line.c \
 		 Parssing/get_data_part2.c \
 		 Draw/drawing.c \
 		 main.c \
-		 math_operations.c
+		 math_operations.c rendring.c sphere.c
 
 OBJES := ${FILES:.c=.o}
 

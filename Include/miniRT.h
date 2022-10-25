@@ -47,6 +47,7 @@ int         ft_check_valid(char *filename, t_data *data);
 size_t      check_data(t_minirt *mini, t_data *data);
 void        fill_Info(t_minirt *mini);
 void		draw_line(t_mlx *info, int color);
+void 		ray_render(t_minirt *minirt);
 
 /* ***		Math Operations		** */
 float		dot(const t_point u, const t_point v);
@@ -60,7 +61,7 @@ float		 	length_squared(t_point p);
 float			length(t_point p);
 t_point			unit_vector(t_point v);
 /* ***		End Math Operations		** */
-bool intersectRaySphere(t_ray *r, t_sphere *s);
+bool 	intersectRaySphere(t_ray *r, t_Sphere *s, float *t);
 //bool	intersectRaySphere(t_ray *r, t_sphere *s, float *t);
 
 

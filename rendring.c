@@ -40,58 +40,38 @@
 /*
  *  t, represent the length of the closest intersection.
  */
-void ray_render(t_minirt *minirt, t_mlx *mlx)
+void ray_render(t_minirt *minirt)
 {
-	// image
-	const int image_width = 500;
-	const int image_height = 500;
-	float	aspect_ratio = (float )image_width / image_height;
-	(void) minirt;
-	(void) mlx;
+
+	t_ray	*ray;
 	bool	hit;
+	int x, y;
 
-	// camera
-	float viewport_height  = 2.0;
-	float viewport_width = aspect_ratio * viewport_height;
-	float focal_e
-	// Render
-	t_sphere	sphere;
-	t_ray		r;
-	t_point 	Camera = {0, 0, -1};
-
-	sphere.pos.x = 0;
-	sphere.pos.y = 0;
-	sphere.pos.z = 0;
-	 /* Sphere radius */
-	sphere.radius = 0.5;
-
-	/* Direction of the ray */
-	r.dir.x = 0;
-	r.dir.y = 0;
-	r.dir.z = 1;
-	/* Start position of the ray, z coordinate */
-	r.start.z = 0;
-	int color;
-	for (int y = image_height-1; y >= 0; --y) {
-		r.start.y = y;
-		for (int x = 0; x < image_width; ++x) {
-			r.start.x = x;
-			hit = intersectRaySphere(&r, &sphere);
+	x = 0;
+	y = 0;
+	minirt->Sphere->radius = minirt->Sphere->diameter / 2;
+	ray = ft_calloc(1, sizeof(t_ray));
+	ray->dir.x = 0;
+	ray->dir.y = 0;
+	ray->dir.z = -1.0;
+	float t;
+	ray->start.z = 2.0;
+	while (y < 540)
+	{
+		ray->start.y = y;
+		while (x < 720)
+		{
+			ray->start.x = x;
+			hit = intersectRaySphere(ray, minirt->Sphere, &t);
 			if (hit)
-			{
-//				color = (int)createRGB(255, 0, 0);
-//				int X = (x / image_width);
-//				int Y = ( y / image_width);
-				my_mlx_pixel_put(mlx, X, Y, 0xFF0000);
-			} else {
-				int X = (x / image_width);
-				int Y = (y / image_width);
-//				my_mlx_pixel_put(mlx, X, Y, 0x000000);
-			}
-//			int ib = (int)(255.999 * b);
+				my_mlx_pixel_put(minirt->Mlx, x, y, 0xFFFF00);
+			else
+				my_mlx_pixel_put(minirt->Mlx, x, y, 0x000033 );
+			x++;
 		}
+		y++;
+		x = 0;
 	}
-
 }
 /*
 
