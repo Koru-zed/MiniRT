@@ -41,10 +41,17 @@ typedef struct _data {
 
 }   t_data;
 
+typedef struct	s_matrix{
+	int row;
+	int col;
+	float	**mat;
+}	t_matrix;
+
 typedef struct	point {
 	float	x;
 	float	y;
 	float	z;
+	float	w;
 }	t_point;
 
 typedef struct	s_ray {

@@ -17,6 +17,7 @@
 # define plane "pl"
 # define sphre "sp"
 # define cylinder "cy"
+# define EPSILON  0.00001
 
 
 
@@ -61,8 +62,8 @@ float		 	length_squared(t_point p);
 float			length(t_point p);
 t_point			unit_vector(t_point v);
 /* ***		End Math Operations		** */
-bool 	intersectRaySphere(t_ray *r, t_Sphere *s, float *t);
-//bool	intersectRaySphere(t_ray *r, t_sphere *s, float *t);
+//bool 	intersectRaySphere(t_ray *r, t_Sphere *s, float *t);
+bool	intersectRaySphere(t_ray *r, t_sphere *s);
 
 
 #endif

@@ -11,6 +11,7 @@ long long	get_time(void)
 
 int main(int ac, char **av)
 {
+	t_point	*matrix;
 	size_t t;
 	// int y;
     t_minirt *miniRT;
@@ -19,6 +20,7 @@ int main(int ac, char **av)
 
 	(void)ac;
 	(void)av;
+	matrix = ft_calloc(4, sizeof(t_point));
 	miniRT = ft_calloc(1, sizeof(t_minirt));
 	miniRT->Data = ft_calloc(1, sizeof(t_data));
 	if (av[1])

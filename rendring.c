@@ -53,15 +53,15 @@ void ray_render(t_minirt *minirt)
 	ray = ft_calloc(1, sizeof(t_ray));
 	ray->dir.x = 0;
 	ray->dir.y = 0;
-	ray->dir.z = -1.0;
+	ray->dir.z = -1.0f;
 	float t;
-	ray->start.z = 2.0;
+	ray->start.z = 2.0f;
 	while (y < 540)
 	{
-		ray->start.y = y;
+		ray->start.y = (float)y;
 		while (x < 720)
 		{
-			ray->start.x = x;
+			ray->start.x = (float )x;
 			hit = intersectRaySphere(ray, minirt->Sphere, &t);
 			if (hit)
 				my_mlx_pixel_put(minirt->Mlx, x, y, 0xFFFF00);
