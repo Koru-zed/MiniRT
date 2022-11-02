@@ -9,12 +9,12 @@
 # include "../get_next_line/get_next_line.h"
 # include "structs.h"
 
-# define ambient "A"
-# define camera "C"
-# define light "L"
-# define plane "pl"
-# define sphre "sp"
-# define cylinder "cy"
+// # define ambient "A"
+// # define camera "C"
+// # define light "L"
+// # define plane "pl"
+// # define sphre "sp"
+// # define cylinder "cy"
 
 
 

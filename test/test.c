@@ -1,9 +1,12 @@
-/* A simple ray tracer - part 1 */
+#/* A simple ray tracer */
 
 #include <stdio.h>
 #include <stdbool.h> /* Needed for boolean datatype */
-#include "Include/miniRT.h"
-// #include <mlx.h>
+
+/* Width and height of out image */
+#define WIDTH  800
+#define HEIGHT 600
+
 /* The vector structure */
 typedef struct{
       float x,y,z;
@@ -32,13 +35,6 @@ float vectorDot(vector *v1, vector *v2){
 	return v1->x * v2->x + v1->y * v2->y + v1->z * v2->z;
 }
 
-static void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = Mlx->addr + (y * Mlx->line_length + x * (Mlx->bits_per_pixel >> 3));
-	*(unsigned int*)dst = color;
-}
 
 /* Check if the ray and sphere intersect */
 bool intersectRaySphere(ray *r, sphere *s){
@@ -71,16 +67,33 @@ bool intersectRaySphere(ray *r, sphere *s){
 		return true;
 }
 
+/* Output data as PPM file */
+void saveppm(char *filename, unsigned char *img, int width, int height){
+	/* FILE pointer */
+	FILE *f;
 
-int main(){
+	/* Open file for writing */
+	f = fopen(filename, "wb");
+
+	/* PPM header info, including the size of the image */
+	fprintf(f, "P6 %d %d %d\n", width, height, 255);
+
+	/* Write the image data to the file - remember 3 byte per pixel */
+	fwrite(img, 3, width*height, f);
+
+	/* Make sure you close the file */
+	fclose(f);
+}
+
+int main(int argc, char *argv[]){
 	
+	/* Image data */
+	unsigned char img[3*WIDTH*HEIGHT];
+
 	/* Our ray and a sphere */
 	sphere s;
 	ray r;
-    	size_t t;
-	// int y;
-    t_mlx *Mlx;
-    // t_data *Data;
+	
 	/* x, y for screen 'resolution' */
 	int x,y;	
 
@@ -88,9 +101,9 @@ int main(){
 	bool hit;
 
 	/* Position the sphere */
-	s.pos.x = 360;
-	s.pos.y = 270;
-	s.pos.z = 20;
+	s.pos.x = 200;
+	s.pos.y = 200;
+	s.pos.z = 100;
 
 	/* Sphere radius */
 	s.radius = 100;
@@ -103,33 +116,29 @@ int main(){
 	/* Start position of the ray, z coordinate */
 	r.start.z = 0;
 
-
-    Mlx = ft_calloc(1, sizeof(t_mlx));
-    Mlx->mlx = mlx_init();
-    Mlx->win = mlx_new_window(Mlx->mlx, 720, 540, "miniRT");
-    Mlx->img = mlx_new_image(Mlx->mlx, 720, 540);
-    Mlx->addr = mlx_get_data_addr(Mlx->img, &Mlx->bits_per_pixel, &Mlx->line_length, &Mlx->endian);
-
-	/* Iterate over every 'pixel' of our screen
-	 * We use a 40x40 virtual ASCII screen for now
-	 */
-	for(y=0;y<540;y++){
+	/* Iterate over every pixel of our screen */
+	for(y=0;y<HEIGHT;y++){
 		/* Set the y-coordinate of the start position of the ray */
 		r.start.y = y; 
-		for(x=0;x<720;x++){
+		for(x=0;x<WIDTH;x++){
 			/* Set the x-coordinate of the start position of the ray */
 			r.start.x = x;
 
 			/* Check if the ray intersects with the shpere */
 			hit = intersectRaySphere(&r, &s);
-			if (hit)
-				my_mlx_pixel_put(Mlx, x, y, 0xFF3333);
-			else
-				my_mlx_pixel_put(Mlx, x, y, 0xFFFFFF);
+			if(hit){
+				img[(x + y*WIDTH)*3 + 0] = 255;
+				img[(x + y*WIDTH)*3 + 1] = 0;
+				img[(x + y*WIDTH)*3 + 2] = 0;
+			}else{
+				img[(x + y*WIDTH)*3 + 0] = 0;
+				img[(x + y*WIDTH)*3 + 1] = 0;
+				img[(x + y*WIDTH)*3 + 2] = 0;
+			}
 		}
-		/* First row of the screen done, move to next row */
 	}
-    mlx_put_image_to_window(Mlx->mlx, Mlx->win, Mlx->img, 0, 0);
-    mlx_loop(Mlx->mlx);
 
+	saveppm("image.ppm", img, WIDTH, HEIGHT);
+
+	return 0;
 }
