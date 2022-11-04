@@ -46,7 +46,7 @@ t_point sub(t_point center, t_point origin)
 	return (p);
 }
 
-unsigned long createRGB(double r, double g, double b)
+int createRGB(float r, float g, float b)
 {
 	int ir = (int)(255.999 * r);
 	int ig = (int)(255.999 * g);
@@ -55,15 +55,15 @@ unsigned long createRGB(double r, double g, double b)
 }
 
 
-float 	length_squared(t_point p)
+float 	length(t_point p)
 {
 	return (p.x * p.x + p.y * p.y + p.z * p.z);
 }
 
 // magnitude
-float length(t_point p)
+float length_squared(t_point p)
 {
-	return sqrtf (length_squared(p));
+	return sqrtf (length(p));
 }
 
 /*
@@ -74,10 +74,12 @@ t_point	normalizing(t_point p)
 {
 	float	mag;
 
-	mag = length(p);
-	p.x /= mag;
-	p.y /= mag;
-	p.z /= mag;
+	mag = length_squared(p);
+	if (mag > 0) {
+		p.x /= mag;
+		p.y /= mag;
+		p.z /= mag;
+	}
 	return (p);
 }
 

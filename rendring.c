@@ -35,8 +35,61 @@
 //	s.radius = 100;
 //	return s;
 //}
+void	add_cord(int i, int j, t_matrix **m, t_point p)
+{
+	(*m)[j][i] = p.x;
+	(*m)[j][i] = p.y;
+	(*m)[j][i] = p.z;
+}
+void	add_neg_cord(int j, t_matrix **m, t_point p)
+{
+	(*m)[j][3] = -p.x;
+	(*m)[j][3] = -p.y;
+	(*m)[j][3] = -p.z;
+}
 
+/*
+  * we need FOV (field of view)
+ * and aspect ratio = w/h == w =  width / height
 
+ *  field of view dependes of sensor size and
+ *  the equation is FOV = 2 tan^-1 (h/2f)
+ */
+
+t_matrix	*viewport(int x, int y, int w, int h)
+{
+	t_matrix	*m = creat_matrix(4);
+	m[0][3] = x+w/2.f;
+	m[1][3] = y+h/2.f;
+	m[2][3] = depth/2.f;
+
+	m[0][0] = w/2.f;
+	m[1][1] = h/2.f;
+	m[2][2] = depth/2.f;
+	return m;
+}
+
+t_matrix	*look_at(t_point eye, t_point center, t_point up)
+{
+	int i;
+
+	i = 0;
+	t_point	z = normalizing(sub(eye, center));
+	t_point	x = normalizing(cross(up, z));
+	t_point	y = normalizing(cross(z, x));
+	t_matrix*	Minv = creat_matrix(3);
+	t_matrix*	Tr = creat_matrix(3);
+	while (i < Minv->col)
+	{
+		add_cord(i, 0,&Minv, x);
+		add_cord(i, 1,&Minv, y);
+		add_cord(i, 2,&Minv, z);
+		add_neg_cord(i, &Tr, eye);
+		i++;
+	}
+	t_matrix	*modelView = matrix_multiplication(Minv, Tr);
+	return modelView;
+}
 /*
  *  t, represent the length of the closest intersection.
  */
@@ -51,10 +104,13 @@ void ray_render(t_minirt *minirt)
 	y = 0;
 	minirt->Sphere->radius = minirt->Sphere->diameter / 2;
 	ray = ft_calloc(1, sizeof(t_ray));
-	ray->dir.x = 0;
-	ray->dir.y = 0;
-	ray->dir.z = -1.0f;
-	float t;
+	ray->dir.x = minirt->Camera->cordinates[0];
+	ray->dir.y = minirt->Camera->cordinates[1];
+	ray->dir.z = minirt->Camera->cordinates[2];
+	int color;
+//	float t;
+//	get_camera_location();
+	printf("mag %d  && normaliz == %d\n", length_squared(ray->dir))
 	ray->start.z = 2.0f;
 	while (y < 540)
 	{
@@ -62,11 +118,16 @@ void ray_render(t_minirt *minirt)
 		while (x < 720)
 		{
 			ray->start.x = (float )x;
-			hit = intersectRaySphere(ray, minirt->Sphere, &t);
+			hit = intersectRaySphere(ray, minirt->Sphere, &color);
 			if (hit)
-				my_mlx_pixel_put(minirt->Mlx, x, y, 0xFFFF00);
+				my_mlx_pixel_put(minirt->Mlx, x, y, color);
 			else
-				my_mlx_pixel_put(minirt->Mlx, x, y, 0x000033 );
+			{
+//				t_point unit = unit_vector(ray->dir);
+//				float  f = 0.5f*(unit.y + 1.0f);
+//				int color = ((1.0-f)*createRGB(1.0, 1.0, 1.0) *  f * createRGB(0.5, 0.7, 1.0));
+				my_mlx_pixel_put(minirt->Mlx, x, y, 0xFF0000);
+			}
 			x++;
 		}
 		y++;

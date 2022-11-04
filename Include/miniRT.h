@@ -57,13 +57,16 @@ t_point		mul(const float t,  t_point p);
 t_point		division(t_point p, float t);
 t_point		adding(t_point p, t_point v);
 t_point		sub(t_point center, t_point origin);
-unsigned long	createRGB(double r, double g, double b);
+int 		createRGB(float r, float g, float b);
 float		 	length_squared(t_point p);
 float			length(t_point p);
 t_point			unit_vector(t_point v);
+t_point	normalizing(t_point p);
+t_matrix	*creat_matrix(size_t c);
+t_matrix *matrix_multiplication(t_matrix *a, t_matrix *b);
 /* ***		End Math Operations		** */
 //bool 	intersectRaySphere(t_ray *r, t_Sphere *s, float *t);
-bool	intersectRaySphere(t_ray *r, t_sphere *s);
-
+//float		intersectRaySphere(t_ray *r, t_Sphere *s);
+bool intersectRaySphere(t_ray *r, t_Sphere *s, int *color);
 
 #endif
