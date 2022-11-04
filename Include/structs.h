@@ -1,6 +1,37 @@
 #pragma once
 #include "miniRT.h"
+/********* struct for test ********/
 
+
+/*
+ *  we could represent the color by percentage
+ *  between 0.0 to 1.0
+ * */
+/*
+typedef struct s_color {
+	float red, green, blue;
+} colour;
+
+
+typedef struct s_material{
+	colour diffuse;
+	float	reflection;
+}	t_material;
+
+typedef struct	s_light {
+	t_point	pos;
+	colour 	intensity;
+}	t_light;
+
+
+typedef struct	s_sphere {
+	t_point	pos;
+	float	radius;
+	int		material;
+}	t_sphere;
+*/
+
+/********************/
 typedef struct _data {
 
     char    *info;//change
@@ -10,24 +41,26 @@ typedef struct _data {
 
 }   t_data;
 
-typedef struct {
+typedef struct	point {
 
-    float x;
-    float y;
-    float z;
-} t_vector;
+	float	x;
+	float	y;
+	float	z;
+}	t_point;
 
-// typedef struct {
+typedef struct	s_ray {
+    
+    t_point left_corner;
+    t_point horizontal;
+    t_point vertical;
+    t_point origin;
+    t_point direction;
+    float   t;
+}	t_ray;
 
-//     float       raduis;
-//     t_vector    pos;
-// } t_Sphere;
-
-// typedef struct {
-
-//     t_vector	begin;
-//     t_vector    dir;
-// } t_Ray;
+// typedef struct eye_camera
+// {
+// } t_eye_camera;
 
 typedef struct _Ambient_light
 {
@@ -38,24 +71,25 @@ typedef struct _Ambient_light
 
 typedef struct _Camera
 {
-    float   cordinates[3];//x,y,z coordinates of the view
-    float   orientation[3];//3d normalized orientation vector. In range [-1,1] 
-    size_t  fov;//Horizontal field of view in degrees in range [0,180]
-    size_t  repetition;
+    t_point   cordinates;//x,y,z coordinates of the view
+    t_point   orientation;//3d normalized orientation vector. In range [-1,1] 
+    size_t    fov;//Horizontal field of view in degrees in range [0,180]
+    size_t    repetition;
+    t_ray	  my_camera;
 } t_Camera;
 
 typedef struct _Light
 {
-    float   cordinates[3];//x,y,z coordinates of the view
-    float   brightenss;//the light brightness ratio in range [0.0,1.0]
-    size_t  color[3];//R,G,B colors in range [0-255]: 255, 255, 255
+    t_point   cordinates;//x,y,z coordinates of the view
+    float    brightenss;//the light brightness ratio in range [0.0,1.0]
+    size_t   color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t   repetition;
 } t_Light;
 
 typedef struct _Plane
 {
-    float           cordinates[3];//x,y,z coordinates of the view
-    float           orientation[3];//3d normalized orientation vector. In range [-1,1] 
+    t_point         cordinates;//x,y,z coordinates of the view
+    t_point         orientation;//3d normalized orientation vector. In range [-1,1] 
     size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t          repetition;
     struct _Plane   *next;
@@ -63,24 +97,24 @@ typedef struct _Plane
 
 typedef struct _Sphere
 {
-    float           cordinates[3];//x,y,z coordinates of the view
-    float           diameter;
-    size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
-    size_t          repetition;
+    t_point         cordinates;//x,y,z coordinates of the view
+    float			diameter;
+    float			radius;
+    size_t			color[3];//R,G,B colors in range [0-255]: 255, 255, 255
+    size_t			repetition;
     struct _Sphere   *next;
 } t_Sphere;
 
 typedef struct _Cylinder
 {
-    float               cordinates[3];//x,y,z coordinates of the view
-    float               orientation[3];//3d normalized orientation vector. In range [-1,1]
+    t_point             cordinates;//x,y,z coordinates of the view
+    t_point             orientation;//3d normalized orientation vector. In range [-1,1] 
     size_t              color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     float               diameter;
     float               hright;
     size_t              repetition;
     struct _Cylinder    *next;
 } t_Cylinder;
-
 
 typedef struct _mlx {
 

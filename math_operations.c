@@ -1,10 +1,10 @@
-#include "../Include/miniRT.h"
+#include "Include/miniRT.h"
 
 float	dot(const t_point u, const t_point v)
 {
-	return u.x * v.x
-		   + u.y * v.y
-		   + u.z * v.z;
+	return (u.x * v.x
+			+ u.y * v.y
+			+ u.z * v.z);
 }
 
 t_point	cross(const t_point u, const t_point v) {
@@ -30,10 +30,11 @@ t_point division(t_point p, float t)
 
 t_point	adding(t_point p, t_point v)
 {
-	p.x += v.x;
-	p.y += v.y;
-	p.z += v.z;
-	return p;
+	t_point a;
+	a.x = p.x + v.x;
+	a.y = p.y + v.y;
+	a.z = p.z + v.z;
+	return a;
 }
 
 t_point sub(t_point center, t_point origin)
@@ -54,14 +55,31 @@ unsigned long createRGB(double r, double g, double b)
 	return (ir << (16 + ig) << (8 + ib));
 }
 
+
 float 	length_squared(t_point p)
 {
 	return (p.x * p.x + p.y * p.y + p.z * p.z);
 }
 
+// magnitude
 float length(t_point p)
 {
 	return sqrtf (length_squared(p));
+}
+
+/*
+ * With that, you can turn any vector
+ * (or rather, any vector with a nonzero magnitude) into a unit vector
+ */
+t_point	normalizing(t_point p)
+{
+	float	mag;
+
+	mag = length(p);
+	p.x /= mag;
+	p.y /= mag;
+	p.z /= mag;
+	return (p);
 }
 
 t_point	unit_vector(t_point v)

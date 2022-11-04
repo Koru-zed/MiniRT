@@ -1,6 +1,6 @@
 #include "../Include/miniRT.h"
 
-static void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
+void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
 {
 	char	*dst;
 
@@ -26,8 +26,6 @@ static int	ft_parameters(t_mlx *info, int *x,int *y)
 
 static void	set_coordinates_to_draw(t_mlx *info, int *x, int *y)
 {
-
-		printf("> %p\n", info);
 		x[0] = 50;
 		y[0] = info->y[0];// = 50;
 		x[1] = 700;
@@ -35,7 +33,7 @@ static void	set_coordinates_to_draw(t_mlx *info, int *x, int *y)
 }
 
 //// Brensham algo ////
-void	draw_line(t_mlx *info)
+void	draw_line(t_mlx *info, int color)
 {
 	int	p;
 	int	d;
@@ -46,10 +44,10 @@ void	draw_line(t_mlx *info)
 	p = 2 * info->d[1] - info->d[0];
 	while (x[0] != x[1] || y[0] != y[1])
 	{
-		my_mlx_pixel_put(info, x[0], y[0], 0x99FFCC);
+		my_mlx_pixel_put(info, x[0], y[0], color);
 		if (x[0] == x[1] && y[0] == y[1])
 			break ;
-			x[0] += info->s[0];
+		x[0] += info->s[0];
 		if (p < 0)
 			p = p + 2 * info->d[1];
 		else if (p <= info->d[0])

@@ -37,8 +37,8 @@ int    get_Camera(t_minirt *mini, t_data *data)
             mini->check = -1;
             return (-1);
         }
-        set_cordinates(data->pars[1], mini->Camera->cordinates, mini);
-        set_orientation(data->pars[2], mini->Camera->orientation, mini);
+        set_cordinates(data->pars[1], &mini->Camera->cordinates, mini);
+        set_orientation(data->pars[2], &mini->Camera->orientation, mini);
         mini->Camera->fov = ft_atoi(data->pars[3]);
         if (mini->check || mini->Camera->fov > 180)
         {
@@ -64,7 +64,7 @@ int    get_Light(t_minirt *mini, t_data *data)
             mini->check = -1;
             return (-1);
         }
-        set_cordinates(data->pars[1], mini->Light->cordinates, mini);
+        set_cordinates(data->pars[1], &mini->Light->cordinates, mini);
         mini->Light->brightenss = ft_atod(data->pars[2], &mini->check);
         if (mini->check || (mini->Light->brightenss < 0.0f && mini->Light->brightenss > 1.0f))
         {
