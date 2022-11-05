@@ -56,17 +56,47 @@ void	add_neg_cord(int j, t_matrix **m, t_point p)
  *  the equation is FOV = 2 tan^-1 (h/2f)
  */
 
-t_matrix	*viewport(int x, int y, int w, int h)
-{
-	t_matrix	*m = creat_matrix(4);
-	m[0][3] = x+w/2.f;
-	m[1][3] = y+h/2.f;
-	m[2][3] = depth/2.f;
+//ft_matrix	*viewport(int x, int y, int w, int h)
+//{
+//	t_matrix	*m = creat_matrix(4);
+//	m[0][3] = x+w/2.f;
+//	m[1][3] = y+h/2.f;
+//	m[2][3] = depth/2.f;
+//
+//	m[0][0] = w/2.f;
+//	m[1][1] = h/2.f;
+//	m[2][2] = depth/2.f;
+//	return m;
+//}
 
-	m[0][0] = w/2.f;
-	m[1][1] = h/2.f;
-	m[2][2] = depth/2.f;
-	return m;
+t_minirt *perspective_camera(t_point origin, t_point target, t_point up_guide, t_minirt *rt, float aspectRatio)
+{
+	rt->Camera->forward = normalizing(sub(target, origin));
+	rt->Camera->right = normalizing(cross(rt->Camera->forward, up_guide));
+	rt->Camera->up = cross(rt->Camera->right, rt->Camera->forward);
+	rt->Camera->h = tan((double ) rt->Camera->fov);
+	rt->Camera->w = rt->Camera->h * aspectRatio;
+	return rt;
+}
+
+t_ray	init_ray(t_point origin, t_point dir)
+{
+	t_ray	r;
+
+	r.start = origin;
+	r.dir = dir;
+	return r;
+}
+t_ray	perpective_camera(t_minirt *rt, t_ray p)
+{
+	// * dir = forward + ( (p.u * w) * right ) + ( (p.v * h) * up )
+	t_point tmp = mul(rt->Camera->w, p.start);
+	t_point tmp1 = cross(tmp, rt->Camera->right);
+	t_point tmp2 = mul(rt->Camera->h ,p.dir);
+	t_point tmp3 = cross(tmp2, rt->Camera->up);
+
+	t_point dir = adding(adding(tmp, tmp1), tmp3);
+	return init_ray(rt->Camera.)
 }
 
 t_matrix	*look_at(t_point eye, t_point center, t_point up)

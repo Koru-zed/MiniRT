@@ -68,10 +68,15 @@ typedef struct _Ambient_light
 
 typedef struct _Camera
 {
-    float   cordinates[3];//x,y,z coordinates of the view
-    float   orientation[3];//3d normalized orientation vector. In range [-1,1] 
-    size_t  fov;//Horizontal field of view in degrees in range [0,180]
-    size_t  repetition;
+    float	cordinates[3];//x,y,z coordinates of the view
+    float	orientation[3];//3d normalized orientation vector. In range [-1,1]
+    size_t	fov;//Horizontal field of view in degrees in range [0,180]
+    size_t	repetition;
+	t_point	forward;
+	t_point	right;
+	t_point	up;
+	double	h;
+	double	w;
 } t_Camera;
 
 typedef struct _Light
