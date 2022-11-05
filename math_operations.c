@@ -17,10 +17,11 @@ t_point	cross(const t_point u, const t_point v) {
 
 t_point mul(const float t,  t_point p)
 {
-	p.x *= t;
-	p.y *= t;
-	p.z *= t;
-	return p;
+	t_point a;
+	a.x = p.x * t;
+	a.y = p.y * t;
+	a.z = p.z * t;
+	return a;
 }
 
 t_point division(t_point p, float t)
@@ -52,7 +53,10 @@ unsigned long createRGB(double r, double g, double b)
 	int ir = (int)(255.999 * r);
 	int ig = (int)(255.999 * g);
 	int ib = (int)(255.999 * b);
-	return (ir << (16 + ig) << (8 + ib));
+	
+	int i = (ir << 16) +(ig  <<  8) + ib ;
+	// printf("co{%d}", i);
+	return (i);
 }
 
 
@@ -71,15 +75,16 @@ float length(t_point p)
  * With that, you can turn any vector
  * (or rather, any vector with a nonzero magnitude) into a unit vector
  */
-t_point	normalizing(t_point p)
+t_point	normalizing(t_point p)///unit_vector
 {
+	t_point a;
 	float	mag;
 
 	mag = length(p);
-	p.x /= mag;
-	p.y /= mag;
-	p.z /= mag;
-	return (p);
+	a.x = p.x / mag;
+	a.y = p.y / mag;
+	a.z = p.z / mag;
+	return (a);
 }
 
 t_point	unit_vector(t_point v)
