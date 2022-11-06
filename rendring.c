@@ -35,18 +35,18 @@
 //	s.radius = 100;
 //	return s;
 //}
-void	add_cord(int i, int j, t_matrix **m, t_point p)
-{
-	(*m)[j][i] = p.x;
-	(*m)[j][i] = p.y;
-	(*m)[j][i] = p.z;
-}
-void	add_neg_cord(int j, t_matrix **m, t_point p)
-{
-	(*m)[j][3] = -p.x;
-	(*m)[j][3] = -p.y;
-	(*m)[j][3] = -p.z;
-}
+//void	add_cord(int i, int j, t_matrix **m, t_point p)
+//{
+//	(*m)[j][i] = p.x;
+//	(*m)[j][i] = p.y;
+//	(*m)[j][i] = p.z;
+//}
+//void	add_neg_cord(int j, t_matrix **m, t_point p)
+//{
+//	(*m)[j][3] = -p.x;
+//	(*m)[j][3] = -p.y;
+//	(*m)[j][3] = -p.z;
+//}
 
 /*
   * we need FOV (field of view)
@@ -85,41 +85,43 @@ t_ray	init_ray(t_point origin, t_point dir)
 
 	r.start = origin;
 	r.dir = dir;
-	return r;
+ 	return r;
 }
-t_ray	perpective_camera(t_minirt *rt, t_ray p)
+
+t_ray	makeRay(t_minirt *rt, t_point p)
 {
 	// * dir = forward + ( (p.u * w) * right ) + ( (p.v * h) * up )
-	t_point tmp = mul(rt->Camera->w, p.start);
-	t_point tmp1 = cross(tmp, rt->Camera->right);
-	t_point tmp2 = mul(rt->Camera->h ,p.dir);
-	t_point tmp3 = cross(tmp2, rt->Camera->up);
+	float tmp = rt->Camera->w * p.x;
+	t_point tmp1 = mul(tmp , rt->Camera->right);
+	float tmp2 = rt->Camera->h * p.y;
+	t_point tmp3 = mul(tmp2, rt->Camera->up);
 
-	t_point dir = adding(adding(tmp, tmp1), tmp3);
-	return init_ray(rt->Camera.)
+	t_point s = adding(rt->Camera->forward, tmp1);
+	t_point dir = adding(s, tmp3);
+	return init_ray(convert_to_point(rt->Camera->cordinates), normalizing(dir));
 }
 
-t_matrix	*look_at(t_point eye, t_point center, t_point up)
-{
-	int i;
-
-	i = 0;
-	t_point	z = normalizing(sub(eye, center));
-	t_point	x = normalizing(cross(up, z));
-	t_point	y = normalizing(cross(z, x));
-	t_matrix*	Minv = creat_matrix(3);
-	t_matrix*	Tr = creat_matrix(3);
-	while (i < Minv->col)
-	{
-		add_cord(i, 0,&Minv, x);
-		add_cord(i, 1,&Minv, y);
-		add_cord(i, 2,&Minv, z);
-		add_neg_cord(i, &Tr, eye);
-		i++;
-	}
-	t_matrix	*modelView = matrix_multiplication(Minv, Tr);
-	return modelView;
-}
+//t_matrix	*look_at(t_point eye, t_point center, t_point up)
+//{
+//	int i;
+//
+//	i = 0;
+//	t_point	z = normalizing(sub(eye, center));
+//	t_point	x = normalizing(cross(up, z));
+//	t_point	y = normalizing(cross(z, x));
+//	t_matrix*	Minv = creat_matrix(3);
+//	t_matrix*	Tr = creat_matrix(3);
+//	while (i < Minv->col)
+//	{
+//		add_cord(i, 0,&Minv, x);
+//		add_cord(i, 1,&Minv, y);
+//		add_cord(i, 2,&Minv, z);
+//		add_neg_cord(i, &Tr, eye);
+//		i++;
+//	}
+//	t_matrix	*modelView = matrix_multiplication(Minv, Tr);
+//	return modelView;
+//}
 /*
  *  t, represent the length of the closest intersection.
  */
@@ -140,17 +142,22 @@ void ray_render(t_minirt *minirt)
 	int color;
 //	float t;
 //	get_camera_location();
-	printf("mag %d  && normaliz == %d\n", length_squared(ray->dir))
+//	printf("mag %f  && normaliz == %d\n", length_squared(ray->dir))
 	ray->start.z = 2.0f;
+//	perspective_camera()
 	while (y < 540)
 	{
 		ray->start.y = (float)y;
 		while (x < 720)
 		{
 			ray->start.x = (float )x;
-			hit = intersectRaySphere(ray, minirt->Sphere, &color);
+			float xhat = (2.0f*(float )x / 720 - 1.0f);
+			float yhat = (-2.0f*(float )y / 540 + 1.0f);
+			t_point p = {xhat, yhat, 0, 0};
+			t_ray ray1 = makeRay(minirt, p);
+			hit = intersectRaySphere(&ray1, minirt->Sphere, &color);
 			if (hit)
-				my_mlx_pixel_put(minirt->Mlx, x, y, color);
+				my_mlx_pixel_put(minirt->Mlx, x, y, 0x00FF00);
 			else
 			{
 //				t_point unit = unit_vector(ray->dir);

@@ -68,5 +68,6 @@ t_matrix *matrix_multiplication(t_matrix *a, t_matrix *b);
 //bool 	intersectRaySphere(t_ray *r, t_Sphere *s, float *t);
 //float		intersectRaySphere(t_ray *r, t_Sphere *s);
 bool intersectRaySphere(t_ray *r, t_Sphere *s, int *color);
+t_point	convert_to_point(float *s);
 
 #endif

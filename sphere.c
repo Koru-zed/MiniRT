@@ -1,12 +1,12 @@
 #include "Include/miniRT.h"
 
-t_point	convert_to_point(t_Sphere *s)
+t_point	convert_to_point(float *s)
 {
 	t_point pos;
 
-	pos.x = s->cordinates[0];
-	pos.y = s->cordinates[1];
-	pos.z = s->cordinates[2];
+	pos.x = s[0];
+	pos.y = s[1];
+	pos.z = s[2];
 	return pos;
 }
 //
@@ -64,7 +64,7 @@ bool intersectRaySphere(t_ray *r, t_Sphere *s, int *color) {
 	 */
 	t_point	pos;
 
-	pos = convert_to_point(s);
+	pos = convert_to_point(s->cordinates);
 	t_point dist = sub(r->start, pos);
 
 	/* 2d.(p0 - c) */
@@ -84,14 +84,15 @@ bool intersectRaySphere(t_ray *r, t_Sphere *s, int *color) {
 		return false;
 	else
 	{
-		float sqrt_discr = sqrtf(discriminant);
-		float t0 = (-B - sqrt_discr) / (2.0f * A);
+		*color = 0xFF0000;
+//		float sqrt_discr = sqrtf(discriminant);
+//		float t0 = (-B - sqrt_discr) / (2.0f * A);
 //		float t1 = (-B + sqrt_discr) / (2.0f * A);
 		// hit point
-		float x = r->start.x + r->dir.x * t0;
-		float y = r->start.y + r->dir.y * t0;
-		float z = r->start.z + r->dir.z * t0;
-		*color = createRGB(x, y, z);
+//		float x = r->start.x + r->dir.x * t0;
+//		float y = r->start.y + r->dir.y * t0;
+//		float z = r->start.z + r->dir.z * t0;
+//		*color = createRGB(x, y, z);
 //		float x1 = r->start.x + r->dir.x * t1;
 //		float y1 = r->start.y + r->dir.y * t1;
 //		float z1 = r->start.z + r->dir.z * t1;
