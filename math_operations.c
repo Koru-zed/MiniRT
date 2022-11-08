@@ -1,35 +1,38 @@
 #include "Include/miniRT.h"
 
-float	dot(const t_point u, const t_point v)
+float	v_dot(const t_point u, const t_point v)
 {
 	return (u.x * v.x
 			+ u.y * v.y
 			+ u.z * v.z);
 }
 
-t_point	cross(const t_point u, const t_point v) {
+t_point	v_cross(const t_point u, const t_point v) {
+	
 	t_point vec;
+
 	vec.x = u.y * v.z - u.z * v.y;
 	vec.y = u.z * v.x - u.x * v.z;
 	vec.z = u.x * v.y - u.y * v.x;
 	return vec;
 }
 
-t_point mul(const float t,  t_point p)
+t_point v_mul(const float t,  t_point p)
 {
 	t_point a;
+
 	a.x = p.x * t;
 	a.y = p.y * t;
 	a.z = p.z * t;
 	return a;
 }
 
-t_point division(t_point p, float t)
+t_point v_division(t_point p, float t)
 {
 	return mul(1/t, p);
 }
 
-t_point	adding(t_point p, t_point v)
+t_point	v_adding(t_point p, t_point v)
 {
 	t_point a;
 	a.x = p.x + v.x;
@@ -38,7 +41,7 @@ t_point	adding(t_point p, t_point v)
 	return a;
 }
 
-t_point sub(t_point center, t_point origin)
+t_point v_sub(t_point center, t_point origin)
 {
 	t_point p;
 

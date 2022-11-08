@@ -8,8 +8,8 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceFolder}/miniRT",
-            "args": ["test.rt"],
+            "program": "${workspaceFolder}/Refrence/42_miniRt/mandatory/minirt",
+            "args": ["Refrence/42_miniRt/mandatory/scene/sphere.rt"],
             "cwd": "${workspaceFolder}"
         }
     ]

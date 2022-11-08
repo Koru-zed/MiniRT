@@ -50,9 +50,9 @@ typedef struct	point {
 
 typedef struct	s_ray {
     
-    t_point left_corner;
-    t_point horizontal;
-    t_point vertical;
+    // t_point left_corner;
+    // t_point horizontal;
+    // t_point vertical;
     t_point origin;
     t_point direction;
     float   t;
@@ -71,9 +71,9 @@ typedef struct _Ambient_light
 
 typedef struct _Camera
 {
-    t_point   cordinates;//x,y,z coordinates of the view
-    t_point   orientation;//3d normalized orientation vector. In range [-1,1] 
-    size_t    fov;//Horizontal field of view in degrees in range [0,180]
+    t_point   cordinates;//origin
+    t_point   orientation;// direction ->
+    size_t    fov;// ->
     size_t    repetition;
     t_ray	  my_camera;
 } t_Camera;
@@ -88,7 +88,7 @@ typedef struct _Light
 
 typedef struct _Plane
 {
-    t_point         cordinates;//x,y,z coordinates of the view
+    t_point         posotion;//x,y,z coordinates of the view
     t_point         orientation;//3d normalized orientation vector. In range [-1,1] 
     size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t          repetition;
@@ -97,8 +97,7 @@ typedef struct _Plane
 
 typedef struct _Sphere
 {
-    t_point         cordinates;//x,y,z coordinates of the view
-    float			diameter;
+    t_point         center;//x,y,z coordinates of the view
     float			radius;
     size_t			color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t			repetition;
@@ -111,7 +110,7 @@ typedef struct _Cylinder
     t_point             orientation;//3d normalized orientation vector. In range [-1,1] 
     size_t              color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     float               diameter;
-    float               hright;
+    float               height;
     size_t              repetition;
     struct _Cylinder    *next;
 } t_Cylinder;

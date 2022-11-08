@@ -29,7 +29,7 @@ int    get_Sphere(t_minirt *mini, t_data *data)//**Spher
         empty = 0;
     _sphere = ft_calloc(1, sizeof(t_Sphere));
     set_cordinates(data->pars[1], &_sphere->cordinates, mini);
-    _sphere->diameter = ft_atod(data->pars[2], &mini->check);
+    _sphere->radius = ft_atod(data->pars[2], &mini->check) / 2;
     if (mini->check)
     {
         free_mini(mini);

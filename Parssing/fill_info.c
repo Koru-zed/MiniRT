@@ -58,7 +58,7 @@ size_t    check_data(t_minirt *mini, t_data *data)
             {
                 printf("-- Sphere --\n");
                 printf("************************\n");
-                printf("diameter [%f]\n", rt_last_Sphere(mini->Sphere)->diameter);
+                printf("radius [%f]\n", rt_last_Sphere(mini->Sphere)->radius);
                 printf("X [%f]\n", rt_last_Sphere(mini->Sphere)->cordinates.x);
                 printf("Y [%f]\n", rt_last_Sphere(mini->Sphere)->cordinates.y);
                 printf("Z [%f]\n", rt_last_Sphere(mini->Sphere)->cordinates.z);
