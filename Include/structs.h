@@ -51,11 +51,11 @@ typedef struct	point {
 	float	x;
 	float	y;
 	float	z;
-	float	w;
+	__attribute__((unused)) float	w;
 }	t_point;
 
 typedef struct	s_ray {
-	t_point	start;
+	t_point	origin;
 	t_point	dir;
 }	t_ray;
 

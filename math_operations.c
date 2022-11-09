@@ -68,6 +68,16 @@ float length_squared(t_point p)
 }
 
 /*
+ ! " P(t) = A + tb ", Here P is a 3D position along a line in 3D, A is the ray origin and b is the ray direction
+*/
+t_point	at(float t, t_ray *r) {
+	t_point	m;
+
+	m = mul(t, r->dir);
+	return adding(r->origin, m);
+}
+
+/*
  * With that, you can turn any vector
  * (or rather, any vector with a nonzero magnitude) into a unit vector
  */
@@ -86,5 +96,7 @@ t_point	normalizing(t_point p)
 
 t_point	unit_vector(t_point v)
 {
-	return mul(length_squared(v),v);
+	float len = length_squared(v);
+	float	t  = 1 / len;
+	return mul(t, v);
 }

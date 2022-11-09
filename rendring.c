@@ -20,7 +20,7 @@
 		* $ B = 2\vec d.(\vec p_0 - \vec c) $
 		* $ C = (\vec p_0 - \vec c).(\vec p_0 - \vec c) - r^2 $
 		*
-		  *  We need a vector representing the distance between the start of
+		  *  We need a vector representing the distance between the origin of
  				 * the ray and the position of the circle. < dist >
 */
 
@@ -69,6 +69,24 @@
 //	return m;
 //}
 
+
+t_point ray_color(t_ray *r, t_Sphere *s)
+{
+	float	t = intersect(r, s);
+	if (t > 0.0)
+	{
+		t_point p = {0, 0, -1, 0};
+		t_point n = unit_vector(sub(at(t, r), p));
+		t_point color = {n.x + 1, n.y + 1, n.z + 1, 0};
+		t_point re = mul(0.5f - t, color);
+		return re;
+	}
+	t_point n = unit_vector(r->dir);
+	t_point color1 = {1.0f, 1.0f, 1.0f, 0};
+	t_point color2 = {0.5f, 0.7f, 1.0f, 0};
+	t = 0.5f * (n.y + 1.0f);
+	return adding(mul(1.0f - t, color1), mul(t, color2));
+}
 t_minirt *perspective_camera(t_point origin, t_point target, t_point up_guide, t_minirt *rt, float aspectRatio)
 {
 	rt->Camera->forward = normalizing(sub(target, origin));
@@ -83,7 +101,7 @@ t_ray	init_ray(t_point origin, t_point dir)
 {
 	t_ray	r;
 
-	r.start = origin;
+	r.origin = origin;
 	r.dir = dir;
  	return r;
 }
@@ -129,46 +147,57 @@ void ray_render(t_minirt *minirt)
 {
 
 	t_ray	*ray;
-	bool	hit;
+	__attribute__((unused)) bool	hit;
 	int x, y;
 
 	x = 0;
 	y = 0;
 	minirt->Sphere->radius = minirt->Sphere->diameter / 2;
 	ray = ft_calloc(1, sizeof(t_ray));
-	ray->dir.x = minirt->Camera->cordinates[0];
-	ray->dir.y = minirt->Camera->cordinates[1];
-	ray->dir.z = minirt->Camera->cordinates[2];
+	ray->origin.x = 0.0f;
+	ray->origin.y = 0.0f;
+	ray->origin.z = 0.0f;
+	t_point lower_left_corner = {-2.0f, -1.0f, -1.f, 0};
+	t_point horizontal = {4.0f, 0.0f, 0.0f, 0};
+	t_point vertical = {0.0f, 2.0f, 0.0f, 0};
+//	t_point origin = {0.0f, 0.0f, 0.0f, 0};0/
 	int color;
 //	float t;
 //	get_camera_location();
 //	printf("mag %f  && normaliz == %d\n", length_squared(ray->dir))
-	ray->start.z = 2.0f;
+	ray->origin.z = 2.0f;
 //	perspective_camera()
-	while (y < 540)
+	y = 540 - 1;
+	while (y)
 	{
-		ray->start.y = (float)y;
-		while (x < 720)
+//		ray->origin.y = (float)y;
+		x = 720 - 1;
+		while (x)
 		{
-			ray->start.x = (float )x;
-			float xhat = (2.0f*(float )x / 720 - 1.0f);
-			float yhat = (-2.0f*(float )y / 540 + 1.0f);
-			t_point p = {xhat, yhat, 0, 0};
-			t_ray ray1 = makeRay(minirt, p);
-			hit = intersectRaySphere(&ray1, minirt->Sphere, &color);
-			if (hit)
-				my_mlx_pixel_put(minirt->Mlx, x, y, 0x00FF00);
-			else
-			{
+			float u = (float )x / 720;
+			float v = (float )y / 540;
+			ray->dir = adding(adding(lower_left_corner, mul(u, horizontal)), mul(v, vertical));
+//			ray->origin.x = (float )x;
+//			float xhat = (2.0f*(float )x / 720 - 1.0f);
+//			float yhat = (-2.0f*(float )y / 540 + 1.0f);
+//			t_point p = {xhat, yhat, 0, 0};
+//			t_ray ray1 = makeRay(minirt, p);
+//			hit = intersectRaySphere(&ray1, minirt->Sphere, &color);
+			t_point col = ray_color(ray, minirt->Sphere);
+			color = createRGB(col.x, col.y, col.z);
+			my_mlx_pixel_put(minirt->Mlx, x, y, color);
+//			if (hit)
+//				my_mlx_pixel_put(minirt->Mlx, x, y, 0x00FF00);
+//			else
+//			{
 //				t_point unit = unit_vector(ray->dir);
 //				float  f = 0.5f*(unit.y + 1.0f);
 //				int color = ((1.0-f)*createRGB(1.0, 1.0, 1.0) *  f * createRGB(0.5, 0.7, 1.0));
-				my_mlx_pixel_put(minirt->Mlx, x, y, 0xFF0000);
-			}
-			x++;
+//				my_mlx_pixel_put(minirt->Mlx, x, y, 0xFF0000);
+//			}
+			x--;
 		}
-		y++;
-		x = 0;
+		y--;
 	}
 }
 /*

@@ -10,21 +10,24 @@ t_point	convert_to_point(float *s)
 	return pos;
 }
 //
-//float	intersectRaySphere(t_ray *r, t_Sphere *s)
-//{
-//	t_point	oc;
-//	t_point	origin;
-//
-//	origin = convert_to_point(s);
-//	oc = sub(r->start, origin);
-//	float a = length_squared(r->dir);
-//	float half_b = dot(oc, r->dir);
-//	float c = length_squared(oc) - s->radius * s->radius;
-//	float discriminant = half_b * half_b -  a * c;
-//	if (discriminant < 0.0f)
-//		return -1.0f;
-//	return (-half_b - sqrtf(discriminant)) / a;
-//}
+float	intersect(t_ray *r, t_Sphere *s)
+{
+	t_point	oc;
+	t_point	origin;
+
+	origin = convert_to_point(s->cordinates);
+	oc = sub(r->origin, origin);
+	float a = length_squared(r->dir);
+	float half_b = dot(oc, r->dir);
+	float c = length_squared(oc) - s->radius * s->radius;
+	float discriminant = half_b * half_b -  a * c;
+	if (discriminant < 0.0f)
+	{
+		printf("true\n");
+		return -1.0f;
+	}
+	return (-half_b - sqrtf(discriminant)) / a;
+}
 
 //bool intersectRaySphere(t_ray *r, t_Sphere *s)
 //{
@@ -36,7 +39,7 @@ t_point	convert_to_point(float *s)
 //	pos = convert_to_point(s);
 //	retval = false;
 //	A = dot(r->dir, r->dir);
-//	dist = sub(r->start, pos);
+//	dist = sub(r->origin, pos);
 //	float B = 2 * dot(r->dir, dist);
 //	float C = dot(dist, dist) - (s->radius * s->radius);
 //	/* * Solving the discriminant */
@@ -58,14 +61,14 @@ bool intersectRaySphere(t_ray *r, t_Sphere *s, int *color) {
 	/* A = d.d, the vector dot product of the direction */
 	float A = dot(r->dir, r->dir);
 
-	/* We need a vector representing the distance between the start of
+	/* We need a vector representing the distance between the origin of
 	 * the ray and the position of the circle.
 	 * This is the term (p0 - c)
 	 */
 	t_point	pos;
 
 	pos = convert_to_point(s->cordinates);
-	t_point dist = sub(r->start, pos);
+	t_point dist = sub(r->origin, pos);
 
 	/* 2d.(p0 - c) */
 	float B = 2 * dot(r->dir, dist);
