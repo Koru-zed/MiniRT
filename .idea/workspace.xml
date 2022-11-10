@@ -22,21 +22,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a4a4f3a-8315-4e34-97f8-9f118a2a5c32" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/InOneWeekend" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/miniRT.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/plane.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.ignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Include/miniRT.h" beforeDir="false" afterPath="$PROJECT_DIR$/Include/miniRT.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Include/structs.h" beforeDir="false" afterPath="$PROJECT_DIR$/Include/structs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parssing/fill_info.c" beforeDir="false" afterPath="$PROJECT_DIR$/Parssing/fill_info.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/math_operations.c" beforeDir="false" afterPath="$PROJECT_DIR$/math_operations.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/math_operations.o" beforeDir="false" afterPath="$PROJECT_DIR$/math_operations.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/miniRT" beforeDir="false" afterPath="$PROJECT_DIR$/miniRT" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rendring.c" beforeDir="false" afterPath="$PROJECT_DIR$/rendring.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rendring.o" beforeDir="false" afterPath="$PROJECT_DIR$/rendring.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sphere.c" beforeDir="false" afterPath="$PROJECT_DIR$/sphere.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sphere.o" beforeDir="false" afterPath="$PROJECT_DIR$/sphere.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.c" beforeDir="false" afterPath="$PROJECT_DIR$/test.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.rt" beforeDir="false" afterPath="$PROJECT_DIR$/test.rt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,6 +73,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="OCResolveContextSettings">
+    <option name="configuration" value="$PROJECT_DIR$/sphere.c" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -235,7 +232,12 @@
       <workItem from="1667922365966" duration="4000" />
       <workItem from="1667925110240" duration="1575000" />
       <workItem from="1667983511094" duration="714000" />
-      <workItem from="1667986839780" duration="254000" />
+      <workItem from="1667986839780" duration="891000" />
+      <workItem from="1667996770320" duration="6000" />
+      <workItem from="1668002502583" duration="237000" />
+      <workItem from="1668004457805" duration="2701000" />
+      <workItem from="1668071316072" duration="157000" />
+      <workItem from="1668071547308" duration="5557000" />
     </task>
     <servers />
   </component>

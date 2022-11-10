@@ -7,9 +7,9 @@
 # include <math.h>
 # include <mlx.h>
 # include "../get_next_line/get_next_line.h"
+#include <stdbool.h>
 # include "structs.h"
 # include <sys/time.h>
-#include <stdbool.h>
 
 # define ambient "A"
 # define camera "C"

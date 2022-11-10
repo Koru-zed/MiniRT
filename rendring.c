@@ -87,6 +87,7 @@ t_point ray_color(t_ray *r, t_Sphere *s)
 	t = 0.5f * (n.y + 1.0f);
 	return adding(mul(1.0f - t, color1), mul(t, color2));
 }
+
 t_minirt *perspective_camera(t_point origin, t_point target, t_point up_guide, t_minirt *rt, float aspectRatio)
 {
 	rt->Camera->forward = normalizing(sub(target, origin));
@@ -140,9 +141,47 @@ t_ray	makeRay(t_minirt *rt, t_point p)
 //	t_matrix	*modelView = matrix_multiplication(Minv, Tr);
 //	return modelView;
 //}
+
+bool	intersectPlane(t_minirt *rt, t_point phat, t_ray ray, float *t)
+{
+	t_point normal = convert_to_point(rt->Plane->orientation); // tmp for now
+	float p = dot(normal, ray.dir);
+	t_point resultOfSub = sub(phat, ray.origin);
+	*t = dot(resultOfSub, normal) / p;
+	if (*t > EPSILON)
+	{
+		rt->Plane->normal = normal;
+		rt->Plane->local_hit_point = adding(ray.origin, mul(*t, ray.dir));
+		return true;
+	}
+	return false;
+}
+
+void	ray_render(t_minirt *rt)
+{
+	t_ray r;
+
+	r.origin.x = 0;
+	r.origin.y = 0;
+	r.origin.z = -1;
+	float t;
+	t_point p = convert_to_point(rt->Plane->cordinates);
+	for (int i = 0; i < 540; ++i) {
+		r.origin.y = i;
+		for (int j = 0; j < 720; ++j) {
+			r.origin.x = 0;
+			if (intersectPlane(rt, p, r, &t))
+			{
+				my_mlx_pixel_put(rt->Mlx, j, i, 0xFFFFFF);
+			}
+			else
+				my_mlx_pixel_put(rt->Mlx, j, i, 0x00FF00);
+		}
+	}
+}
 /*
  *  t, represent the length of the closest intersection.
- */
+
 void ray_render(t_minirt *minirt)
 {
 
@@ -199,7 +238,7 @@ void ray_render(t_minirt *minirt)
 		}
 		y--;
 	}
-}
+}*/
 /*
 
 

@@ -94,6 +94,9 @@ typedef struct _Plane
     float           orientation[3];//3d normalized orientation vector. In range [-1,1] 
     size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t          repetition;
+	bool			hit;
+	t_point			normal; // normal at hit point
+	t_point 		local_hit_point; // where it hit the point
     struct _Plane   *next;
 } t_Plane;
 

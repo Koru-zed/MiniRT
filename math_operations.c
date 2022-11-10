@@ -68,7 +68,8 @@ float length_squared(t_point p)
 }
 
 /*
- ! " P(t) = A + tb ", Here P is a 3D position along a line in 3D, A is the ray origin and b is the ray direction
+ ! " P(t) = A + tb ", Here P is a 3D position along a line in 3D,
+ ! A is the ray origin and b is the ray direction
 */
 t_point	at(float t, t_ray *r) {
 	t_point	m;
