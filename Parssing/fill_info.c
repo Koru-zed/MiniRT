@@ -24,13 +24,13 @@ size_t    check_data(t_minirt *mini, t_data *data)
                 printf("************************\n");
                 printf("repetition [%zu]\n", mini->Camera->repetition);
                 printf("FOV [%zu]\n", mini->Camera->fov);
-                printf("X [%f]\n", mini->Camera->cordinates.x);
-                printf("Y [%f]\n", mini->Camera->cordinates.y);
-                printf("Z [%f]\n", mini->Camera->cordinates.z);
+                printf("X [%f]\n", mini->Camera->ray.origin.x);
+                printf("Y [%f]\n", mini->Camera->ray.origin.y);
+                printf("Z [%f]\n", mini->Camera->ray.origin.z);
                     printf("   -----  \n");
-                printf("X.o_v [%f]\n", mini->Camera->orientation.x);
-                printf("Y.o_v [%f]\n", mini->Camera->orientation.y);
-                printf("Z.o_v [%f]\n", mini->Camera->orientation.z);
+                printf("X.o_v [%f]\n", mini->Camera->ray.direction.x);
+                printf("Y.o_v [%f]\n", mini->Camera->ray.direction.y);
+                printf("Z.o_v [%f]\n", mini->Camera->ray.direction.z);
                 printf("************************\n");
             }
         }
@@ -59,9 +59,9 @@ size_t    check_data(t_minirt *mini, t_data *data)
                 printf("-- Sphere --\n");
                 printf("************************\n");
                 printf("radius [%f]\n", rt_last_Sphere(mini->Sphere)->radius);
-                printf("X [%f]\n", rt_last_Sphere(mini->Sphere)->cordinates.x);
-                printf("Y [%f]\n", rt_last_Sphere(mini->Sphere)->cordinates.y);
-                printf("Z [%f]\n", rt_last_Sphere(mini->Sphere)->cordinates.z);
+                printf("X [%f]\n", rt_last_Sphere(mini->Sphere)->center.x);
+                printf("Y [%f]\n", rt_last_Sphere(mini->Sphere)->center.y);
+                printf("Z [%f]\n", rt_last_Sphere(mini->Sphere)->center.z);
                     printf("   -----  \n");
                 printf("R [%zu]\n", rt_last_Sphere(mini->Sphere)->color[0]);
                 printf("G [%zu]\n", rt_last_Sphere(mini->Sphere)->color[1]);
@@ -75,13 +75,13 @@ size_t    check_data(t_minirt *mini, t_data *data)
             {
                 printf ("-- Plan --\n");
                 printf("************************\n");
-                printf("X [%f]\n", rt_last_Plane(mini->Plane)->cordinates.x);
-                printf("Y [%f]\n", rt_last_Plane(mini->Plane)->cordinates.y);
-                printf("Z [%f]\n", rt_last_Plane(mini->Plane)->cordinates.z);
+                printf("X [%f]\n", rt_last_Plane(mini->Plane)->plane_point.x);
+                printf("Y [%f]\n", rt_last_Plane(mini->Plane)->plane_point.y);
+                printf("Z [%f]\n", rt_last_Plane(mini->Plane)->plane_point.z);
                     printf("   -----  \n");
-                printf("X.o_v [%f]\n", rt_last_Plane(mini->Plane)->orientation.x);
-                printf("Y.o_v [%f]\n", rt_last_Plane(mini->Plane)->orientation.y);
-                printf("Z.o_v [%f]\n", rt_last_Plane(mini->Plane)->orientation.z);
+                printf("X.o_v [%f]\n", rt_last_Plane(mini->Plane)->normal.x);
+                printf("Y.o_v [%f]\n", rt_last_Plane(mini->Plane)->normal.y);
+                printf("Z.o_v [%f]\n", rt_last_Plane(mini->Plane)->normal.z);
                     printf("   -----  \n");
                 printf("R [%zu]\n", rt_last_Plane(mini->Plane)->color[0]);
                 printf("G [%zu]\n", rt_last_Plane(mini->Plane)->color[1]);
@@ -97,7 +97,7 @@ size_t    check_data(t_minirt *mini, t_data *data)
                 printf("-- Cylinder --\n");
                 printf("************************\n");
                 printf("diameter [%f]\n", rt_last_Cylinder(mini->Cylinder)->diameter);
-                printf("hright [%f]\n", rt_last_Cylinder(mini->Cylinder)->hright);
+                printf("height [%f]\n", rt_last_Cylinder(mini->Cylinder)->height);
                 printf("X [%f]\n", rt_last_Cylinder(mini->Cylinder)->cordinates.x);
                 printf("Y [%f]\n", rt_last_Cylinder(mini->Cylinder)->cordinates.y);
                 printf("Z [%f]\n", rt_last_Cylinder(mini->Cylinder)->cordinates.z);

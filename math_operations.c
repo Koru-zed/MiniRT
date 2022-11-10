@@ -29,7 +29,7 @@ t_point v_mul(const float t,  t_point p)
 
 t_point v_division(t_point p, float t)
 {
-	return mul(1/t, p);
+	return v_mul(1/t, p);
 }
 
 t_point	v_adding(t_point p, t_point v)
@@ -92,5 +92,25 @@ t_point	normalizing(t_point p)///unit_vector
 
 t_point	unit_vector(t_point v)
 {
-	return mul(length_squared(v),v);
+	return v_mul(length_squared(v),v);
 }
+
+t_matrix	cross_matrix(t_matrix M1, t_matrix M2)
+{
+	int			i;
+	int         j;
+	t_matrix	M12;
+
+	i = -1;
+	while (++i < 4)
+	{
+		j = -1;
+        while (++j < 4)
+			M12.M[i][j] = M1.M[i][0] * M2.M[0][j] + \
+			M1.M[i][1] * M2.M[1][j] + \
+			M1.M[i][2] * M2.M[2][j] + \
+			M1.M[i][3] * M2.M[3][j];
+	}
+	return (M12);
+}
+

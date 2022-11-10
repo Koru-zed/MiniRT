@@ -37,8 +37,8 @@ int    get_Camera(t_minirt *mini, t_data *data)
             mini->check = -1;
             return (-1);
         }
-        set_cordinates(data->pars[1], &mini->Camera->cordinates, mini);
-        set_orientation(data->pars[2], &mini->Camera->orientation, mini);
+        set_cordinates(data->pars[1], &mini->Camera->ray.origin, mini);
+        set_orientation(data->pars[2], &mini->Camera->ray.direction, mini);
         mini->Camera->fov = ft_atoi(data->pars[3]);
         if (mini->check || mini->Camera->fov > 180)
         {

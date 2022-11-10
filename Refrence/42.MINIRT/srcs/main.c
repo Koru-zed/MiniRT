@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbadia <jbadia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:29:32 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/24 15:07:50 by jbadia           ###   ########.fr       */
+/*   Updated: 2022/11/10 12:51:14 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,3 +90,4 @@ int	main(int argc, char **argv)
 	make_scene(scene);
 	return (0);
 }
+cd

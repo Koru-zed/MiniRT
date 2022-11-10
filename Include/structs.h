@@ -48,19 +48,20 @@ typedef struct	point {
 	float	z;
 }	t_point;
 
-typedef struct	s_ray {
-    
     // t_point left_corner;
     // t_point horizontal;
-    // t_point vertical;
+    // t_point vertical; 
+typedef struct	s_ray {
+    
     t_point origin;
     t_point direction;
     float   t;
 }	t_ray;
 
-// typedef struct eye_camera
-// {
-// } t_eye_camera;
+typedef struct matrix
+{
+	float	M[4][4];
+}				t_matrix;
 
 typedef struct _Ambient_light
 {
@@ -71,11 +72,9 @@ typedef struct _Ambient_light
 
 typedef struct _Camera
 {
-    t_point   cordinates;//origin
-    t_point   orientation;// direction ->
     size_t    fov;// ->
     size_t    repetition;
-    t_ray	  my_camera;
+    t_ray	  ray;
 } t_Camera;
 
 typedef struct _Light
@@ -88,8 +87,9 @@ typedef struct _Light
 
 typedef struct _Plane
 {
-    t_point         posotion;//x,y,z coordinates of the view
-    t_point         orientation;//3d normalized orientation vector. In range [-1,1] 
+    t_point         plane_point;//x,y,z coordinates of the view
+    t_point         normal;//3d normalized orientation vector. In range [-1,1] 
+    t_ray	        ray;
     size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t          repetition;
     struct _Plane   *next;

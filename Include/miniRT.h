@@ -52,12 +52,12 @@ void 		ray_render(t_minirt *minirt);
 t_point	to_point(float x, float y, float z);
 
 /* ***		Math Operations		** */
-float		dot(const t_point u, const t_point v);
-t_point		cross(const t_point u, const t_point v);
-t_point		mul(const float t,  t_point p);
-t_point		division(t_point p, float t);
-t_point		adding(t_point p, t_point v);
-t_point		sub(t_point center, t_point origin);
+float		v_dot(const t_point u, const t_point v);
+t_point		v_cross(const t_point u, const t_point v);
+t_point		v_mul(const float t,  t_point p);
+t_point		v_division(t_point p, float t);
+t_point		v_adding(t_point p, t_point v);
+t_point		v_sub(t_point center, t_point origin);
 unsigned long	createRGB(double r, double g, double b);
 float		 	length_squared(t_point p);
 float			length(t_point p);
