@@ -42,7 +42,7 @@
 //	return retval;
 //}|
 
-t_point	to_point(float x, float y, float z)
+t_point new_point(float x, float y, float z)
 {
 	t_point pos;
 
@@ -59,7 +59,7 @@ t_point	to_point(float x, float y, float z)
 //	t_point	dist;
 //	t_point	pos;
 //
-//	pos = convert_to_point(s);
+//	pos = convert_new_point(s);
 //	retval = false;
 //	A = dot(r->dir, r->dir);
 //	dist = sub(r->start, pos);

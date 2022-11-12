@@ -54,7 +54,7 @@ int    get_Cylinder(t_minirt *mini, t_data *data)
     _cylinder = ft_calloc(1, sizeof(t_Cylinder));
     set_cordinates(data->pars[1], &_cylinder->cordinates, mini);
     set_orientation(data->pars[2], &_cylinder->orientation, mini);
-    _cylinder->diameter = ft_atod(data->pars[3], &mini->check);
+    _cylinder->redius = ft_atod(data->pars[3], &mini->check) / 2;
     _cylinder->height = ft_atod(data->pars[4], &mini->check);
     if (mini->check)
     {

@@ -43,11 +43,11 @@
 
 // void my_camera(t_Camera *_cam)
 // {
-// 	_cam->my_camera.left_corner = to_point(-2.0, 1.0, -1.0);
-// 	_cam->my_camera.horizontal = to_point(4.0, 0.0, 0.0);
-// 	_cam->my_camera.vertical = to_point(0.0, 2.0, 0.0);
-// 	_cam->my_camera.origin = to_point(0.0, 0.0, 0.0);
-// 	_cam->my_camera.direction = to_point(0.0, 0.0, 0.0);
+// 	_cam->my_camera.left_corner = new_point(-2.0, 1.0, -1.0);
+// 	_cam->my_camera.horizontal = new_point(4.0, 0.0, 0.0);
+// 	_cam->my_camera.vertical = new_point(0.0, 2.0, 0.0);
+// 	_cam->my_camera.origin = new_point(0.0, 0.0, 0.0);
+// 	_cam->my_camera.direction = new_point(0.0, 0.0, 0.0);
 // }
 
 // void my_ray(t_ray *ray, float u, float v)

@@ -9,12 +9,68 @@ long long	get_time(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
+t_point	ray_pixel_to_world(t_minirt *mini, int x, int y)
+{
+	float	aspect_ratio;
+	float	half_hight;
+	float   half_width;
+	float	p_x;
+	float	p_y;
+
+	half_hight = tanf((mini->Camera->fov * M_PI / 180) / 2);
+	aspect_ratio = mini->Mlx->width / mini->Mlx->height;
+	half_width = half_hight * aspect_ratio;
+	p_x = (2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
+	p_y = (1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
+	return (new_point(-p_x, p_y, 1));
+}
+
+t_ray	ray_generator(t_minirt *mini, int x, int y)
+{
+	t_point	shooting_direction;
+	t_ray	ray;
+
+	shooting_direction = ray_pixel_to_world(mini->Camera, x, y);
+	shooting_direction = mul_point_matrix(shooting_direction, mini->Camera->matrix);
+	shooting_direction = v_sub(shooting_direction, mini->Camera->ray.origin);
+	shooting_direction = normalizing(shooting_direction);
+	ray.origin = mini->Camera->ray.origin;
+	ray.direction = shooting_direction;
+	return (ray);
+}
+
+// int	get_hit_color(t_minirt *mini, t_ray ray)
+// {
+// 	size_t	i;
+// 	double	distance;
+// 	double	closer;
+// 	int		color;	
+// 	t_shape	*obj;
+
+// 	closer = M_INFINITY;
+// 	color = 0x000000;
+// 	i = 0;
+// 	while (i < scene->objs->total)
+// 	{
+// 		obj = (t_shape *)scene->objs->elements[i];
+// 		distance = obj->hit_obj(obj->shape, ray.origin, ray.direction);
+// 		if (distance > 0 && distance < closer)
+// 		{
+// 			closer = distance;
+// 			color = get_color(obj, ray, scene, distance);
+// 		}
+// 		i++;
+// 	}
+// 	return (color);
+// }
+
 int main(int ac, char **av)
 {
 	// size_t t;
-	// int y;
+	int x, y;
     t_minirt *miniRT;
-
+	t_ray	ray;
+	int		color;
     // t_data *Data;
 
 	(void)ac;
@@ -30,7 +86,21 @@ int main(int ac, char **av)
 		miniRT->Camera = ft_calloc(1, sizeof(t_Camera));
 		miniRT->Light = ft_calloc(1, sizeof(t_Light));
 		fill_Info(miniRT);
-
+		fill_matrix(miniRT->Camera);
+		miniRT->Mlx->width = WIDTH;
+		miniRT->Mlx->height = HEIGHT;
+		while (y < Mlx->height)
+		{
+			x = 0;
+			while (x < Mlx->width)
+			{
+				ray = ray_generator(scene, x, y);
+				color = get_hit_color(scene, ray);
+				my_mlx_pixel_put(mlx, x, y, color);
+				x++;
+			}
+			y++;
+		}
 		// miniRT->Mlx = ft_calloc(1, sizeof(t_mlx));
 		// miniRT->Mlx->mlx = mlx_init();
 		// miniRT->Mlx->win = mlx_new_window(miniRT->Mlx->mlx, 720, 540, "miniRT");

@@ -51,7 +51,7 @@ t_point v_sub(t_point center, t_point origin)
 	return (p);
 }
 
-unsigned long createRGB(double r, double g, double b)
+int createRGB(double r, double g, double b)
 {
 	int ir = (int)(255.999 * r);
 	int ig = (int)(255.999 * g);
@@ -114,3 +114,12 @@ t_matrix	cross_matrix(t_matrix M1, t_matrix M2)
 	return (M12);
 }
 
+t_point	mul_point_matrix(t_point p, t_matrix m)
+{
+	t_point	Point;
+
+	Point.x = p.x * m.d[0][0] + p.y * m.d[1][0] + p.z * m.d[2][0] + m.d[3][0];
+	Point.y = p.x * m.d[0][1] + p.y * m.d[1][1] + p.z * m.d[2][1] + m.d[3][1];
+	Point.z = p.x * m.d[0][2] + p.y * m.d[1][2] + p.z * m.d[2][2] + m.d[3][2];
+	return (Point);
+}

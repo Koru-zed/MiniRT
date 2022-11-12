@@ -17,6 +17,10 @@
 # define plane "pl"
 # define sphre "sp"
 # define cylinder "cy"
+# define HEIGHT 540
+# define WIDTH 720
+# define EPSILON 1.0e-4f
+# define _INFINITE 1.0e30f
 
 
 
@@ -49,7 +53,7 @@ void        fill_Info(t_minirt *mini);
 void		draw_line(t_mlx *info, int color);
 void 		ray_render(t_minirt *minirt);
 
-t_point	to_point(float x, float y, float z);
+t_point	new_point(float x, float y, float z);
 
 /* ***		Math Operations		** */
 float		v_dot(const t_point u, const t_point v);
@@ -66,6 +70,12 @@ t_point	normalizing(t_point p);
 /* ***		End Math Operations		** */
 bool 	intersectRaySphere(t_ray *r, t_Sphere *s, float *t);
 //bool	intersectRaySphere(t_ray *r, t_sphere *s, float *t);
+
+
+
+void        fill_matrix(t_Camera *_camera);
+t_matrix    new_matrix(t_point origin, t_point forward, t_point right, t_point up);
+t_point	mul_point_matrix(t_point p, t_matrix m);
 
 
 #endif

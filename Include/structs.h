@@ -32,6 +32,19 @@ typedef struct	s_sphere {
 */
 
 /********************/
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*adr;
+	int		width;
+	int		height;
+    int		bits_per_pixel;
+    int		line_length;
+	int		endian;
+}			t_mlx;
+
 typedef struct _data {
 
     char    *info;//change
@@ -75,6 +88,7 @@ typedef struct _Camera
     size_t    fov;// ->
     size_t    repetition;
     t_ray	  ray;
+    t_matrix  matrix;
 } t_Camera;
 
 typedef struct _Light
@@ -109,29 +123,11 @@ typedef struct _Cylinder
     t_point             cordinates;//x,y,z coordinates of the view
     t_point             orientation;//3d normalized orientation vector. In range [-1,1] 
     size_t              color[3];//R,G,B colors in range [0-255]: 255, 255, 255
-    float               diameter;
+    float               redius;
     float               height;
     size_t              repetition;
     struct _Cylinder    *next;
 } t_Cylinder;
-
-typedef struct _mlx {
-
-void    *img;
-void    *mlx;
-void    *win;
-char	*addr;
-int		bits_per_pixel;
-int		line_length;
-int		endian;
-int     x[2];
-int     y[2];
-int     z[2];
-int     d[2];
-int     s[2];
-
-} t_mlx;
-
 
 typedef struct _minirt {
 

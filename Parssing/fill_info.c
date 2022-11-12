@@ -96,7 +96,7 @@ size_t    check_data(t_minirt *mini, t_data *data)
            {
                 printf("-- Cylinder --\n");
                 printf("************************\n");
-                printf("diameter [%f]\n", rt_last_Cylinder(mini->Cylinder)->diameter);
+                printf("diameter [%f]\n", rt_last_Cylinder(mini->Cylinder)->redius);
                 printf("height [%f]\n", rt_last_Cylinder(mini->Cylinder)->height);
                 printf("X [%f]\n", rt_last_Cylinder(mini->Cylinder)->cordinates.x);
                 printf("Y [%f]\n", rt_last_Cylinder(mini->Cylinder)->cordinates.y);
