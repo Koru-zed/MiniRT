@@ -10,7 +10,7 @@ t_point	convert_to_point(float *s)
 	return pos;
 }
 //
-float	intersect(t_ray *r, t_Sphere *s)
+/*float	intersect(t_ray *r, t_Sphere *s)
 {
 	t_point	oc;
 	t_point	origin;
@@ -27,7 +27,7 @@ float	intersect(t_ray *r, t_Sphere *s)
 		return -1.0f;
 	}
 	return (-half_b - sqrtf(discriminant)) / a;
-}
+}*/
 t_point new_point(float x, float y, float z)
 {
 	t_point pos;
@@ -97,8 +97,6 @@ bool intersectRaySphere(t_ray *r, t_Sphere *s, float *t){
 		return false;
 	else
 	{
-<<<<<<< HEAD
-		*color = 0xFF0000;
 //		float sqrt_discr = sqrtf(discriminant);
 //		float t0 = (-B - sqrt_discr) / (2.0f * A);
 //		float t1 = (-B + sqrt_discr) / (2.0f * A);
@@ -110,12 +108,9 @@ bool intersectRaySphere(t_ray *r, t_Sphere *s, float *t){
 //		float x1 = r->start.x + r->dir.x * t1;
 //		float y1 = r->start.y + r->dir.y * t1;
 //		float z1 = r->start.z + r->dir.z * t1;
-=======
-		printf("hi\n");
+
 		float sqrt_discr = sqrtf(discriminant);
 		*t = (-B - sqrt_discr) / (2.0f * A);
-//		float t0 = (-B + sqrt_discr) / (2.0f * A);
->>>>>>> 6cd3fbdb64b2a75113e16f421a721ae02af7e8e1
 		return true;
 	}
 }

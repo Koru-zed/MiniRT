@@ -79,6 +79,6 @@ t_point	mul_point_matrix(t_point p, t_matrix m);
 t_point	convert_to_point(float *s);
 float	intersect(t_ray *r, t_Sphere *s);
 t_point	at(float t, t_ray *r);
-bool intersectRaySphere(t_ray *r, t_Sphere *s, int *color);
+//bool intersectRaySphere(t_ray *r, t_Sphere *s, int *color);
 
 #endif

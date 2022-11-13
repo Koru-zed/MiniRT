@@ -46,8 +46,6 @@ int main(int ac, char **av)
 {
 	// size_t t;
 	int x, y;
-	t_point	*matrix;
-	size_t o;
 	// int y;
     t_minirt *miniRT;
 	t_ray	ray;

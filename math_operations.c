@@ -82,8 +82,8 @@ float length_squared(t_point p)
 t_point	at(float t, t_ray *r) {
 	t_point	m;
 
-	m = mul(t, r->dir);
-	return adding(r->origin, m);
+	m = v_mul(t, r->direction);
+	return v_adding(r->origin, m);
 }
 
 /*

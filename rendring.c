@@ -71,23 +71,23 @@
 //}
 
 
-t_point ray_color(t_ray *r, t_Sphere *s)
-{
-	float	t = intersect(r, s);
-	if (t > 0.0)
-	{
-		t_point p = {0, 0, -1, 0};
-		t_point n = unit_vector(sub(at(t, r), p));
-		t_point color = {n.x + 1, n.y + 1, n.z + 1, 0};
-		t_point re = mul(0.5f - t, color);
-		return re;
-	}
-	t_point n = unit_vector(r->dir);
-	t_point color1 = {1.0f, 1.0f, 1.0f, 0};
-	t_point color2 = {0.5f, 0.7f, 1.0f, 0};
-	t = 0.5f * (n.y + 1.0f);
-	return adding(mul(1.0f - t, color1), mul(t, color2));
-}
+//t_point ray_color(t_ray *r, t_Sphere *s)
+//{
+//	float	t = intersect(r, s);
+//	if (t > 0.0)
+//	{
+//		t_point p = {0, 0, -1, 0};
+//		t_point n = unit_vector(sub(at(t, r), p));
+//		t_point color = {n.x + 1, n.y + 1, n.z + 1, 0};
+//		t_point re = mul(0.5f - t, color);
+//		return re;
+//	}
+//	t_point n = unit_vector(r->dir);
+//	t_point color1 = {1.0f, 1.0f, 1.0f, 0};
+//	t_point color2 = {0.5f, 0.7f, 1.0f, 0};
+//	t = 0.5f * (n.y + 1.0f);
+//	return adding(mul(1.0f - t, color1), mul(t, color2));
+//}
 
 //t_matrix	*look_at(t_point eye, t_point center, t_point up)
 //{
@@ -110,47 +110,27 @@ t_point ray_color(t_ray *r, t_Sphere *s)
 //	t_matrix	*modelView = matrix_multiplication(Minv, Tr);
 //	return modelView;
 //}
+//
+//bool	intersectPlane(t_minirt *rt, t_point phat, t_ray ray, float *t)
+//{
+//	t_point normal = convert_to_point(rt->Plane->orientation); // tmp for now
+//	float p = dot(normal, ray.dir);
+//	if (fabs(p) > EPSILON)
+//		return false;
+//	t_point resultOfSub = sub(phat, ray.origin);
+//	*t = dot(resultOfSub, normal) / p;
+//	if (*t > EPSILON)
+//	{
+//		rt->Plane->normal = normal;
+//		rt->Plane->local_hit_point = adding(ray.origin, mul(*t, ray.dir));
+//		return true;
+//	}
+//	return false;
+//}
 
-bool	intersectPlane(t_minirt *rt, t_point phat, t_ray ray, float *t)
-{
-	t_point normal = convert_to_point(rt->Plane->orientation); // tmp for now
-	float p = dot(normal, ray.dir);
-	if (fabs(p) > EPSILON)
-		return false;
-	t_point resultOfSub = sub(phat, ray.origin);
-	*t = dot(resultOfSub, normal) / p;
-	if (*t > EPSILON)
-	{
-		rt->Plane->normal = normal;
-		rt->Plane->local_hit_point = adding(ray.origin, mul(*t, ray.dir));
-		return true;
-	}
-	return false;
-}
-
-void	ray_render(t_minirt *rt)
-{
-	t_ray r;
-
-	r.origin.x = 0;
-	r.origin.y = 0;
-	r.origin.z = -1;
-	r.dir.z = -2;
-	float t;
-	t_point p = convert_to_point(rt->Plane->cordinates);
-	for (int i = 0; i < 540; ++i) {
-		r.dir.y = i;
-		for (int j = 0; j < 720; ++j) {
-			r.dir.x = 0;
-			if (intersectPlane(rt, p, r, &t))
-			{
-				my_mlx_pixel_put(rt->Mlx, j, i, 0xFFFFFF);
-			}
-			else
-				my_mlx_pixel_put(rt->Mlx, j, i, 0x00FF00);
-		}
-	}
-}
+//void	ray_render(t_minirt *rt)
+//{
+//}
 /*
  *  t, represent the length of the closest intersection.
 
