@@ -28,6 +28,7 @@ t_point	convert_to_point(float *s)
 	}
 	return (-half_b - sqrtf(discriminant)) / a;
 }*/
+
 t_point new_point(float x, float y, float z)
 {
 	t_point pos;
