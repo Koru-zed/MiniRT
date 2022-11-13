@@ -30,7 +30,7 @@ t_ray	ray_generator(t_minirt *mini, int x, int y)
 	t_point	shooting_direction;
 	t_ray	ray;
 
-	shooting_direction = ray_pixel_to_world(mini->Camera, x, y);
+	shooting_direction = ray_pixel_to_world(mini, x, y);
 	shooting_direction = mul_point_matrix(shooting_direction, mini->Camera->matrix);
 	shooting_direction = v_sub(shooting_direction, mini->Camera->ray.origin);
 	shooting_direction = normalizing(shooting_direction);
@@ -48,7 +48,7 @@ int main(int ac, char **av)
 	int x, y;
     t_minirt *miniRT;
 	t_ray	ray;
-	int		color;
+//	int		color;
     // t_data *Data;
 
 	(void)ac;
@@ -63,34 +63,43 @@ int main(int ac, char **av)
 		miniRT->Ambient = ft_calloc(1, sizeof(t_Ambient));
 		miniRT->Camera = ft_calloc(1, sizeof(t_Camera));
 		miniRT->Light = ft_calloc(1, sizeof(t_Light));
+		miniRT->Mlx = ft_calloc(1, sizeof(t_mlx));
 		fill_Info(miniRT);
 		fill_matrix(miniRT->Camera);
+
 		miniRT->Mlx->width = WIDTH;
 		miniRT->Mlx->height = HEIGHT;
-		while (y < Mlx->height)
+		 miniRT->Mlx->mlx = mlx_init();
+		 miniRT->Mlx->win = mlx_new_window(miniRT->Mlx->mlx, 720, 540, "miniRT");
+		 miniRT->Mlx->img = mlx_new_image(miniRT->Mlx->mlx, 720, 540);
+		 miniRT->Mlx->addr = mlx_get_data_addr(
+		 		miniRT->Mlx->img, &miniRT->Mlx->bits_per_pixel, &miniRT->Mlx->line_length, &miniRT->Mlx->endian
+		 									 );
+		y = 0;
+
+		float t;
+		while (y < HEIGHT)
 		{
 			x = 0;
-			while (x < Mlx->width)
+			while (x < WIDTH)
 			{
 				ray = ray_generator(miniRT, x, y);
-				// my_mlx_pixel_put(miniRT->Mlx, x, y, color);
+//				printf("ray->origin.x {%f}\n", ray.origin.x);
+//				printf("ray->origin.y {%f}\n", ray.origin.y);
+//				printf("ray->origin.z {%f}\n", ray.origin.z);
+//				printf("ray->direction.x {%f}\n", ray.direction.x);
+//				printf("ray->direction.y {%f}\n", ray.direction.y);
+//				printf("ray->direction.z {%f}\n", ray.direction.z);
+
+
+				if (intersectRaySphere(&ray, miniRT->Sphere, &t))
+				 	my_mlx_pixel_put(miniRT->Mlx, x, y, 0xFF6633);
 				x++;
 			}
 			y++;
 		}
-		// miniRT->Mlx = ft_calloc(1, sizeof(t_mlx));
-		// miniRT->Mlx->mlx = mlx_init();
-		// miniRT->Mlx->win = mlx_new_window(miniRT->Mlx->mlx, 720, 540, "miniRT");
-		// miniRT->Mlx->img = mlx_new_image(miniRT->Mlx->mlx, 720, 540);
-		// miniRT->Mlx->addr = mlx_get_data_addr(
-		// 		miniRT->Mlx->img, &miniRT->Mlx->bits_per_pixel, &miniRT->Mlx->line_length, &miniRT->Mlx->endian
-		// 									 );
-		// t = get_time();
-		// ray_render(miniRT);
-		// printf("-----------------------\n");
-		// printf("Time measured: %lld ms.\n", get_time() - t);
-		// mlx_put_image_to_window(miniRT->Mlx->mlx, miniRT->Mlx->win, miniRT->Mlx->img, 0, 0);
-		// mlx_loop(miniRT->Mlx->mlx);
+		 mlx_put_image_to_window(miniRT->Mlx->mlx, miniRT->Mlx->win, miniRT->Mlx->img, 0, 0);
+		 mlx_loop(miniRT->Mlx->mlx);
 	}
     free_mini(miniRT);
 }

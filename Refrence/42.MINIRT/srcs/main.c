@@ -90,4 +90,3 @@ int	main(int argc, char **argv)
 	make_scene(scene);
 	return (0);
 }
-cd

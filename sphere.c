@@ -107,6 +107,7 @@ bool intersectRaySphere(t_ray *r, t_Sphere *s, float *t){
 		return false;
 	else
 	{
+		printf("hi\n");
 		float sqrt_discr = sqrtf(discriminant);
 		*t = (-B - sqrt_discr) / (2.0f * A);
 //		float t0 = (-B + sqrt_discr) / (2.0f * A);

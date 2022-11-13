@@ -37,7 +37,7 @@ typedef struct s_mlx
 	void	*mlx;
 	void	*win;
 	void	*img;
-	char	*adr;
+	char	*addr;
 	int		width;
 	int		height;
     int		bits_per_pixel;
