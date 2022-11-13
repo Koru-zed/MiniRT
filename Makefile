@@ -9,6 +9,7 @@ FILES := get_next_line/get_next_line.c \
 		 Parssing/get_data_part1.c \
 		 Parssing/get_data_part2.c \
 		 Draw/drawing.c \
+		 Dowing/camera.c \
 		 main.c \
 		 math_operations.c rendring.c sphere.c
 
@@ -18,7 +19,7 @@ CC := cc -g3
 
 LIBFT := libft/libft
 
-CFLAGS := -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS := -Wall -Wextra -Werror -g -fsanitize=address -g3
 
 FRAMWORK = -lmlx -framework OpenGL -framework AppKit
 
@@ -40,7 +41,7 @@ ${NAME} : ${OBJES} ${LIBFT}
 
 %.o : %.c
 	@ echo "${BLUE}Generating Minishell objects... ${PURPLE}" $@ "${WHITE}"
-	@$(CC) $(CFLAGS) -Imlx -c $< -o $@
+	@$(CC) $(CFLAGS) -Imlx -c $< -o $@ 
 
 clean : 
 	@ ${RM} ${OBJES}
