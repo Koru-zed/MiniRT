@@ -4,7 +4,7 @@ BNAME= miniRT_bonus
 AR= ar rc
 RM= rm -rf
 
-CC= gcc
+CC= gcc -g3
 CFLAGS= -Wall -Wextra -Werror -c -g
 MFLAGS= -Llibx -lmlx -framework OpenGL -framework Appkit
 
