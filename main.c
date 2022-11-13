@@ -71,8 +71,8 @@ int main(int ac, char **av)
 		miniRT->Mlx->width = WIDTH;
 		miniRT->Mlx->height = HEIGHT;
 		 miniRT->Mlx->mlx = mlx_init();
-		 miniRT->Mlx->win = mlx_new_window(miniRT->Mlx->mlx, 720, 540, "miniRT");
-		 miniRT->Mlx->img = mlx_new_image(miniRT->Mlx->mlx, 720, 540);
+		 miniRT->Mlx->win = mlx_new_window(miniRT->Mlx->mlx, WIDTH, HEIGHT, "miniRT");
+		 miniRT->Mlx->img = mlx_new_image(miniRT->Mlx->mlx, WIDTH, HEIGHT );
 		 miniRT->Mlx->addr = mlx_get_data_addr(
 		 		miniRT->Mlx->img, &miniRT->Mlx->bits_per_pixel, &miniRT->Mlx->line_length, &miniRT->Mlx->endian
 		 									 );

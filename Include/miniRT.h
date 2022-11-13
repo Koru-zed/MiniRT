@@ -17,8 +17,8 @@
 # define plane "pl"
 # define sphre "sp"
 # define cylinder "cy"
-# define HEIGHT 540
-# define WIDTH 720
+# define HEIGHT 720
+# define WIDTH 1080
 # define EPSILON 1.0e-4f
 # define _INFINITE 1.0e30f
 

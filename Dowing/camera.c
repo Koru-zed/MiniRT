@@ -34,6 +34,6 @@ void    fill_matrix(t_Camera *_camera)
 
     right = normalizing(v_cross(random, _camera->ray.direction));
     up = normalizing(v_cross(_camera->ray.direction, right));
-    _camera->matrix = new_matrix(right, up, _camera->ray.direction, _camera->ray.origin);
+    _camera->matrix = new_matrix(_camera->ray.origin, _camera->ray.direction, right, up);
 
 }
