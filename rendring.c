@@ -35,6 +35,7 @@
 //	s.radius = 100;
 //	return s;
 //}
+
 //void	add_cord(int i, int j, t_matrix **m, t_point p)
 //{
 //	(*m)[j][i] = p.x;
@@ -88,38 +89,6 @@ t_point ray_color(t_ray *r, t_Sphere *s)
 	return adding(mul(1.0f - t, color1), mul(t, color2));
 }
 
-t_minirt *perspective_camera(t_point origin, t_point target, t_point up_guide, t_minirt *rt, float aspectRatio)
-{
-	rt->Camera->forward = normalizing(sub(target, origin));
-	rt->Camera->right = normalizing(cross(rt->Camera->forward, up_guide));
-	rt->Camera->up = cross(rt->Camera->right, rt->Camera->forward);
-	rt->Camera->h = tan((double ) rt->Camera->fov);
-	rt->Camera->w = rt->Camera->h * aspectRatio;
-	return rt;
-}
-
-t_ray	init_ray(t_point origin, t_point dir)
-{
-	t_ray	r;
-
-	r.origin = origin;
-	r.dir = dir;
- 	return r;
-}
-
-t_ray	makeRay(t_minirt *rt, t_point p)
-{
-	// * dir = forward + ( (p.u * w) * right ) + ( (p.v * h) * up )
-	float tmp = rt->Camera->w * p.x;
-	t_point tmp1 = mul(tmp , rt->Camera->right);
-	float tmp2 = rt->Camera->h * p.y;
-	t_point tmp3 = mul(tmp2, rt->Camera->up);
-
-	t_point s = adding(rt->Camera->forward, tmp1);
-	t_point dir = adding(s, tmp3);
-	return init_ray(convert_to_point(rt->Camera->cordinates), normalizing(dir));
-}
-
 //t_matrix	*look_at(t_point eye, t_point center, t_point up)
 //{
 //	int i;
@@ -146,6 +115,8 @@ bool	intersectPlane(t_minirt *rt, t_point phat, t_ray ray, float *t)
 {
 	t_point normal = convert_to_point(rt->Plane->orientation); // tmp for now
 	float p = dot(normal, ray.dir);
+	if (fabs(p) > EPSILON)
+		return false;
 	t_point resultOfSub = sub(phat, ray.origin);
 	*t = dot(resultOfSub, normal) / p;
 	if (*t > EPSILON)
@@ -164,12 +135,13 @@ void	ray_render(t_minirt *rt)
 	r.origin.x = 0;
 	r.origin.y = 0;
 	r.origin.z = -1;
+	r.dir.z = -2;
 	float t;
 	t_point p = convert_to_point(rt->Plane->cordinates);
 	for (int i = 0; i < 540; ++i) {
-		r.origin.y = i;
+		r.dir.y = i;
 		for (int j = 0; j < 720; ++j) {
-			r.origin.x = 0;
+			r.dir.x = 0;
 			if (intersectPlane(rt, p, r, &t))
 			{
 				my_mlx_pixel_put(rt->Mlx, j, i, 0xFFFFFF);
