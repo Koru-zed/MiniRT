@@ -39,30 +39,8 @@ t_ray	ray_generator(t_minirt *mini, int x, int y)
 	return (ray);
 }
 
-// int	get_hit_color(t_minirt *mini, t_ray ray)
-// {
-// 	size_t	i;
-// 	double	distance;
-// 	double	closer;
-// 	int		color;	
-// 	t_shape	*obj;
+// +
 
-// 	closer = M_INFINITY;
-// 	color = 0x000000;
-// 	i = 0;
-// 	while (i < scene->objs->total)
-// 	{
-// 		obj = (t_shape *)scene->objs->elements[i];
-// 		distance = obj->hit_obj(obj->shape, ray.origin, ray.direction);
-// 		if (distance > 0 && distance < closer)
-// 		{
-// 			closer = distance;
-// 			color = get_color(obj, ray, scene, distance);
-// 		}
-// 		i++;
-// 	}
-// 	return (color);
-// }
 
 int main(int ac, char **av)
 {
@@ -94,9 +72,8 @@ int main(int ac, char **av)
 			x = 0;
 			while (x < Mlx->width)
 			{
-				ray = ray_generator(scene, x, y);
-				color = get_hit_color(scene, ray);
-				my_mlx_pixel_put(mlx, x, y, color);
+				ray = ray_generator(miniRT, x, y);
+				// my_mlx_pixel_put(miniRT->Mlx, x, y, color);
 				x++;
 			}
 			y++;
