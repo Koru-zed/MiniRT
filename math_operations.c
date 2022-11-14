@@ -51,16 +51,13 @@ t_point v_sub(t_point center, t_point origin)
 	return (p);
 }
 
-//int createRGB(double r, double g, double b)
-//{
-//	int ir = (int)(255.999 * r);
-//	int ig = (int)(255.999 * g);
-//	int ib = (int)(255.999 * b);
-//
-//	int i = (ir << 16) +(ig  <<  8) + ib ;
-//	// printf("co{%d}", i);
-//	return (i);
-//}
+size_t rgb(const size_t rgb[3])
+{
+	size_t color;
+
+	color = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
+	return (color);
+}
 
 
 

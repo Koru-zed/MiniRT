@@ -1,9 +1,10 @@
 #include "Include/miniRT.h"
 
+
+
 int main()
 {
-	float a  = 0.0f;
-	float b = 5.5 / 0;
-//	if (b > INFINITY)
-		printf("%f\n", INFINITY);
+	size_t a[3]= {0, 51, 25};
+	size_t af = rgb(a);
+	printf("%zu", af);
 }

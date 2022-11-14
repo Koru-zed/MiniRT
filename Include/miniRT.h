@@ -22,7 +22,7 @@
 # define EPSILON 1.0e-4f
 # define BLACK 0x000000
 # define _INFINITE 1.0e30f
-typedef int COLOR
+typedef int COLOR;
 
 
 void		free_mini(t_minirt *mini);
@@ -67,7 +67,8 @@ t_point		v_sub(t_point center, t_point origin);
 float		 	length_squared(t_point p);
 float			length(t_point p);
 t_point			unit_vector(t_point v);
-t_point	normalizing(t_point p);
+t_point			normalizing(t_point p);
+size_t			rgb(const size_t rgb[3]);
 /* ***		End Math Operations		** */
 
 /*
