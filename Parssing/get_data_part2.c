@@ -6,11 +6,12 @@ int    get_Plane(t_minirt *mini, t_data *data)
     t_Plane *_plane;
 
     empty = 1;
+	printf("here debug\n");
     if (!mini->Plane)
         empty = 0;
     _plane = ft_calloc(1, sizeof(t_Plane));
-    set_cordinates(data->pars[1], _plane->cordinates, mini);
-    set_orientation(data->pars[2], _plane->orientation, mini);
+    set_cordinates(data->pars[1], &_plane->plane_point, mini);
+    set_orientation(data->pars[2], &_plane->normal, mini);
     set_color(data->pars[3], _plane->color, mini);
     if (empty)
         rt_last_Plane(mini->Plane)->next = _plane;
@@ -28,8 +29,8 @@ int    get_Sphere(t_minirt *mini, t_data *data)//**Spher
     if (!mini->Sphere)
         empty = 0;
     _sphere = ft_calloc(1, sizeof(t_Sphere));
-    set_cordinates(data->pars[1], _sphere->cordinates, mini);
-    _sphere->diameter = ft_atod(data->pars[2], &mini->check);
+    set_cordinates(data->pars[1], &_sphere->center, mini);
+    _sphere->radius = ft_atod(data->pars[2], &mini->check) / 2;
     if (mini->check)
     {
         free_mini(mini);
@@ -52,10 +53,13 @@ int    get_Cylinder(t_minirt *mini, t_data *data)
     if (!mini->Cylinder)
         empty = 0;
     _cylinder = ft_calloc(1, sizeof(t_Cylinder));
-    set_cordinates(data->pars[1], _cylinder->cordinates, mini);
-    set_orientation(data->pars[2], _cylinder->orientation, mini);
-    _cylinder->diameter = ft_atod(data->pars[3], &mini->check);
-    _cylinder->hright = ft_atod(data->pars[4], &mini->check);
+    set_cordinates(data->pars[1], &_cylinder->cordinates, mini);
+    set_orientation(data->pars[2], &_cylinder->orientation, mini);
+	/*
+	 *  todo : ! turn atod from double to float !
+	 */
+    _cylinder->redius = ft_atod(data->pars[3], &mini->check) / 2;
+    _cylinder->height = ft_atod(data->pars[4], &mini->check);
     if (mini->check)
     {
         free_mini(mini);

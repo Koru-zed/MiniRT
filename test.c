@@ -1,11 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include "Include/miniRT.h"
 
-int main () {
-   printf("Value 8.0 ^ 3 = %d\n", atoi("252,46"));
 
-   // printf("Value 3.05 ^ 1.98 = %lf", pow(3.05, 1.98));
-   
-   return(0);
+
+int main()
+{
+	size_t a[3]= {0, 51, 25};
+	size_t af = rgb(a);
+	printf("%zu", af);
 }

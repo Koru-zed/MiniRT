@@ -1,6 +1,6 @@
 #include "../Include/miniRT.h"
 
-void    set_cordinates(char const *cord, float *table, t_minirt *mini)
+void    set_cordinates(char const *cord, t_point *cordinate, t_minirt *mini)
 {
     int     size;
     char    **arr;
@@ -14,9 +14,9 @@ void    set_cordinates(char const *cord, float *table, t_minirt *mini)
         free_mini(mini);
         exit(EXIT_FAILURE);
     }
-    table[0] = ft_atod(arr[0], &mini->check);
-    table[1] = ft_atod(arr[1], &mini->check);
-    table[2] = ft_atod(arr[2], &mini->check);
+    cordinate->x = ft_atod(arr[0], &mini->check);
+    cordinate->y = ft_atod(arr[1], &mini->check);
+    cordinate->z = ft_atod(arr[2], &mini->check);
     if (mini->check == -1)
     {
         free_mini(mini);
@@ -24,7 +24,7 @@ void    set_cordinates(char const *cord, float *table, t_minirt *mini)
     }
 }
 
-void    set_orientation(char const *colors, float *table, t_minirt *mini)
+void    set_orientation(char const *colors, t_point *cordinate, t_minirt *mini)
 {
     int     i;
     int     size;
@@ -39,21 +39,15 @@ void    set_orientation(char const *colors, float *table, t_minirt *mini)
         free_mini(mini);
         exit(EXIT_FAILURE);
     }
-    table[0] = ft_atod(arr[0], &mini->check);
-    table[1] = ft_atod(arr[1], &mini->check);
-    table[2] = ft_atod(arr[2], &mini->check);
-    while (table[++i])
+    cordinate->x = ft_atod(arr[0], &mini->check);
+    cordinate->y = ft_atod(arr[1], &mini->check);
+    cordinate->z = ft_atod(arr[2], &mini->check);
+    if (mini->check == -1 || (cordinate->x < -1 && cordinate->x > 1) || \
+        (cordinate->y < -1 && cordinate->y > 1) || (cordinate->z < -1 && cordinate->z > 1))
     {
-        if (mini->check == -1)
-        {
-            free_mini(mini);
-            exit(EXIT_FAILURE);
-        }
-        if (table[i] < -1 && table[i] > 1)
-        {
-            ft_putstr_fd("Error : out of range [-1.0;1.0]", 1);
-            mini->check = -1;
-        }
+        ft_putstr_fd("Error : out of range [-1.0;1.0]", 1);
+        free_mini(mini);
+        exit(EXIT_FAILURE);
     }
 }
 
