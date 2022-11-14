@@ -106,15 +106,16 @@ typedef struct _Plane
     t_ray	        ray;
     size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t          repetition;
+	t_point			local_hit_point; // store the hit point
     struct _Plane   *next;
 } t_Plane;
 
 typedef struct _Sphere
 {
-    t_point         center;//x,y,z coordinates of the view
-    float			radius;
-    size_t			color[3];//R,G,B colors in range [0-255]: 255, 255, 255
-    size_t			repetition;
+	t_point         center;//x,y,z coordinates of the view
+	float			radius;
+	size_t			color[3];//R,G,B colors in range [0-255]: 255, 255, 255
+	size_t			repetition;
     struct _Sphere   *next;
 } t_Sphere;
 

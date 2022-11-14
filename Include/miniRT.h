@@ -20,8 +20,9 @@
 # define HEIGHT 720
 # define WIDTH 1080
 # define EPSILON 1.0e-4f
+# define BLACK 0x000000
 # define _INFINITE 1.0e30f
-
+typedef int COLOR
 
 
 void		free_mini(t_minirt *mini);
@@ -62,16 +63,21 @@ t_point		v_mul(const float t,  t_point p);
 t_point		v_division(t_point p, float t);
 t_point		v_adding(t_point p, t_point v);
 t_point		v_sub(t_point center, t_point origin);
-unsigned long	createRGB(double r, double g, double b);
+
 float		 	length_squared(t_point p);
 float			length(t_point p);
 t_point			unit_vector(t_point v);
 t_point	normalizing(t_point p);
 /* ***		End Math Operations		** */
+
+/*
+	! ~ intersection test functions.
+ */
+t_ray	ray_generator(t_minirt *mini, int x, int y);
 bool 	intersectRaySphere(t_ray *r, t_Sphere *s, float *t);
 //bool	intersectRaySphere(t_ray *r, t_sphere *s, float *t);
 
-
+bool	intersectPlane(t_minirt *rt, t_ray ray, float *t);
 
 void        fill_matrix(t_Camera *_camera);
 t_matrix    new_matrix(t_point origin, t_point forward, t_point right, t_point up);

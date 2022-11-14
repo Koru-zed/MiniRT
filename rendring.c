@@ -111,26 +111,93 @@
 //	return modelView;
 //}
 //
-//bool	intersectPlane(t_minirt *rt, t_point phat, t_ray ray, float *t)
-//{
-//	t_point normal = convert_to_point(rt->Plane->orientation); // tmp for now
-//	float p = dot(normal, ray.dir);
-//	if (fabs(p) > EPSILON)
+
+
+
+bool	intersectPlane(t_minirt *rt, t_ray ray, float *t)
+{
+	//t_point normal = convert_to_point(rt->Plane.); // tmp for now
+	float p = v_dot(rt->Plane->normal, ray.direction);
+//	if (fabsf(p) > EPSILON)
 //		return false;
-//	t_point resultOfSub = sub(phat, ray.origin);
-//	*t = dot(resultOfSub, normal) / p;
-//	if (*t > EPSILON)
-//	{
-//		rt->Plane->normal = normal;
-//		rt->Plane->local_hit_point = adding(ray.origin, mul(*t, ray.dir));
-//		return true;
-//	}
-//	return false;
+	t_point resultOfSub = v_sub(rt->Plane->plane_point, ray.origin);
+	*t = v_dot(resultOfSub, rt->Plane->normal) / p;
+	if (*t > EPSILON)
+	{
+//		printf("true\n");
+		rt->Plane->normal = rt->Plane->normal;
+		rt->Plane->local_hit_point = v_adding(ray.origin, v_mul(*t, ray.direction));
+		return true;
+	}
+//	printf("false\n");
+	return false;
+}
+
+bool closest_sphere(t_minirt *rt, t_ray ray, float nearest, float *t)
+{
+	t_Sphere	*s;
+	size_t	n_o;
+
+	n_o = 0;
+	s = rt->Sphere;
+	while (s)
+	{
+		if (intersectRaySphere(&ray, s, t) && *t < nearest)
+		{
+			t_Sphere *closest = s;
+			nearest = *t;
+		}
+		s = s->next;
+	}
+	return true;
+}
+
+t_Sphere closest_plane(t_minirt *rt, t_ray ray, float nearest, float *t)
+{
+
+}
+
+//t_Sphere closest_cylinder(t_minirt *rt, t_ray ray, float nearest, float *t)
+//{
+//
 //}
 
-//void	ray_render(t_minirt *rt)
-//{
-//}
+bool iterate_over_objects(t_minirt *rt, t_ray ray, float nearest, float *t)
+{
+
+}
+
+bool intersection_object(t_minirt *rt, t_ray ray, COLOR *color)
+{
+	float t_nearest;
+	float t;
+
+	t_nearest = INFINITY;
+	*color  = BLACK;
+	iterate_over_objects(rt, ray, t_nearest, &t);
+}
+
+void	ray_render(t_minirt *rt)
+{
+	COLOR color;
+	t_ray	ray;
+	int y, x;
+	y = 0;
+
+	float t;
+	while (y < HEIGHT)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			ray = ray_generator(rt, x, y);
+			intersection_object(rt, ray, &color);
+			my_mlx_pixel_put(rt->Mlx, x, y, color);
+			x++;
+		}
+		y++;
+	}
+}
 /*
  *  t, represent the length of the closest intersection.
 
