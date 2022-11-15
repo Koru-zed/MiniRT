@@ -75,7 +75,7 @@ int			rgb(const size_t rgb[3]);
 	! ~ intersection test functions.
  */
 t_ray	ray_generator(t_minirt *mini, int x, int y);
-bool 	intersectRaySphere(t_ray *r, t_minirt *s, float *t, COLOR *color);
+bool 	intersectRaySphere(t_ray r, t_minirt *s, float *t, COLOR *color);
 
 bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, COLOR *color);
 

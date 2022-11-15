@@ -55,15 +55,15 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 	t_Plane *tPlane;
 	t_Plane *closestPlane;
 
-	hd = FLT_MAX;
+	hd = EPSILON;
 	tPlane = rt->Plane;
 	closestPlane = NULL;
 	while (tPlane)
 	{
-		float p = v_dot(rt->Plane->normal, ray.direction);
-		t_point resultOfSub = v_sub(rt->Plane->plane_point, ray.origin);
-		tmin = v_dot(resultOfSub, rt->Plane->normal) / p;
-		if (tmin < hd)
+		float p = v_dot(tPlane->normal, ray.direction);
+		t_point resultOfSub = v_sub(tPlane->plane_point, ray.origin);
+		tmin = v_dot(resultOfSub, tPlane->normal) / p;
+		if (tmin > EPSILON)
 		{
 			closestPlane = tPlane;
 			hd = tmin;
@@ -71,9 +71,12 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 		tPlane = tPlane->next;
 	}
 	if (!closestPlane)
+	{
+		*t = FLT_MAX;
 		return false;
+	}
 	*t = hd;
-	rt->Plane->normal = rt->Plane->normal;
+	rt->Plane->normal = closestPlane->normal;
 	rt->Plane->local_hit_point = v_adding(ray.origin, v_mul(hd, ray.direction));
 	*color = rgb(closestPlane->color);
 /*	if (*t > EPSILON)
@@ -120,26 +123,27 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, COLOR *color)
 {
 	float t1;
-	float t2 = INFINITY;
+	float t2;
 	COLOR color1;
 	COLOR color2;
-
-	if (intersectPlane(rt, ray, &t1, &color1) || intersectRaySphere(&ray, rt, &t2, &color2))
-	{
-		if (t1 > t2) {
+	bool isP = intersectPlane(rt, ray, &t1, &color1);
+	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
+	*color = BLACK;
+	if (isP || isS) {
+		if (t1 > t2 && isS) {
 			*color = color2;
 			*t = t2;
 		}
-		else {
+		else if (t2 > t1 && isP) {
 			*color = color1;
 			*t = t1;
 		}
+		else {
+			*color = BLACK;
+			*t = 0;
+		}
 	}
-	else
-	{
-		*color = BLACK;
-		*t = 0;
-	}
+
 }
 
 

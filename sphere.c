@@ -14,7 +14,7 @@ t_point new_point(float x, float y, float z)
 	return pos;
 }
 
-bool intersectRaySphere(t_ray *r, t_minirt *rt, float *t, int *color){
+bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color){
 
 	float t_min;
 	t_point dist;
@@ -31,14 +31,13 @@ bool intersectRaySphere(t_ray *r, t_minirt *rt, float *t, int *color){
 	/* A = d.d, the vector dot product of the direction */
 	hitDestance = FLT_MAX;
 	closestSphere = NULL;
-	A = v_dot(r->direction, r->direction);
-	*t = 0;
+	A = v_dot(r.direction, r.direction);
+	*t = FLT_MAX;
 	while (s) {
-
-		dist = v_sub(r->origin, s->center);
+		dist = v_sub(r.origin, s->center);
 
 		/* 2d.(p0 - c) */
-		B = 2 * v_dot(r->direction, dist);
+		B = 2 * v_dot(r.direction, dist);
 
 		/* (p0 - c).(p0 - c) - r^2 */
 		C = v_dot(dist, dist) - (s->radius * s->radius);
