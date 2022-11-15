@@ -1,5 +1,6 @@
 #pragma once
 #include "miniRT.h"
+#include <float.h>
 /********* struct for test ********/
 
 

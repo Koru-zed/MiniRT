@@ -13,6 +13,7 @@
 
 #include "libft.h"
 #include <math.h>
+#include <stdio.h>
 
 double	ft_atod(const char *str, int *check)
 {
@@ -46,6 +47,7 @@ double	ft_atod(const char *str, int *check)
 	}
     if (*str)
     {
+		printf("!!%s\n", str);
 		*check = -1;
         ft_putstr_fd("# Bad value #", 1);
         exit(EXIT_FAILURE);

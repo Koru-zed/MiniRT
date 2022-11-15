@@ -68,24 +68,20 @@ float		 	length_squared(t_point p);
 float			length(t_point p);
 t_point			unit_vector(t_point v);
 t_point			normalizing(t_point p);
-size_t			rgb(const size_t rgb[3]);
+int			rgb(const size_t rgb[3]);
 /* ***		End Math Operations		** */
 
 /*
 	! ~ intersection test functions.
  */
 t_ray	ray_generator(t_minirt *mini, int x, int y);
-bool 	intersectRaySphere(t_ray *r, t_Sphere *s, float *t);
-//bool	intersectRaySphere(t_ray *r, t_sphere *s, float *t);
+bool 	intersectRaySphere(t_ray *r, t_minirt *s, float *t, COLOR *color);
 
-bool	intersectPlane(t_minirt *rt, t_ray ray, float *t);
+bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, COLOR *color);
 
 void        fill_matrix(t_Camera *_camera);
 t_matrix    new_matrix(t_point origin, t_point forward, t_point right, t_point up);
 t_point	mul_point_matrix(t_point p, t_matrix m);
-t_point	convert_to_point(float *s);
-float	intersect(t_ray *r, t_Sphere *s);
 t_point	at(float t, t_ray *r);
-//bool intersectRaySphere(t_ray *r, t_Sphere *s, int *color);
 
 #endif

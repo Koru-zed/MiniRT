@@ -51,11 +51,11 @@ t_point v_sub(t_point center, t_point origin)
 	return (p);
 }
 
-size_t rgb(const size_t rgb[3])
+int rgb(const size_t rgb[3])
 {
-	size_t color;
+	int color;
 
-	color = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
+	color = (int) ((rgb[0] << 16) + (rgb[1] << 8) + rgb[2]);
 	return (color);
 }
 

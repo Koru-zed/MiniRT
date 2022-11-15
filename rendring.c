@@ -48,70 +48,69 @@
 
 
 
-bool	intersectPlane(t_minirt *rt, t_ray ray, float *t)
+bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 {
-	float p = v_dot(rt->Plane->normal, ray.direction);
-	t_point resultOfSub = v_sub(rt->Plane->plane_point, ray.origin);
-	*t = v_dot(resultOfSub, rt->Plane->normal) / p;
-	if (*t > EPSILON)
+	float tmin;
+	float hd;
+	t_Plane *tPlane;
+	t_Plane *closestPlane;
+
+	hd = FLT_MAX;
+	tPlane = rt->Plane;
+	closestPlane = NULL;
+	while (tPlane)
+	{
+		float p = v_dot(rt->Plane->normal, ray.direction);
+		t_point resultOfSub = v_sub(rt->Plane->plane_point, ray.origin);
+		tmin = v_dot(resultOfSub, rt->Plane->normal) / p;
+		if (tmin < hd)
+		{
+			closestPlane = tPlane;
+			hd = tmin;
+		}
+		tPlane = tPlane->next;
+	}
+	if (!closestPlane)
+		return false;
+	*t = hd;
+	rt->Plane->normal = rt->Plane->normal;
+	rt->Plane->local_hit_point = v_adding(ray.origin, v_mul(hd, ray.direction));
+	*color = rgb(closestPlane->color);
+/*	if (*t > EPSILON)
 	{
 		rt->Plane->normal = rt->Plane->normal;
 		rt->Plane->local_hit_point = v_adding(ray.origin, v_mul(*t, ray.direction));
 		return true;
-	}
-	return false;
-}
-
-bool closest_sphere(t_minirt *rt, t_ray ray, float *t, COLOR *color)
-{
-	t_Sphere	*s;
-	size_t	n_o;
-
-	n_o = 0;
-	s = rt->Sphere;
-	float nearest = INFINITY;
-	while (s)
-	{
-		if (intersectRaySphere(&ray, s, t) && *t < nearest)
-		{
-//			t_Sphere *closest = s;
-			*color = (int)rgb(s->color);
-			nearest = *t;
-			n_o++;
-		}
-		s = s->next;
-	}
-	*t = nearest;
-	if (!n_o)
-		return false;
+	}*/
 	return true;
 }
 
-bool closest_plane(t_minirt *rt, t_ray ray, float *t, COLOR *color)
-{
-	t_Plane 	*s;
-	size_t	n_o;
 
-	n_o = 0;
-	float nearest = INFINITY;
-	s = rt->Plane;
-	while (s)
-	{
-		if (intersectPlane(rt, ray, t) && *t < nearest)
-		{
-//			t_Plane *closest = s;
-			*color = rgb(s->color);
-			nearest = *t;
-			n_o++;
-		}
-		s = s->next;
-	}
-	*t = nearest;
-	if (!n_o) {
-		return false;
-	}
-	return true;
-}
+//bool closest_plane(t_minirt *rt, t_ray ray, float *t, COLOR *color)
+//{
+//	t_Plane 	*s;
+//	size_t	n_o;
+//
+//	n_o = 0;
+//	float nearest = INFINITY;
+//	s = rt->Plane;
+//	while (s)
+//	{
+//		if (intersectPlane(rt, ray, t) && *t < nearest)
+//		{
+////			t_Plane *closest = s;
+//			*color = rgb(s->color);
+//			nearest = *t;
+//			n_o++;
+//		}
+//		s = s->next;
+//	}
+//	*t = nearest;
+//	if (!n_o) {
+//		return false;
+//	}
+//	return true;
+//}
 
 //t_Sphere closest_cylinder(t_minirt *rt, t_ray ray, float nearest, float *t)
 //{
@@ -125,7 +124,7 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, COLOR *color)
 	COLOR color1;
 	COLOR color2;
 
-	if (closest_plane(rt, ray, &t1, &color1) || closest_sphere(rt, ray,&t2, &color2))
+	if (intersectPlane(rt, ray, &t1, &color1) || intersectRaySphere(&ray, rt, &t2, &color2))
 	{
 		if (t1 > t2) {
 			*color = color2;
@@ -143,14 +142,6 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, COLOR *color)
 	}
 }
 
-void intersection_object(t_minirt *rt, t_ray ray, COLOR *color)
-{
-//	float t_nearest;
-	float t;
-
-//	t_nearest = INFINITY;INFINITY
-	iterate_over_objects(rt, ray, &t, color);
-}
 
 void	ray_render(t_minirt *rt)
 {
