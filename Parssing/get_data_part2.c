@@ -6,7 +6,6 @@ int    get_Plane(t_minirt *mini, t_data *data)
     t_Plane *_plane;
 
     empty = 1;
-	printf("here debug\n");
     if (!mini->Plane)
         empty = 0;
     _plane = ft_calloc(1, sizeof(t_Plane));

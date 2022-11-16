@@ -3,7 +3,7 @@
 int ft_check_valid(char *filename, t_data *data)
 {
     int i;
-
+    // char** f;
     i = 0;
     if (!filename)
         return (-1);
@@ -13,6 +13,10 @@ int ft_check_valid(char *filename, t_data *data)
     {
         data->info = filename;
         data->pars = ft_split(data->info, ' ');
+        // f = data->pars;
+        // for (int j = 0; f[j]; j++)
+        //     printf("{%s}\n", f[j]);
+        //     printf("**********\n");
         return (1);
     }
     return (0);

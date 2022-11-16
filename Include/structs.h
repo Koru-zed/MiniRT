@@ -1,5 +1,6 @@
 #pragma once
 #include "miniRT.h"
+#include <float.h>
 /********* struct for test ********/
 
 
@@ -99,6 +100,12 @@ typedef struct _Light
     size_t   repetition;
 } t_Light;
 
+typedef struct s_intersect {
+	float	tmin;
+	t_point	closestPoint;
+	size_t	*color;
+
+} t_intersect;
 typedef struct _Plane
 {
     t_point         plane_point;//x,y,z coordinates of the view
