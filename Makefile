@@ -11,7 +11,10 @@ FILES := get_next_line/get_next_line.c \
 		 Draw/drawing.c \
 		 Dowing/camera.c \
 		 main.c \
-		 math_operations.c rendring.c sphere.c
+		 math_operations.c \
+		Shape/rendring.c \
+		Shape/sphere.c \
+		Shape/plane.c
 
 OBJES := ${FILES:.c=.o}
 

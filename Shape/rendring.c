@@ -1,4 +1,4 @@
-#include "Include/miniRT.h"
+#include "../Include/miniRT.h"
 
 
 
@@ -46,51 +46,7 @@
  */
 
 
-bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
-{
-	float tmin;
-	float hd;
-	t_Plane *tPlane;
-	t_intersect closestPlane;
 
-
-	hd = EPSILON;
-	tPlane = rt->Plane;
-	closestPlane.tmin = FLT_MAX;
-	while (tPlane)
-	{
-		float p = v_dot(tPlane->normal, ray.direction);
-		t_point resultOfSub = v_sub(tPlane->plane_point, ray.origin);
-		tmin = v_dot(resultOfSub, tPlane->normal) / p;
-
-		if (tmin > EPSILON)
-		{
-			// true tmin = 1.0  true 0.5
-			if (closestPlane.tmin > tmin) {
-				closestPlane.closestPoint = tPlane->plane_point;
-				closestPlane.color = tPlane->color;
-				closestPlane.tmin = tmin;
-			}
-		}
-		tPlane = tPlane->next;
-	}
-	if (closestPlane.tmin == FLT_MAX)
-	{
-		*t = FLT_MAX;
-		return false;
-	}
-
-//	rt->Plane->normal = closestPlane.normal;
-//	rt->Plane->local_hit_point = v_adding(ray.origin, v_mul(hd, ray.direction));
-	*color = rgb(closestPlane.color);
-/*	if (*t > EPSILON)
-	{
-		rt->Plane->normal = rt->Plane->normal;
-		rt->Plane->local_hit_point = v_adding(ray.origin, v_mul(*t, ray.direction));
-		return true;
-	}*/
-	return true;
-}
 
 
 //bool closest_plane(t_minirt *rt, t_ray ray, float *t, COLOR *color)
