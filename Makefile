@@ -8,13 +8,12 @@ FILES := get_next_line/get_next_line.c \
 		 Parssing/rt_last_node.c \
 		 Parssing/get_data_part1.c \
 		 Parssing/get_data_part2.c \
-		 Draw/drawing.c \
 		 Dowing/camera.c \
 		 main.c \
 		 math_operations.c \
-		Shape/rendring.c \
-		Shape/sphere.c \
-		Shape/plane.c
+		 Shape/rendring.c \
+		 Shape/sphere.c \
+		 Shape/plane.c
 
 OBJES := ${FILES:.c=.o}
 

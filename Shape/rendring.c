@@ -1,6 +1,12 @@
 #include "../Include/miniRT.h"
 
+void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
+{
+	char	*dst;
 
+	dst = Mlx->addr + (y * Mlx->line_length + x * (Mlx->bits_per_pixel >> 3));
+	*(unsigned int*)dst = color;
+}
 
 /*
  * Let's make:
@@ -82,19 +88,20 @@
 
 void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, COLOR *color)
 {
-	float t1;
-	float t2;
+	float t1 = FLT_MAX;
+	float t2 = FLT_MAX;
 	COLOR color1;
 	COLOR color2;
+	
 	bool isP = intersectPlane(rt, ray, &t1, &color1);
 	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
 	*color = BLACK;
 	if (isP || isS) {
-		if (t1 > t2 && isS) {
+		if (t1 > t2) {
 			*color = color2;
 			*t = t2;
 		}
-		else if (t2 > t1 && isP) {
+		else if (t2 > t1) {
 			*color = color1;
 			*t = t1;
 		}

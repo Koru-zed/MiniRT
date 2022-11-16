@@ -18,6 +18,7 @@ int    get_Ambient_lightning(t_minirt *mini, t_data *data)
             free_mini(mini);
             exit(EXIT_FAILURE);
         }
+        	// printf("here debug\n");
         set_color(data->pars[2], mini->Ambient->color, mini);
         return 1;
     }
@@ -59,11 +60,12 @@ int    get_Light(t_minirt *mini, t_data *data)
     if (!mini->Light->repetition)
     {
         mini->Light->repetition = 1;
-        if (ft_arrylen(data->pars) != 4)
+        if (ft_arrylen(data->pars) != 3)
         {
             mini->check = -1;
             return (-1);
         }
+        	printf("here debug\n");
         set_cordinates(data->pars[1], &mini->Light->cordinates, mini);
         mini->Light->brightenss = ft_atod(data->pars[2], &mini->check);
         if (mini->check || (mini->Light->brightenss < 0.0f && mini->Light->brightenss > 1.0f))
@@ -73,7 +75,7 @@ int    get_Light(t_minirt *mini, t_data *data)
             free_mini(mini);
             exit(EXIT_FAILURE);
         }
-        set_color(data->pars[3], mini->Light->color, mini);
+        // set_color(data->pars[3], mini->Light->color, mini);
         return 1;
     }
     ft_putstr_fd("Munltiple Light", 1);

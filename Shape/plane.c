@@ -41,6 +41,8 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 		*t = FLT_MAX;
 		return false;
 	}
+    *t = closestPlane.tmin;
+
 
 //	rt->Plane->normal = closestPlane.normal;
 //	rt->Plane->local_hit_point = v_adding(ray.origin, v_mul(hd, ray.direction));
