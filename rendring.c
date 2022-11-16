@@ -46,39 +46,43 @@
  */
 
 
-
-
 bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 {
 	float tmin;
 	float hd;
 	t_Plane *tPlane;
-	t_Plane *closestPlane;
+	t_intersect closestPlane;
+
 
 	hd = EPSILON;
 	tPlane = rt->Plane;
-	closestPlane = NULL;
+	closestPlane.tmin = FLT_MAX;
 	while (tPlane)
 	{
 		float p = v_dot(tPlane->normal, ray.direction);
 		t_point resultOfSub = v_sub(tPlane->plane_point, ray.origin);
 		tmin = v_dot(resultOfSub, tPlane->normal) / p;
+
 		if (tmin > EPSILON)
 		{
-			closestPlane = tPlane;
-			hd = tmin;
+			// true tmin = 1.0  true 0.5
+			if (closestPlane.tmin > tmin) {
+				closestPlane.closestPoint = tPlane->plane_point;
+				closestPlane.color = tPlane->color;
+				closestPlane.tmin = tmin;
+			}
 		}
 		tPlane = tPlane->next;
 	}
-	if (!closestPlane)
+	if (closestPlane.tmin == FLT_MAX)
 	{
 		*t = FLT_MAX;
 		return false;
 	}
-	*t = hd;
-	rt->Plane->normal = closestPlane->normal;
-	rt->Plane->local_hit_point = v_adding(ray.origin, v_mul(hd, ray.direction));
-	*color = rgb(closestPlane->color);
+
+//	rt->Plane->normal = closestPlane.normal;
+//	rt->Plane->local_hit_point = v_adding(ray.origin, v_mul(hd, ray.direction));
+	*color = rgb(closestPlane.color);
 /*	if (*t > EPSILON)
 	{
 		rt->Plane->normal = rt->Plane->normal;
