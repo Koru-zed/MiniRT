@@ -70,10 +70,11 @@ t_point			unit_vector(t_point v);
 t_point			normalizing(t_point p);
 int			rgb(const size_t rgb[3]);
 /* ***		End Math Operations		** */
-
+void	ft_print_vector(const t_point p, int fd);
 /*
 	! ~ intersection test functions.
  */
+bool	cylinder_intersection(t_minirt *rt, t_ray *ray, int fd);
 t_ray	ray_generator(t_minirt *mini, int x, int y);
 bool 	intersectRaySphere(t_ray r, t_minirt *s, float *t, COLOR *color);
 

@@ -79,7 +79,7 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 		*t = FLT_MAX;
 		return false;
 	}
-
+	*t = closestPlane.tmin;
 //	rt->Plane->normal = closestPlane.normal;
 //	rt->Plane->local_hit_point = v_adding(ray.origin, v_mul(hd, ray.direction));
 	*color = rgb(closestPlane.color);
@@ -92,37 +92,6 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 	return true;
 }
 
-
-//bool closest_plane(t_minirt *rt, t_ray ray, float *t, COLOR *color)
-//{
-//	t_Plane 	*s;
-//	size_t	n_o;
-//
-//	n_o = 0;
-//	float nearest = INFINITY;
-//	s = rt->Plane;
-//	while (s)
-//	{
-//		if (intersectPlane(rt, ray, t) && *t < nearest)
-//		{
-////			t_Plane *closest = s;
-//			*color = rgb(s->color);
-//			nearest = *t;
-//			n_o++;
-//		}
-//		s = s->next;
-//	}
-//	*t = nearest;
-//	if (!n_o) {
-//		return false;
-//	}
-//	return true;
-//}
-
-//t_Sphere closest_cylinder(t_minirt *rt, t_ray ray, float nearest, float *t)
-//{
-//
-//}
 
 void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, COLOR *color)
 {
@@ -153,20 +122,23 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, COLOR *color)
 
 void	ray_render(t_minirt *rt)
 {
-	COLOR color;
 	t_ray	ray;
 	int y, x;
 	y = 0;
 
-	float t;
+//	float t;
+	int fd;
+	fd = open("debug.txt", O_RDWR | O_TRUNC);
 	while (y < HEIGHT)
 	{
 		x = 0;
 		while (x < WIDTH)
 		{
 			ray = ray_generator(rt, x, y);
-			iterate_over_objects(rt, ray, &t, &color);
-			my_mlx_pixel_put(rt->Mlx, x, y, color);
+//			iterate_over_objects(rt, ray, &t, &color);
+			ft_print_vector(ray.direction, fd);
+			if (cylinder_intersection(rt, &ray, fd))
+				my_mlx_pixel_put(rt->Mlx, x, y, 0xE4D00A);
 			x++;
 		}
 		y++;
