@@ -9,7 +9,6 @@ int ft_check_valid(char *filename, t_data *data, t_num_shape *_shape)
         return (-1);
     while (filename[i] && (filename[i] == ' ' || filename[i] == '\t'))
         i++;
-    // printf("{%d}\n", *(data->head->A));
     if (filename[i] && filename[i] != '\n')
     {
         data->info = filename;
@@ -26,8 +25,9 @@ int ft_check_valid(char *filename, t_data *data, t_num_shape *_shape)
 	    	_shape->pl++ ;
 	    else if (!ft_strcmp(data->pars[0], CYLINDER))
 	    	_shape->cy++ ;
-        else
+        else if (ft_strcmp(data->pars[0], "#"))
         {
+        printf("{%s}\n", data->pars[0]);
             // free_mini(mini);
             ft_putstr_fd("Error : Data not valid\n", 1);
             exit(EXIT_FAILURE);

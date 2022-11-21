@@ -14,7 +14,7 @@ size_t    check_data(t_minirt *mini, t_data *data)
 		get_Plane(mini, data);
 	else if (!ft_strcmp(data->pars[0], CYLINDER))
 		get_Cylinder(mini, data);
-	else
+	else if (ft_strcmp(data->pars[0], "#"))
 		return (0);
 	return 1;
 }

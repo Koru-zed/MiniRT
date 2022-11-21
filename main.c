@@ -9,20 +9,36 @@ long long	get_time(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
+// t_point	ray_pixel_to_world(t_minirt *mini, int x, int y)
+// {
+// 	float	aspect_ratio;
+// 	float	half_hight;
+// 	float   half_width;
+// 	float	p_x;
+// 	float	p_y;
+
+// 	half_hight = tanf((float )((float )mini->Camera->fov * M_PI / 180) / 2);
+// 	aspect_ratio = (float )mini->Mlx->width / (float )mini->Mlx->height;
+// 	half_width = half_hight * aspect_ratio;
+// 	p_x = (float )(2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
+// 	p_y = (float )(1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
+// 	return (new_point(-p_x, p_y, 1));
+// }
+
 t_point	ray_pixel_to_world(t_minirt *mini, int x, int y)
 {
 	float	aspect_ratio;
 	float	half_hight;
 	float   half_width;
-	float	p_x;
-	float	p_y;
+	float	ps_x;
+	float	ps_y;
 
-	half_hight = tanf((float )((float )mini->Camera->fov * M_PI / 180) / 2);
-	aspect_ratio = (float )mini->Mlx->width / (float )mini->Mlx->height;
+	half_hight = tanf(((float )mini->Camera->fov * M_PI / 180.0f) / 2.0f);
+	aspect_ratio = (float)mini->Mlx->width / (float)mini->Mlx->height;
 	half_width = half_hight * aspect_ratio;
-	p_x = (float )(2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
-	p_y = (float )(1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
-	return (new_point(-p_x, p_y, 1));
+	ps_x = (float )(2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
+	ps_y = (float )(1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
+	return (new_point(-ps_x, ps_y, 1));
 }
 
 t_ray	ray_generator(t_minirt *mini, int x, int y)
@@ -82,23 +98,23 @@ void edit_sepher(t_minirt *mini, int key)
 	if (key == KEYUP){
 		i = -1;
 		while (++i < mini->Data->shape.sp)
-			mini->Sphere[i].center.y += -0.75;
+			mini->Sphere[i].center.y += 0.75;
 	}
 	else if (key == KEYDOWN){
 		i = -1;
 		while (++i < mini->Data->shape.sp)
-			mini->Sphere[i].center.y -= -0.75;
+			mini->Sphere[i].center.y -= 0.75;
 	}
 	else if (key == KEYLEFT){
 		i = -1;
 		while (++i < mini->Data->shape.sp)
-			mini->Sphere[i].center.x -= -0.75;
+			mini->Sphere[i].center.x -= 0.75;
 	}
 	else if (key == KEYRIGHT)
 	{
 		i = -1;
 		while (++i < mini->Data->shape.sp)
-			mini->Sphere[i].center.x += -0.75;
+			mini->Sphere[i].center.x += 0.75;
 	}
 	else
 		mini->Mlx->_do = 0; 
@@ -114,23 +130,23 @@ void edit_plane(t_minirt *mini, int key)
 	if (key == KEYUP){
 		i = -1;
 		while (++i < mini->Data->shape.pl)
-			mini->Plane[i].plane_point.y -= -0.75;
+			mini->Plane[i].plane_point.y += 0.75;
 	}
 	else if (key == KEYDOWN){
 		i = -1;
 		while (++i < mini->Data->shape.pl)
-			mini->Plane[i].plane_point.y += -0.75;
+			mini->Plane[i].plane_point.y -= 0.75;
 	}
 	else if (key == KEYLEFT){
 		i = -1;
 		while (++i < mini->Data->shape.pl)
-			mini->Plane[i].plane_point.x += -0.75;
+			mini->Plane[i].plane_point.x -= 0.75;
 	}
 	else if (key == KEYRIGHT)
 	{
 		i = -1;
 		while (++i < mini->Data->shape.pl)
-			mini->Plane[i].plane_point.x -= -0.75;
+			mini->Plane[i].plane_point.x += 0.75;
 	}
 	else
 		mini->Mlx->_do = 0; 

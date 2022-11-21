@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Debug",
             "program": "${workspaceFolder}/miniRT",
-            "args": ["rt_files/spheres.rt"],
+            "args": ["rt_files/art.rt"],
             "cwd": "${workspaceFolder}"
         }
     ]
