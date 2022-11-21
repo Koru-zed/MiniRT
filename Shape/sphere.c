@@ -26,21 +26,22 @@ bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color){
 	t_Sphere *closestSphere;
 	t_Sphere *s;
 	float hitDestance;
-
+	int i;
 	s = rt->Sphere;
 	/* A = d.d, the vector dot product of the direction */
 	hitDestance = FLT_MAX;
 	closestSphere = NULL;
 	A = v_dot(r.direction, r.direction);
 	*t = FLT_MAX;
-	while (s) {
-		dist = v_sub(r.origin, s->center);
+	i = -1;
+	while (++i < rt->Data->shape.sp) {
+		dist = v_sub(r.origin, s[i].center);
 
 		/* 2d.(p0 - c) */
 		B = 2 * v_dot(r.direction, dist);
 
 		/* (p0 - c).(p0 - c) - r^2 */
-		C = v_dot(dist, dist) - (s->radius * s->radius);
+		C = v_dot(dist, dist) - (s[i].radius * s[i].radius);
 
 		/* Solving the discriminant  quadratic equation*/
 		discriminant = B * B - 4.0f * A * C;
@@ -49,16 +50,13 @@ bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color){
 		 * Return false in that case as the ray misses the sphere.
 		 * Return true in all other cases (can be one or two intersections)
 		 */
-//		if (discriminant < 0.0f)
-//			continue;
 		sqrt_discr = sqrtf(discriminant);
 		t_min = (-B - sqrt_discr) / (2.0f * A);
 		if (t_min < hitDestance)
 		{
 			hitDestance = t_min;
-			closestSphere = s;
+			closestSphere = &s[i];
 		}
-		s = s->next;
 	}
 	if (!closestSphere)
 	{
@@ -66,6 +64,7 @@ bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color){
 		return false;
 	}
 	*t = hitDestance;
+                // printf("-- Sphere --\n");
 //	t_point origin = v_sub(r->origin, closestSphere->center);
 //	t_point hitPoint = v_adding(origin, v_mul(hitDestance, r->direction));
 

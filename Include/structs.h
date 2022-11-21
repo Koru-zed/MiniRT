@@ -135,7 +135,7 @@ typedef struct _Sphere
 	float			radius;
 	size_t			color[3];//R,G,B colors in range [0-255]: 255, 255, 255
 	size_t			repetition;
-    struct _Sphere   *next;
+    // struct _Sphere   *next;
 } t_Sphere;
 
 typedef struct _Cylinder

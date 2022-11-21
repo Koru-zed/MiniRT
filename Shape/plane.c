@@ -20,11 +20,11 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 	hd = EPSILON;
 	tPlane = rt->Plane;
 	closestPlane.tmin = FLT_MAX;
-	while (++i < rt->Data->pl)
+	while (++i < rt->Data->shape.pl)
 	{
 		float p = v_dot(tPlane[i].normal, ray.direction);
 		t_point resultOfSub = v_sub(tPlane[i].plane_point, ray.origin);
-		tmin = v_dot(resultOfSub, tPlane->normal) / p;
+		tmin = v_dot(resultOfSub, tPlane[i].normal) / p;
 
 		if (tmin > EPSILON)
 		{
@@ -43,7 +43,7 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 	}
     *t = closestPlane.tmin;
 
-
+	// printf("plane\n");
 //	rt->Plane->normal = closestPlane.normal;
 //	rt->Plane->local_hit_point = v_adding(ray.origin, v_mul(hd, ray.direction));
 	*color = rgb(closestPlane.color);
