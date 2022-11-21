@@ -114,7 +114,7 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, COLOR *color)
 }
 
 
-void	ray_render(t_minirt *rt)
+void	ray_render(t_minirt *mini)
 {
 	COLOR color;
 	t_ray	ray;
@@ -127,11 +127,12 @@ void	ray_render(t_minirt *rt)
 		x = 0;
 		while (x < WIDTH)
 		{
-			ray = ray_generator(rt, x, y);
-			iterate_over_objects(rt, ray, &t, &color);
-			my_mlx_pixel_put(rt->Mlx, x, y, color);
+			ray = ray_generator(mini, x, y);
+			iterate_over_objects(mini, ray, &t, &color);
+			my_mlx_pixel_put(mini->Mlx, x, y, color);
 			x++;
 		}
 		y++;
 	}
+	mlx_put_image_to_window(mini->Mlx->mlx, mini->Mlx->win, mini->Mlx->img, 0, 0);
 }

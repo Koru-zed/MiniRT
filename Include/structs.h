@@ -44,15 +44,27 @@ typedef struct s_mlx
     int		bits_per_pixel;
     int		line_length;
 	int		endian;
+    int     obj;
+    int     _do;
 }			t_mlx;
+
+typedef struct _num_shape
+{
+    int     A;
+    int     C;
+    int     L;
+    int     pl;
+    int     sp;
+    int     cy;
+} t_num_shape;
 
 typedef struct _data {
 
     char    *info;//change
     char    **pars;
     int     check_empty;
-    struct _data *next;
-
+    t_num_shape shape;
+    struct  _data *next;
 }   t_data;
 
 typedef struct	point {
@@ -114,7 +126,7 @@ typedef struct _Plane
     size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t          repetition;
 	t_point			local_hit_point; // store the hit point
-    struct _Plane   *next;
+    // struct _Plane   *next;
 } t_Plane;
 
 typedef struct _Sphere
@@ -134,7 +146,7 @@ typedef struct _Cylinder
     float               redius;
     float               height;
     size_t              repetition;
-    struct _Cylinder    *next;
+    // struct _Cylinder    *next;
 } t_Cylinder;
 
 typedef struct _minirt {

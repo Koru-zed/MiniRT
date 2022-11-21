@@ -65,7 +65,7 @@ int    get_Light(t_minirt *mini, t_data *data)
             mini->check = -1;
             return (-1);
         }
-        	printf("here debug\n");
+        	// printf("here debug\n");
         set_cordinates(data->pars[1], &mini->Light->cordinates, mini);
         mini->Light->brightenss = ft_atod(data->pars[2], &mini->check);
         if (mini->check || (mini->Light->brightenss < 0.0f && mini->Light->brightenss > 1.0f))

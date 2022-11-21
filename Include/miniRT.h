@@ -11,17 +11,30 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
-# define ambient "A"
-# define camera "C"
-# define light "L"
-# define plane "pl"
-# define sphre "sp"
-# define cylinder "cy"
+# define AMBIENT "A"
+# define CAMERA "C"
+# define LIGHT "L"
+# define PLANE "pl"
+# define SEPHER "sp"
+# define CYLINDER "cy"
 # define HEIGHT 720
 # define WIDTH 1080
 # define EPSILON 1.0e-4f
 # define BLACK 0x000000
 # define _INFINITE 1.0e30f
+# define KEYDOWN  125
+# define KEYUP  126
+# define KEYLEFT  123
+# define KEYRIGHT  124
+# define _SEPHER 1 //s
+# define _PLANE 35 //p
+# define _LIGHT 37 //l
+# define _CYLINDER 8 // c
+# define _CAMERA 9 //v
+# define MOUSEDOWN  4
+# define MOUSEUP  5
+// # define MOUSEMOVE  6
+# define DESTROY  53
 typedef int COLOR;
 
 
@@ -46,8 +59,8 @@ int         get_Plane(t_minirt *mini, t_data *data);
 int         get_Sphere(t_minirt *mini, t_data *data);
 int         get_Cylinder(t_minirt *mini, t_data *data);
 
-void        fill_data(t_data *n_data, int fd);
-int         ft_check_valid(char *filename, t_data *data);
+void        fill_data(t_data *n_data, t_num_shape *n_shape, int fd);
+int         ft_check_valid(char *filename, t_data *data, t_num_shape *_shape);
 
 size_t      check_data(t_minirt *mini, t_data *data);
 void        fill_Info(t_minirt *mini);

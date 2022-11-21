@@ -41,6 +41,156 @@ t_ray	ray_generator(t_minirt *mini, int x, int y)
 
 // +
 
+void edit_camera(t_minirt *mini, int key)
+{
+	printf("Camera\n");
+	mini->Mlx->_do = 1; 
+	if (key == KEYUP)
+		mini->Camera->ray.origin.y -= 0.125;
+	else if (key == KEYDOWN)
+		mini->Camera->ray.origin.y += 0.125;
+	else if (key == KEYLEFT)
+		mini->Camera->ray.origin.x += 0.125;
+	else if (key == KEYRIGHT)
+		mini->Camera->ray.origin.x -= 0.125;
+	else
+		mini->Mlx->_do = 0; 
+}
+
+// void edit_light(t_minirt *mini, int key)
+// {
+
+// }
+
+void edit_sepher(t_minirt *mini, int key)
+{
+	printf("Sepher\n");
+	mini->Mlx->_do = 1; 
+	if (key == KEYUP)
+		mini->Sphere->center.y += 0.5;
+	else if (key == KEYDOWN)
+		mini->Sphere->center.y -= 0.5;
+	else if (key == KEYLEFT)
+		mini->Sphere->center.x -= 0.5;
+	else if (key == KEYRIGHT)
+		mini->Sphere->center.x += 0.5;
+	else
+		mini->Mlx->_do = 0; 
+	// printf("hello\n");
+
+}
+
+// void edit_plane(t_minirt *mini, int key)
+// {
+// 	t_Plane *head;
+// 		printf("Plane\n");
+// 	mini->Mlx->_do = 1; 
+// 	if (key == KEYUP){
+// 		head = mini->_plane;
+// 		while (head){
+// 			head->plane_point.y -= 0.75;
+// 			head = head->next
+// 		}
+// 	}
+// 	else if (key == KEYDOWN){
+// 		head = mini->_plane;
+// 		while (head){
+// 			head->plane_point.y += 0.75;
+// 			head = head->next
+// 		}
+// 	}
+// 	else if (key == KEYLEFT){
+// 		head = mini->_plane;
+// 		while (head){
+// 			head->plane_point.x += 0.75;
+// 			head = head->next
+// 		}
+// 	}
+// 	else if (key == KEYRIGHT){
+// 		head = mini->_plane;
+// 		while (head){
+// 			head->plane_point.x -= 0.75;
+// 			head = head->next
+// 		}
+// 	}
+// 	else
+// 		mini->Mlx->_do = 0; 
+// }
+
+// void edit_cylinder(t_minirt *mini, int key)
+// {
+
+// }
+
+// void edit_mini(t_minirt *mini, int key)
+// {
+// 	if (mini->Mlx->obj == _CAMERA)
+// 		edit_camera(mini, key);
+// 	// else if (key == _LIGHT)
+// 	// 	edit_light(mini, key);
+// 	else if (mini->Mlx->obj == _SEPHER)
+// 		edit_sepher(mini, key);
+// 	else if (mini->Mlx->obj == _PLANE)
+// 		edit_plane(mini, key);
+// 	// else if (key == _CYLINDER)
+// 	// 	edit_cylinder(mini, key);
+// 	// mini->Mlx->addr = mlx_get_data_addr(mini->Mlx->img, &mini->Mlx->bits_per_pixel, &mini->Mlx->line_length, &mini->Mlx->endian);
+// 	if (mini->Mlx->_do)
+// 	{
+// 		mlx_clear_window(mini->Mlx->mlx, mini->Mlx->win);
+// 		ray_render(mini);
+// 	}
+// }
+
+// // void edit_mini(t_minirt *mini, int key)
+// // {
+// // 	if 
+// // }
+// int objs(int key, t_minirt *mini)
+// {
+// 	if (key == _CAMERA)
+// 		mini->Mlx->obj = _CAMERA;
+// 	else if (key == _LIGHT)
+// 		mini->Mlx->obj = _LIGHT;
+// 	else if (key == _SEPHER)
+// 		mini->Mlx->obj = _SEPHER;
+// 	else if (key == _PLANE)
+// 		mini->Mlx->obj = _PLANE;
+// 	else if (key == _CYLINDER)
+// 		mini->Mlx->obj = _CYLINDER;
+// 	// else
+// 	// 	mini->Mlx->obj = -1;
+// 	// printf("key_objs{%d}{%d}\n", key, mini->Mlx->obj);
+// 	return (0);
+// }
+
+// int press_key(int key, t_minirt *mini)
+// {
+// 	if (key == KEYUP)
+// 		edit_mini(mini, key);
+// 	else if (key == KEYDOWN)
+// 		edit_mini(mini, key);
+// 	else if (key == KEYLEFT)
+// 		edit_mini(mini, key);
+// 	else if (key == KEYRIGHT)
+// 		edit_mini(mini, key);
+// 	else if (key == DESTROY)
+// 		edit_mini(mini, key);
+// 	objs(key, mini);
+// 	printf("key_press{%d}\n", key);
+	
+// 	return (0);
+// }
+
+
+// +
+// void	setup_controls(t_minirt *mini)
+// {
+// 	// mlx_hook(mini->Mlx->win, 4, 0, ft_mouse, mini);
+// 	// mlx_hook(mini->Mlx->win, 5, 0, ft_mouse, mini);
+// 	// mlx_key_hook(mini->Mlx->win, objs, mini);
+// 	mlx_key_hook(mini->Mlx->win, press_key, mini);
+// }
 
 int main(int ac, char **av)
 {
@@ -52,22 +202,23 @@ int main(int ac, char **av)
 	{
 		miniRT->file = av[1];
 		miniRT->fd = open(miniRT->file, O_RDONLY);
-		fill_data(miniRT->Data, miniRT->fd);
-		miniRT->Ambient = ft_calloc(1, sizeof(t_Ambient));
-		miniRT->Camera = ft_calloc(1, sizeof(t_Camera));
-		miniRT->Light = ft_calloc(1, sizeof(t_Light));
-		miniRT->Mlx = ft_calloc(1, sizeof(t_mlx));
-		fill_Info(miniRT);
-		fill_matrix(miniRT->Camera);
-		miniRT->Mlx->width = WIDTH;
-		miniRT->Mlx->height = HEIGHT;
-		miniRT->Mlx->mlx = mlx_init();
-		miniRT->Mlx->win = mlx_new_window(miniRT->Mlx->mlx, WIDTH, HEIGHT, "miniRT");
-		miniRT->Mlx->img = mlx_new_image(miniRT->Mlx->mlx, WIDTH, HEIGHT );
-		miniRT->Mlx->addr = mlx_get_data_addr(miniRT->Mlx->img, &miniRT->Mlx->bits_per_pixel, &miniRT->Mlx->line_length, &miniRT->Mlx->endian);
-		ray_render(miniRT);
-		mlx_put_image_to_window(miniRT->Mlx->mlx, miniRT->Mlx->win, miniRT->Mlx->img, 0, 0);
-		mlx_loop(miniRT->Mlx->mlx);
+		fill_data(miniRT->Data, &miniRT->Data->shape, miniRT->fd);
+		// miniRT->Ambient = ft_calloc(1, sizeof(t_Ambient));
+		// miniRT->Camera = ft_calloc(1, sizeof(t_Camera));
+		// miniRT->Light = ft_calloc(1, sizeof(t_Light));
+		// miniRT->Mlx = ft_calloc(1, sizeof(t_mlx));
+		// fill_Info(miniRT);
+		// fill_matrix(miniRT->Camera);
+		// miniRT->Mlx->width = WIDTH;
+		// miniRT->Mlx->height = HEIGHT;
+		// miniRT->Mlx->mlx = mlx_init();
+		// miniRT->Mlx->win = mlx_new_window(miniRT->Mlx->mlx, WIDTH, HEIGHT, "miniRT");
+		// miniRT->Mlx->img = mlx_new_image(miniRT->Mlx->mlx, WIDTH, HEIGHT );
+		// miniRT->Mlx->addr = mlx_get_data_addr(miniRT->Mlx->img, &miniRT->Mlx->bits_per_pixel, &miniRT->Mlx->line_length, &miniRT->Mlx->endian);
+		// ray_render(miniRT);
+		// setup_controls(miniRT);
+		// mlx_loop(miniRT->Mlx->mlx);
 	}
-    free_mini(miniRT);
+	return	0;
+    // free_mini(miniRT);
 }

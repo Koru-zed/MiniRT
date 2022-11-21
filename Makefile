@@ -19,6 +19,8 @@ OBJES := ${FILES:.c=.o}
 
 CC := cc -g3
 
+FOBJS := ./objs
+
 LIBFT := libft/libft
 
 CFLAGS := -Wall -Wextra -Werror -g -fsanitize=address -g3
@@ -38,6 +40,7 @@ RED = \033[1;91m
 all : ${NAME}
 
 ${NAME} : ${OBJES} ${LIBFT}
+	@ mkdir -p ${FOBJS}
 	@ ${CC} ${CFLAGS} ${LIBFT} ${FRAMWORK} $^ -o $@
 	@ echo "       ${YELLOW}}}}.....${GREEN}!Compile :-> ${NAME} <-: Successe!${YELLOW}.....{{{${WHITE}"
 
