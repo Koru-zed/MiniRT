@@ -131,7 +131,7 @@ typedef struct _Cylinder
     t_point             cordinates;//x,y,z coordinates of the view
     t_point             orientation;//3d normalized orientation vector. In range [-1,1]
     size_t              color[3];//R,G,B colors in range [0-255]: 255, 255, 255
-    float               redius;
+    float               radius;
     float               height;
     size_t              repetition;
     struct _Cylinder    *next;

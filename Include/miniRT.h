@@ -69,6 +69,7 @@ float			length(t_point p);
 t_point			unit_vector(t_point v);
 t_point			normalizing(t_point p);
 int			rgb(const size_t rgb[3]);
+bool	cylinder_int(t_minirt *rt, t_ray *ray, const int fd);
 /* ***		End Math Operations		** */
 void	ft_print_vector(const t_point p, int fd);
 /*

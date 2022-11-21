@@ -119,7 +119,12 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, COLOR *color)
 
 }
 
-
+// void normal_at()
+// {
+// 	t_point p = {0, 5, -1};
+// 	t_point n    = normalizing(p);
+// 	// ft_print_vector(n, 1);
+// }
 void	ray_render(t_minirt *rt)
 {
 	t_ray	ray;
@@ -127,8 +132,10 @@ void	ray_render(t_minirt *rt)
 	y = 0;
 
 //	float t;
+//	int color;
 	int fd;
 	fd = open("debug.txt", O_RDWR | O_TRUNC);
+	// normal_at();
 	while (y < HEIGHT)
 	{
 		x = 0;
@@ -136,9 +143,9 @@ void	ray_render(t_minirt *rt)
 		{
 			ray = ray_generator(rt, x, y);
 //			iterate_over_objects(rt, ray, &t, &color);
-			ft_print_vector(ray.direction, fd);
-			if (cylinder_intersection(rt, &ray, fd))
-				my_mlx_pixel_put(rt->Mlx, x, y, 0xE4D00A);
+//			ft_print_vector(ray.direction, fd);
+			 if (cylinder_int(rt, &ray, fd))
+				my_mlx_pixel_put(rt->Mlx, x, y, 0xFFFFFF);
 			x++;
 		}
 		y++;

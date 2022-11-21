@@ -34,7 +34,7 @@ bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color){
 	A = v_dot(r.direction, r.direction);
 	*t = FLT_MAX;
 	while (s) {
-		dist = v_sub(r.origin, s->center);
+		dist = v_sub(s->center, r.origin);
 
 		/* 2d.(p0 - c) */
 		B = 2 * v_dot(r.direction, dist);

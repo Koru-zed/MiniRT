@@ -58,7 +58,7 @@ int    get_Cylinder(t_minirt *mini, t_data *data)
 	/*
 	 *  todo : ! turn atod from double to float !
 	 */
-    _cylinder->redius = ft_atod(data->pars[3], &mini->check) / 2;
+    _cylinder->radius = ft_atod(data->pars[3], &mini->check) / 2;
     _cylinder->height = ft_atod(data->pars[4], &mini->check);
     if (mini->check)
     {
