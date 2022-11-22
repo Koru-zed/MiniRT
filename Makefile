@@ -20,7 +20,7 @@ CC := cc -g3
 
 LIBFT := libft/libft
 
-CFLAGS := -Wall -Wextra -Werror -g -fsanitize=address -g3
+CFLAGS := -g -fsanitize=address -g3
 
 FRAMWORK = -lmlx -framework OpenGL -framework AppKit
 

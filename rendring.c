@@ -119,6 +119,20 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, COLOR *color)
 
 }
 
+bool	cylinde(t_minirt *rt, t_ray ray, const int fd)
+{
+	(void )fd;
+	t_Cylinder *cy;
+	float A;
+	float B;
+	float C;
+
+	cy = rt->Cylinder;
+	t_point end = v_mul(cy->height, cy->cordinates);
+	t_point v = normalizing(v_sub(end, cy->cordinates));
+
+	return true;
+}
 // void normal_at()
 // {
 // 	t_point p = {0, 5, -1};
@@ -144,6 +158,8 @@ void	ray_render(t_minirt *rt)
 			ray = ray_generator(rt, x, y);
 //			iterate_over_objects(rt, ray, &t, &color);
 //			ft_print_vector(ray.direction, fd);
+//			if (y == 0)
+//				cylinde(rt, ray, fd);
 			 if (cylinder_int(rt, &ray, fd))
 				my_mlx_pixel_put(rt->Mlx, x, y, 0xFFFFFF);
 			x++;

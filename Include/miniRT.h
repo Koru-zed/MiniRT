@@ -57,6 +57,7 @@ void 		ray_render(t_minirt *minirt);
 t_point	new_point(float x, float y, float z);
 
 /* ***		Math Operations		** */
+bool	cylinder_int(t_minirt *rt, t_ray *ray, const int fd);
 float		v_dot(const t_point u, const t_point v);
 t_point		v_cross(const t_point u, const t_point v);
 t_point		v_mul(const float t,  t_point p);

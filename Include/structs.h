@@ -1,6 +1,7 @@
 #pragma once
 #include "miniRT.h"
 #include <float.h>
+#include <stdbool.h>
 /********* struct for test ********/
 
 
@@ -128,12 +129,15 @@ typedef struct _Sphere
 
 typedef struct _Cylinder
 {
-    t_point             cordinates;//x,y,z coordinates of the view
-    t_point             orientation;//3d normalized orientation vector. In range [-1,1]
-    size_t              color[3];//R,G,B colors in range [0-255]: 255, 255, 255
-    float               radius;
-    float               height;
-    size_t              repetition;
+    t_point		cordinates;//x,y,z coordinates of the view
+    t_point	orientation;//3d normalized orientation vector. In range [-1,1]
+    size_t	color[3];//R,G,B colors in range [0-255]: 255, 255, 255
+    float	radius;
+    float	height;
+    size_t 	repetition;
+	bool	closed;
+	float cyMin;
+	float cyMax;
     struct _Cylinder    *next;
 } t_Cylinder;
 
