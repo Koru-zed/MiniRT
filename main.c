@@ -38,7 +38,7 @@ t_point	ray_pixel_to_world(t_minirt *mini, int x, int y)
 	half_width = half_hight * aspect_ratio;
 	ps_x = (float )(2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
 	ps_y = (float )(1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
-	return (new_point(-ps_x, ps_y, 1));
+	return (new_point(ps_x, ps_y, 1));
 }
 
 t_ray	ray_generator(t_minirt *mini, int x, int y)

@@ -65,11 +65,11 @@ void    fill_matrix(t_Camera *_camera)
     t_point w;
     t_point u;
 	t_point v;
-    t_point up;
+    t_point tmp;
 
-    up =  new_point(0, 1, 0);
+    tmp =  new_point(0, 1, 0);
 	w = normalizing(v_sub(_camera->ray.origin, _camera->ray.direction));
-    u = normalizing(v_cross(up, w));
+    u = normalizing(v_cross(tmp, w));
     v = v_cross(w, u);
     _camera->matrix = new_matrix(u, v, w, _camera->ray.direction);
 }
