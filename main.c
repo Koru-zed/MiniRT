@@ -182,7 +182,7 @@ void edit_mini(t_minirt *mini, int key)
 // {
 // 	if 
 // }
-int objs(int key, t_minirt *mini)
+int objs_key(int key, t_minirt *mini)
 {
 	if (key == _CAMERA)
 		mini->Mlx->obj = _CAMERA;
@@ -196,7 +196,51 @@ int objs(int key, t_minirt *mini)
 		mini->Mlx->obj = _CYLINDER;
 	// else
 	// 	mini->Mlx->obj = -1;
-	// printf("key_objs{%d}{%d}\n", key, mini->Mlx->obj);
+	printf("key_objs{%d}{%d}\n", key, mini->Mlx->obj);
+	return (0);
+}
+
+void update_matrix_x(t_Camera *_camera)
+{
+	_camera->matrix.M[1][1] -= (float )cos(M_PI / 6);
+	_camera->matrix.M[2][1] -= (float )sin(M_PI / 6);
+	_camera->matrix.M[1][2] -= -(float )sin(M_PI / 6);
+	_camera->matrix.M[2][2] -= (float )cos(M_PI / 6);
+}
+
+void update_matrix_y(t_Camera *_camera)
+{
+	_camera->matrix.M[0][0] -= (float )cos(M_PI / 6);
+	_camera->matrix.M[0][2] -= (float )sin(M_PI / 6);
+	_camera->matrix.M[2][0] -= -(float )sin(M_PI / 6);
+	_camera->matrix.M[2][2] -= (float )cos(M_PI / 6);
+}
+
+void update_matrix_z(t_Camera *_camera)
+{
+	_camera->matrix.M[0][0] -= (float )cos(M_PI / 6);
+	_camera->matrix.M[0][1] -= -(float )sin(M_PI / 6);
+	_camera->matrix.M[1][0] -= (float )sin(M_PI / 6);
+	_camera->matrix.M[1][1] -= (float )cos(M_PI / 6);
+}
+
+int rotation_key(int key, t_minirt *mini)
+{
+	if (key == ROTATE_X){
+		mini->Mlx->rotate = ROTATE_X;
+		update_matrix_x(mini->Camera);
+		print_matrix(mini->Camera);
+	}
+	else if (key == ROTATE_Y){
+		mini->Mlx->rotate = ROTATE_Y;
+		update_matrix_y(mini->Camera);
+		print_matrix(mini->Camera);
+	}
+	else if (key == ROTATE_Z){
+		mini->Mlx->rotate = ROTATE_Z;
+		update_matrix_z(mini->Camera);
+		print_matrix(mini->Camera);
+	}
 	return (0);
 }
 
@@ -212,7 +256,8 @@ int press_key(int key, t_minirt *mini)
 		edit_mini(mini, key);
 	else if (key == DESTROY)
 		edit_mini(mini, key);
-	objs(key, mini);
+	objs_key(key, mini);
+	rotation_key(key, mini);
 	printf("key_press{%d}\n", key);
 	
 	return (0);
@@ -226,6 +271,50 @@ void	setup_controls(t_minirt *mini)
 	// mlx_hook(mini->Mlx->win, 5, 0, ft_mouse, mini);
 	// mlx_key_hook(mini->Mlx->win, objs, mini);
 	mlx_key_hook(mini->Mlx->win, press_key, mini);
+}
+
+void print_matrix(t_Camera *_camera)
+{
+	printf("fd{%d}\n", _camera->fd);
+	ft_putstr_fd("########\n", _camera->fd);
+	ft_putstr_fd("M[0][0] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[0][0], _camera->fd);
+	ft_putstr_fd(" | M[0][1] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[0][1], _camera->fd);
+	ft_putstr_fd(" | M[0][2] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[0][2], _camera->fd);
+	ft_putstr_fd(" | M[0][3] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[0][3], _camera->fd);
+	ft_putchar_fd('\n', _camera->fd);
+	ft_putstr_fd("M[1][0] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[1][0], _camera->fd);
+	ft_putstr_fd(" | M[1][1] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[1][1], _camera->fd);
+	ft_putstr_fd(" | M[1][2] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[1][2], _camera->fd);
+	ft_putstr_fd(" | M[1][3] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[1][3], _camera->fd);
+	ft_putchar_fd('\n', _camera->fd);
+	ft_putstr_fd("M[2][0] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[2][0], _camera->fd);
+	ft_putstr_fd(" | M[2][1] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[2][1], _camera->fd);
+	ft_putstr_fd(" | M[2][2] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[2][2], _camera->fd);
+	ft_putstr_fd(" | M[2][3] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[2][3], _camera->fd);
+	ft_putchar_fd('\n', _camera->fd);
+	ft_putstr_fd("M[3][0] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[3][0], _camera->fd);
+	ft_putstr_fd(" | M[3][1] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[3][1], _camera->fd);
+	ft_putstr_fd(" | M[3][2] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[3][2], _camera->fd);
+	ft_putstr_fd(" | M[3][3] = ", _camera->fd);
+	ft_putnbr_fd(_camera->matrix.M[3][3], _camera->fd);
+	ft_putstr_fd("\n\n", _camera->fd);
+	// close(_camera->fd);
+
 }
 
 int main(int ac, char **av)
@@ -244,7 +333,9 @@ int main(int ac, char **av)
 		// miniRT->Light = ft_calloc(1, sizeof(t_Light));
 		miniRT->Mlx = ft_calloc(1, sizeof(t_mlx));
 		fill_Info(miniRT);
+		miniRT->Camera-> fd = open("had.txt", O_CREAT | O_RDWR, 777);
 		fill_matrix(miniRT->Camera);
+		print_matrix(miniRT->Camera);
 		miniRT->Mlx->width = WIDTH;
 		miniRT->Mlx->height = HEIGHT;
 		miniRT->Mlx->mlx = mlx_init();

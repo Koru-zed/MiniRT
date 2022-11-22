@@ -9,7 +9,7 @@ void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
 }
 
 /*
- * Let's make:
+ * Let's make:make
 		* $ A = \vec d.\vec d $
 		* $ B = 2\vec d.(\vec p_0 - \vec c) $
 		* $ C = (\vec p_0 - \vec c).(\vec p_0 - \vec c) - r^2 $

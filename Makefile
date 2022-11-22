@@ -49,7 +49,7 @@ ${NAME} : ${OBJES} ${LIBFT}
 	@$(CC) $(CFLAGS) -Imlx -c $< -o $@ 
 
 clean : 
-	@ ${RM} ${OBJES}
+	@ ${RM} ${OBJES} had.txt
 	@ echo "${YELLOW}-> ${PURPLE}Delete the object files.....${WHITE}"
 
 fclean : clean

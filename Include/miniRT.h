@@ -33,6 +33,9 @@
 # define _CAMERA 9 //v
 # define MOUSEDOWN  4
 # define MOUSEUP  5
+# define ROTATE_X 7
+# define ROTATE_Y 16
+# define ROTATE_Z 6
 // # define MOUSEMOVE  6
 # define DESTROY  53
 typedef int COLOR;
@@ -97,5 +100,7 @@ void        fill_matrix(t_Camera *_camera);
 t_matrix    new_matrix(t_point u, t_point v, t_point w, t_point T);
 t_point	mul_point_matrix(t_point p, t_matrix m);
 t_point	at(float t, t_ray *r);
+
+void print_matrix(t_Camera *_camera);
 
 #endif

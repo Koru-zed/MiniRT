@@ -45,6 +45,7 @@ typedef struct s_mlx
     int		line_length;
 	int		endian;
     int     obj;
+    int     rotate;
     int     _do;
 }			t_mlx;
 
@@ -98,6 +99,7 @@ typedef struct _Ambient_light
 
 typedef struct _Camera
 {
+    int fd;
     size_t    fov;// ->
     size_t    repetition;
     t_ray	  ray;
