@@ -15,11 +15,11 @@
   * ** y(t) = d1t + p1
   * ** z(t) = d2t + p2
   */
-bool	check_caps(t_ray ray, float t)
+bool	check_caps(t_ray ray, float t, float r)
 {
 	 float x = ray.origin.x + t * ray.direction.x;
 	 float z = ray.origin.z + t * ray.direction.z;
-	 return (powf(x, 2) + powf(z, 2) <= 1);
+	 return (powf(x, 2) + powf(z, 2) <= powf(r, 2.0f));
 }
 
 t_point local_normal_at(t_Cylinder *cy, t_point p)
@@ -73,11 +73,34 @@ bool intersect_caps(t_Cylinder cy, t_ray ray)
 //	# check for an intersection with the lower end cap by intersecting
 //	# the ray with the plane at y=cyl.minimum
 	float t = (cy.cyMin - ray.origin.y) / ray.direction.y;
-	if (check_caps(ray, t))
+	if (check_caps(ray, t, cy.radius))
 		return true;
 	t = (cy.cyMax - ray.origin.y) / ray.direction.y;
-	if (check_caps(ray, t))
+	if (check_caps(ray, t, cy.radius))
 		return true;
+	return false;
+}
+
+bool	test(t_minirt *rt, t_ray *ray)
+{
+	float a;
+	float half_b;
+	float c;
+	t_Cylinder *cy;
+	t_point cy_dir;
+
+	cy = rt->Cylinder;
+	cy_dir = normalizing(cy->cordinates);
+	a = length_squared(ray->direction) - powf(v_dot(ray->direction, cy_dir), 2.0f);
+	t_point oc = v_sub(ray->origin, cy->cordinates);
+	half_b = v_dot(ray->direction, oc) - (v_dot(ray->direction, cy_dir) * v_dot(oc, cy_dir));
+	c = length_squared(oc) - powf(v_dot(oc, cy_dir), 2.0f) - powf(cy->radius, 2.0f);
+	float disc = powf(half_b, 2.0f) - a * c;
+
+	if (disc < EPSILON)
+		return false;
+	float root = (-half_b - sqrtf(disc)) / a;
+	if (root < )
 }
 
  bool	cylinder_int(t_minirt *rt, t_ray *ray, const int fd)
@@ -86,27 +109,31 @@ bool intersect_caps(t_Cylinder cy, t_ray ray)
 	 t_Cylinder *cy;
 	 float t[2];
 
-	 rt->Cylinder->cyMin = 1;
+	 rt->Cylinder->cyMin = -1;
 	 rt->Cylinder->cyMax = 2;
 	 cy = rt->Cylinder;
 	 find_t(rt, ray, t);
-	 if (t[0] == INFINITY || t[1] == INFINITY)
-		 return false;
-	 cy->closed = true;
-	 ray->direction = normalizing(ray->direction);
-	 float y0 = ray->origin.y + t[0] * ray->direction.y;
-	 if (cy->cyMin < y0 && y0 < cy->cyMax)
-	 {
-		 return true;
+	 if (t[0] != INFINITY && t[1] != INFINITY) {
+		 cy->closed = true;
+		 ray->direction = normalizing(ray->direction);
+		 float y0 = ray->origin.y + t[0] * ray->direction.y;
+		 if (y0 >= cy->cordinates.y && y0 <= cy->cordinates.y + cy->height)
+			 return true;
+//		 if (cy->cyMin < y0 && y0 < cy->cyMax) {
+//			 return true;
+//		 }
+		 float y1 = ray->origin.y + t[1] * ray->direction.y;
+		 if (y1 >= cy->cordinates.y && y1 <= cy->cordinates.y + cy->height)
+			 return true;
+//		 if (cy->cyMin < y1 && y1 < cy->cyMax) {
+//			 return true;
+//		 }
 	 }
-	 float y1 = ray->origin.y + t[1] * ray->direction.y;
-	 if (cy->cyMin < y1 && y1 < cy->cyMax)
-	 {
-		 return true;
-	 }
-	 return false;
+//	 return intersect_caps(*cy, *ray);
+	 return  false;
  }
 //	 if (t[0] > EPSILON)
+
 //	 {
 //		 t_point pInt = v_adding(ray->origin, v_mul(t[0], ray->direction));
 //		 t_point normal = {2 * pInt.x, 0.0f, 2 * pInt.z};
