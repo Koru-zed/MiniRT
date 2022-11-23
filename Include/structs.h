@@ -46,6 +46,7 @@ typedef struct s_mlx
 	int		endian;
     int     obj;
     int     rotate;
+    // int     dir;
     int     _do;
 }			t_mlx;
 
@@ -124,7 +125,7 @@ typedef struct _Plane
 {
     t_point         plane_point;//x,y,z coordinates of the view
     t_point         normal;//3d normalized orientation vector. In range [-1,1]
-    t_ray	        ray;
+    // t_ray	        ray;
     size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t          repetition;
 	t_point			local_hit_point; // store the hit point
