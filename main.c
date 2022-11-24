@@ -63,17 +63,25 @@ void edit_camera(t_minirt *mini, int key)
 	// printf("Camera\n");
 	mini->Mlx->_do = 1; 
 	if (key == KEYUP)
-		mini->Camera->ray.origin.y -= 0.125;
+		mini->Camera->ray.origin.y -= 0.5;
 	else if (key == KEYDOWN)
-		mini->Camera->ray.origin.y += 0.125;
+		mini->Camera->ray.origin.y += 0.5;
 	else if (key == KEYLEFT)
-		mini->Camera->ray.origin.x += 0.125;
+		mini->Camera->ray.origin.x -= 0.5;
 	else if (key == KEYRIGHT)
-		mini->Camera->ray.origin.x -= 0.125;
-	else if (key == KEY_A)////////////////////////////
-		mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, mini->Camera->matrix);
-	else if (key == R_RIGHT)
-		mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, mini->Camera->matrix);
+		mini->Camera->ray.origin.x += 0.5;
+	// else if (key == KEY_A)
+	// 	mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, update_matrix_x());
+	// else if (key == KEY_D)
+	// 	mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, update_matrix_x());
+	// else if (key == KEY_S)
+	// 	mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, update_matrix_x());
+	// else if (key == KEY_W)
+	// 	mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, update_matrix_x());
+	// else if (key == KEY_A)////////////////////////////
+	// 	mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, mini->Camera->matrix);
+	// else if (key == R_RIGHT)
+	// 	mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, mini->Camera->matrix);
 	else
 		mini->Mlx->_do = 0; 
 }
@@ -139,6 +147,14 @@ int rotation_key(int key, t_minirt *mini)
 		mini->Mlx->rotate = ROTATE_Y;
 	else if (key == ROTATE_Z)
 		mini->Mlx->rotate = ROTATE_Z;
+	else if (key == KEY_A)
+		mini->Mlx->rotate = KEY_A;
+	else if (key == KEY_D)
+		mini->Mlx->rotate = KEY_D;
+	else if (key == KEY_S)
+		mini->Mlx->rotate = KEY_S;
+	else if (key == KEY_W)
+		mini->Mlx->rotate = KEY_W;
 	// if (key == R_RIGHT){
 	// 	// printf("hala\n");
 	// 	// if (theta < 360)
@@ -400,7 +416,7 @@ void	rotation_plane(t_minirt *mini, int e)
 		else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->normal.z <= 1.000000)
 			mini->Plane->normal.z += 0.1f * e;// cycle * e;
 	}
-	else
+	else if (e == -1)
 	{
 		if (mini->Mlx->rotate == ROTATE_X && mini->Plane->normal.x >= -1.000000)
 			mini->Plane->normal.x += 0.1f * e;//cycle * e;
@@ -512,7 +528,7 @@ int main(int ac, char **av)
 		miniRT->Mlx = ft_calloc(1, sizeof(t_mlx));
 		fill_Info(miniRT);
 		miniRT->Camera-> fd = open("had.txt", O_CREAT | O_RDWR, 777);
-		fill_matrix(miniRT->Camera);
+		fill_camera_matrix(miniRT->Camera);
 		print_matrix(miniRT->Camera);
 		miniRT->Mlx->width = WIDTH;
 		miniRT->Mlx->height = HEIGHT;

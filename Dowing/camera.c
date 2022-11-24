@@ -46,7 +46,7 @@ t_matrix    new_matrix(t_point origin, t_point forward, t_point right, t_point u
 // 	return (new);
 // }
 
-void    fill_matrix(t_Camera *_camera)
+void    fill_camera_matrix(t_Camera *_camera)
 {
     t_point random;
     t_point right;
@@ -59,6 +59,22 @@ void    fill_matrix(t_Camera *_camera)
     _camera->matrix = new_matrix(_camera->ray.origin, _camera->ray.direction, right, up);
 
 }
+
+
+// void    fill_plane_matrix(t_Plane *_plane)
+// {
+//     t_point random;
+//     t_point right;
+//     t_point up;
+
+//     random =  new_point(0, 1, 0);
+
+//     right = normalizing(v_cross(random, _plane->ray.direction));
+//     up = normalizing(v_cross(_plane->ray.direction, right));
+//     _camera->matrix = new_matrix(_plane->ray.origin, _plane->ray.direction, right, up);
+
+// }
+
 
 // void    fill_matrix(t_Camera *_camera)
 // {

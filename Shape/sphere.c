@@ -28,6 +28,7 @@ bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color){
 	float hitDestance;
 	int i;
 	s = rt->Sphere;
+	// r.direction = normalizing(r.direction);
 	/* A = d.d, the vector dot product of the direction */
 	hitDestance = FLT_MAX;
 	closestSphere = NULL;

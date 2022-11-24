@@ -4,7 +4,7 @@
 
 int main()
 {
-	size_t a[3]= {0, 51, 25};
-	size_t af = rgb(a);
-	printf("%zu", af);
+	int a = 808;
+	char b = (char)a;
+	printf("%c", b);
 }
