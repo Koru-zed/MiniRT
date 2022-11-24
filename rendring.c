@@ -92,34 +92,34 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 	return true;
 }
 
+//
+//void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, COLOR *color)
+//{
+//	float t1;
+//	float t2;
+//	COLOR color1;
+//	COLOR color2;
+//	bool isP = intersectPlane(rt, ray, &t1, &color1);
+//	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
+//	*color = BLACK;
+//	if (isP || isS) {
+//		if (t1 > t2 && isS) {
+//			*color = color2;
+//			*t = t2;
+//		}
+//		else if (t2 > t1 && isP) {
+//			*color = color1;
+//			*t = t1;
+//		}
+//		else {
+//			*color = BLACK;
+//			*t = 0;
+//		}
+//	}
+//
+//}
 
-void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, COLOR *color)
-{
-	float t1;
-	float t2;
-	COLOR color1;
-	COLOR color2;
-	bool isP = intersectPlane(rt, ray, &t1, &color1);
-	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
-	*color = BLACK;
-	if (isP || isS) {
-		if (t1 > t2 && isS) {
-			*color = color2;
-			*t = t2;
-		}
-		else if (t2 > t1 && isP) {
-			*color = color1;
-			*t = t1;
-		}
-		else {
-			*color = BLACK;
-			*t = 0;
-		}
-	}
-
-}
-
-bool	cylinde(t_minirt *rt, t_ray ray, const int fd)
+/*bool	cylinde(t_minirt *rt, t_ray ray, const int fd)
 {
 	(void )fd;
 	t_Cylinder *cy;
@@ -138,30 +138,34 @@ bool	cylinde(t_minirt *rt, t_ray ray, const int fd)
 // 	t_point p = {0, 5, -1};
 // 	t_point n    = normalizing(p);
 // 	// ft_print_vector(n, 1);
-// }
+// }*/
 void	ray_render(t_minirt *rt)
 {
 	t_ray	ray;
 	int y, x;
-	y = 0;
+	float t;
+	t_hit	*pHit;
+	int color;
 
-//	float t;
-//	int color;
-	int fd;
-	fd = open("debug.txt", O_RDWR | O_TRUNC);
+//	int fd;
+//	fd = open("debug.txt", O_RDWR | O_TRUNC);
 	// normal_at();
+	y = 0;
+	pHit = malloc(sizeof(t_hit));
+	if (!pHit) {
+		exit(EXIT_FAILURE);
+	}
+	pHit->color = ft_calloc(3, sizeof(size_t));
 	while (y < HEIGHT)
 	{
 		x = 0;
 		while (x < WIDTH)
 		{
 			ray = ray_generator(rt, x, y);
-//			iterate_over_objects(rt, ray, &t, &color);
-//			ft_print_vector(ray.direction, fd);
-//			if (y == 0)
-//				cylinde(rt, ray, fd);
-			 if (cylinder_int(rt, &ray, fd))
-				my_mlx_pixel_put(rt->Mlx, x, y, 0xFFFFFF);
+			intersectRaySphere(ray, rt, &t, &color, &pHit);
+//			add_light(pHit, rt, &color);
+//			iterate_over_objects	(rt, ray, &t, &color);
+			my_mlx_pixel_put(rt->Mlx, x, y, color);
 			x++;
 		}
 		y++;

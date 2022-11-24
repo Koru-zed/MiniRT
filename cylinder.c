@@ -80,7 +80,7 @@ bool intersect_caps(t_Cylinder cy, t_ray ray)
 		return true;
 	return false;
 }
-
+/*
 bool	test(t_minirt *rt, t_ray *ray)
 {
 	float a;
@@ -101,7 +101,7 @@ bool	test(t_minirt *rt, t_ray *ray)
 		return false;
 	float root = (-half_b - sqrtf(disc)) / a;
 	if (root < )
-}
+}*/
 
  bool	cylinder_int(t_minirt *rt, t_ray *ray, const int fd)
  {

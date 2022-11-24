@@ -12,7 +12,7 @@ FILES := get_next_line/get_next_line.c \
 		 Dowing/camera.c \
 		 main.c \
 		 math_operations.c rendring.c sphere.c \
-		 cylinder.c
+		 cylinder.c shade.c
 
 OBJES := ${FILES:.c=.o}
 

@@ -63,6 +63,13 @@ typedef struct	point {
 	float	z;
 }	t_point;
 
+typedef struct s_p_intersect {
+	t_point hit_pos;
+	t_point normal;
+	float	hit_mag;
+	size_t 		*color;
+} t_hit;
+
     // t_point left_corner;
     // t_point horizontal;
     // t_point vertical;
