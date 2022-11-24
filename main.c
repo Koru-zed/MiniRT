@@ -229,6 +229,7 @@ void edit_plane(t_minirt *mini, int key)
 	int i;
 	// t_Plane *head;
 		// printf("Plane\n");
+	// static int e; 
 	mini->Mlx->_do = 1;
 	if (key == KEYUP){
 		i = -1;
@@ -252,9 +253,9 @@ void edit_plane(t_minirt *mini, int key)
 			mini->Plane[i].plane_point.x -= 0.75;
 	}
 	else if (key == R_RIGHT)
-		rotation_plane(mini, -1);
-	else if (key == R_LEFT)
 		rotation_plane(mini, 1);
+	else if (key == R_LEFT)
+		rotation_plane(mini, -1);
 	// else if (key == KEY_A)
 	// {
 	// 	// i = -1;
@@ -389,48 +390,25 @@ t_matrix update_matrix_z(int theta)
 
 void	rotation_plane(t_minirt *mini, int e)
 {
-	static float cycle;
-
-	// if (mini->Plane->normal.x == 1)
-	// 	cycle.x = -0.1;
-	// else if (mini->Plane->normal.y == 1)
-	// 	cycle.y = -0.1;
-	// else if (mini->Plane->normal.z == 1)
-	// 	cycle.z = -0.1;
-    // else if (mini->Plane->normal.x <= 1)
-	// 	cycle.x = 0.1;
-	// else if (mini->Plane->normal.y <= 1)
-	// 	cycle.y = 0.1;
-	// else if (mini->Plane->normal.z <= 1)
-	// 	cycle.z = 0.1;
-	// if (mini->)
-		// cycle = 0.1f;
 	mini->Mlx->_do = 1;
-	if (mini->Mlx->rotate == ROTATE_X && (mini->Plane->normal.x <= 1 && mini->Plane->normal.x >= -1))
+	if (e == 1)
 	{
-		if (mini->Plane->normal.x == 1)
-			cycle = -1 * e;
-		else
-			cycle = 1 * e;
-		mini->Plane->normal.x += 0.1f * cycle;
+		if (mini->Mlx->rotate == ROTATE_X && mini->Plane->normal.x <= 1.000000)
+			mini->Plane->normal.x += 0.1f * e;//cycle * e;
+		else if (mini->Mlx->rotate == ROTATE_Y && mini->Plane->normal.y <= 1.000000)
+			mini->Plane->normal.y += 0.1f * e;// cycle * e;
+		else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->normal.z <= 1.000000)
+			mini->Plane->normal.z += 0.1f * e;// cycle * e;
 	}
-	else if (mini->Mlx->rotate == ROTATE_Y && (mini->Plane->normal.y <= 1 && mini->Plane->normal.x >= -1))
+	else
 	{
-		if (mini->Plane->normal.y == 1)
-			cycle = -1 * e;
-		else
-			cycle = 1 * e;
-		mini->Plane->normal.y += 0.1f * cycle;
+		if (mini->Mlx->rotate == ROTATE_X && mini->Plane->normal.x >= -1.000000)
+			mini->Plane->normal.x += 0.1f * e;//cycle * e;
+		else if (mini->Mlx->rotate == ROTATE_Y && mini->Plane->normal.y >= -1.000000)
+			mini->Plane->normal.y += 0.1f * e;// cycle * e;
+		else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->normal.z >= -1.000000)
+			mini->Plane->normal.z += 0.1f * e;// cycle * e;
 	}
-	else if (mini->Mlx->rotate == ROTATE_Z && (mini->Plane->normal.z <= 1 && mini->Plane->normal.x >= -1))
-	{
-		if (mini->Plane->normal.z == 1)
-			cycle = -1 * e;
-		else
-			cycle = 1 * e;
-		mini->Plane->normal.z += 0.1f * cycle;
-	}
-	printf("cycle {%f}\n", cycle);
 	printf("Plane->normal.x = %f, Plane->normal.y = %f, Plane->normal.z = %f\n", mini->Plane->normal.x, mini->Plane->normal.y, mini->Plane->normal.z);
 }
 
