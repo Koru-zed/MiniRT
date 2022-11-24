@@ -4,7 +4,7 @@
 
 int main()
 {
-	int a = 808;
-	char b = (char)a;
-	printf("%c", b);
+	int a = 0;
+	float b= (float)a;
+	printf("%f", b);
 }

@@ -250,23 +250,23 @@ void edit_plane(t_minirt *mini, int key)
 	if (key == KEYUP){
 		i = -1;
 		while (++i < mini->Data->shape.pl)
-			mini->Plane[i].plane_point.y += 0.75;
+			mini->Plane[i].ray.origin.y += 0.75;
 	}
 	else if (key == KEYDOWN){
 		i = -1;
 		while (++i < mini->Data->shape.pl)
-			mini->Plane[i].plane_point.y -= 0.75;
+			mini->Plane[i].ray.origin.y -= 0.75;
 	}
 	else if (key == KEYLEFT){
 		i = -1;
 		while (++i < mini->Data->shape.pl)
-			mini->Plane[i].plane_point.x += 0.75;
+			mini->Plane[i].ray.origin.x += 0.75;
 	}
 	else if (key == KEYRIGHT)
 	{
 		i = -1;
 		while (++i < mini->Data->shape.pl)
-			mini->Plane[i].plane_point.x -= 0.75;
+			mini->Plane[i].ray.origin.x -= 0.75;
 	}
 	else if (key == R_RIGHT)
 		rotation_plane(mini, 1);
@@ -409,23 +409,23 @@ void	rotation_plane(t_minirt *mini, int e)
 	mini->Mlx->_do = 1;
 	if (e == 1)
 	{
-		if (mini->Mlx->rotate == ROTATE_X && mini->Plane->normal.x <= 1.000000)
-			mini->Plane->normal.x += 0.1f * e;//cycle * e;
-		else if (mini->Mlx->rotate == ROTATE_Y && mini->Plane->normal.y <= 1.000000)
-			mini->Plane->normal.y += 0.1f * e;// cycle * e;
-		else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->normal.z <= 1.000000)
-			mini->Plane->normal.z += 0.1f * e;// cycle * e;
+		if (mini->Mlx->rotate == ROTATE_X && mini->Plane->ray.direction.x <= 1.000000)
+			mini->Plane->ray.direction.x += 0.1f * e;//cycle * e;
+		else if (mini->Mlx->rotate == ROTATE_Y && mini->Plane->ray.direction.y <= 1.000000)
+			mini->Plane->ray.direction.y += 0.1f * e;// cycle * e;
+		else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->ray.direction.z <= 1.000000)
+			mini->Plane->ray.direction.z += 0.1f * e;// cycle * e;
 	}
 	else if (e == -1)
 	{
-		if (mini->Mlx->rotate == ROTATE_X && mini->Plane->normal.x >= -1.000000)
-			mini->Plane->normal.x += 0.1f * e;//cycle * e;
-		else if (mini->Mlx->rotate == ROTATE_Y && mini->Plane->normal.y >= -1.000000)
-			mini->Plane->normal.y += 0.1f * e;// cycle * e;
-		else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->normal.z >= -1.000000)
-			mini->Plane->normal.z += 0.1f * e;// cycle * e;
+		if (mini->Mlx->rotate == ROTATE_X && mini->Plane->ray.direction.x >= -1.000000)
+			mini->Plane->ray.direction.x += 0.1f * e;//cycle * e;
+		else if (mini->Mlx->rotate == ROTATE_Y && mini->Plane->ray.direction.y >= -1.000000)
+			mini->Plane->ray.direction.y += 0.1f * e;// cycle * e;
+		else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->ray.direction.z >= -1.000000)
+			mini->Plane->ray.direction.z += 0.1f * e;// cycle * e;
 	}
-	printf("Plane->normal.x = %f, Plane->normal.y = %f, Plane->normal.z = %f\n", mini->Plane->normal.x, mini->Plane->normal.y, mini->Plane->normal.z);
+	printf("Plane->normal.x = %f, Plane->normal.y = %f, Plane->normal.z = %f\n", mini->Plane->ray.direction.x, mini->Plane->ray.direction.y, mini->Plane->ray.direction.z);
 }
 
 
@@ -529,7 +529,8 @@ int main(int ac, char **av)
 		fill_Info(miniRT);
 		miniRT->Camera-> fd = open("had.txt", O_CREAT | O_RDWR, 777);
 		fill_camera_matrix(miniRT->Camera);
-		print_matrix(miniRT->Camera);
+		fill_plane_matrix(miniRT->Plane);
+		// print_matrix(miniRT->Camera);
 		miniRT->Mlx->width = WIDTH;
 		miniRT->Mlx->height = HEIGHT;
 		miniRT->Mlx->mlx = mlx_init();

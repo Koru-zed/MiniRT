@@ -123,12 +123,13 @@ typedef struct s_intersect {
 } t_intersect;
 typedef struct _Plane
 {
-    t_point         plane_point;//x,y,z coordinates of the view
-    t_point         normal;//3d normalized orientation vector. In range [-1,1]
-    // t_ray	        ray;
+    // t_point         plane_point;//x,y,z coordinates of the view
+    // t_point         normal;//3d normalized orientation vector. In range [-1,1]
+    t_ray	        ray;
     size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t          repetition;
 	t_point			local_hit_point; // store the hit point
+    t_matrix  matrix;
     // struct _Plane   *next;
 } t_Plane;
 
@@ -138,6 +139,7 @@ typedef struct _Sphere
 	float			radius;
 	size_t			color[3];//R,G,B colors in range [0-255]: 255, 255, 255
 	size_t			repetition;
+
     // struct _Sphere   *next;
 } t_Sphere;
 

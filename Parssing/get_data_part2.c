@@ -12,8 +12,8 @@ int    get_Plane(t_minirt *mini, t_data *data)
 
     // _plane = ft_calloc(1, sizeof(t_Plane));
 
-    set_cordinates(data->pars[1], &mini->Plane[i].plane_point, mini);
-    set_orientation(data->pars[2], &mini->Plane[i].normal, mini);
+    set_cordinates(data->pars[1], &mini->Plane[i].ray.origin, mini);
+    set_orientation(data->pars[2], &mini->Plane[i].ray.direction, mini);
     set_color(data->pars[3], mini->Plane[i].color, mini);
     i++;
     // if (empty)

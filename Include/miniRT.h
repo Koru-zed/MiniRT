@@ -103,6 +103,7 @@ bool 	intersectRaySphere(t_ray r, t_minirt *s, float *t, COLOR *color);
 bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, COLOR *color);
 
 void        fill_camera_matrix(t_Camera *_camera);
+void    fill_plane_matrix(t_Plane *_plane);
 // t_matrix    new_matrix(t_point origin, t_point forward, t_point right, t_point up);
 t_matrix    new_matrix(t_point u, t_point v, t_point w, t_point T);
 t_point	mul_point_matrix(t_point p, t_matrix m);
