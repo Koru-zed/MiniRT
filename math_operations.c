@@ -111,20 +111,44 @@ t_matrix	cross_matrix(t_matrix M1, t_matrix M2)
 	int         j;
 	t_matrix	M12;
 
-	i = -1;
-	while (++i < 4)
+	i = 0;
+	while (i < 4)
 	{
-		j = -1;
-        while (++j < 4)
+		j = 0;
+        while (j < 4)
 		{
 			M12.M[i][j] = M1.M[i][0] * M2.M[0][j] + \
-			M1.M[i][1] * M2.M[1][j] + \
-			M1.M[i][2] * M2.M[2][j] + \
-			M1.M[i][3] * M2.M[3][j];
+						  M1.M[i][1] * M2.M[1][j] + \
+						  M1.M[i][2] * M2.M[2][j] + \
+						  M1.M[i][3] * M2.M[3][j];
+			j++;
 		}
+		i++;
 	}
 	return (M12);
 }
+
+// t_matrix	cross_matrix(t_matrix src, t_matrix mult)
+// {
+// 	t_matrix	res;
+// 	int				i;
+// 	int				j;
+
+// 	i = 0;
+// 	while (i < 4)
+// 	{
+// 		j = 0;
+// 		while (j < 4)
+// 		{
+// 			res.M[i][j] = src.M[i][0] * mult.M[0][j] + \
+// 			src.M[i][1] * mult.M[1][j] \
+// 			+ src.M[i][2] * mult.M[2][j] + src.M[i][3] * mult.M[3][j];
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	return (res);
+// }
 
 t_point	mul_point_matrix(t_point p, t_matrix m)
 {

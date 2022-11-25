@@ -13,7 +13,9 @@ FILES := get_next_line/get_next_line.c \
 		 math_operations.c \
 		Shape/rendring.c \
 		Shape/sphere.c \
-		Shape/plane.c
+		Shape/plane.c \
+		Shape/Rotation.c \
+		ft_matrix.c
 
 OBJES := ${FILES:.c=.o}
 

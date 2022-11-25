@@ -39,7 +39,7 @@ t_point	ray_pixel_to_world(t_minirt *mini, int x, int y)
 	half_width = half_hight * aspect_ratio;
 	ps_x = (float )(2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
 	ps_y = (float )(1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
-	return (new_point(ps_x, ps_y, 1));
+	return (new_point(-ps_x, ps_y, 1));
 }
 
 t_ray	ray_generator(t_minirt *mini, int x, int y)
@@ -77,18 +77,21 @@ void edit_camera(t_minirt *mini, int key)
 		mini->Camera->ray.origin.x += 0.5;
 	else if (key == KEY_A || key == KEY_D || key == KEY_S || key == KEY_W)
 	{
-		printf("hello\n");
-		if (key == KEY_W)
-			mini->Camera->matrix = cross_matrix(update_matrix_x(3.6), mini->Camera->matrix);
-		else if (key == KEY_S)
-			mini->Camera->matrix = cross_matrix(update_matrix_x(-3.6), mini->Camera->matrix);
-		else if (key == KEY_A)
+		if (key == KEY_A)
 			mini->Camera->matrix = cross_matrix(update_matrix_y(-3.6), mini->Camera->matrix);
 		else if (key == KEY_D)
-			mini->Camera->matrix = cross_matrix(update_matrix_y(3.6), mini->Camera->matrix);
+			mini->Camera->matrix = cross_matrix(update_matrix_y(3.6),  mini->Camera->matrix);
+		else if (key == KEY_W)
+			mini->Camera->matrix = cross_matrix(update_matrix_x(3.6), mini->Camera->matrix);
+		else if (key == KEY_D)
+			mini->Camera->matrix = cross_matrix(update_matrix_x(-3.6),  mini->Camera->matrix);
+		// printf("cross_matrix\n");
+		// print_matrix(mini->Camera->matrix);
 		mini->Camera->ray.direction.x = mini->Camera->matrix.M[2][0];
 		mini->Camera->ray.direction.y = mini->Camera->matrix.M[2][1];
 		mini->Camera->ray.direction.z = mini->Camera->matrix.M[2][2];
+		// printf("x[%f], y{%f}, z{%f}", mini->Camera->ray.direction.x,mini->Camera->ray.direction.y,mini->Camera->ray.direction.z);
+
 	}
 	else
 		mini->Mlx->_do = 0; 
@@ -102,19 +105,7 @@ void edit_camera(t_minirt *mini, int key)
 void edit_sepher(t_minirt *mini, int key)
 {
 	int i;
-	// printf("Sepher\n");
-	// mini->Mlx->_do = 1; 
-	// if (key == KEYUP)
-	// 	mini->Sphere->center.y += 0.5;
-	// else if (key == KEYDOWN)
-	// 	mini->Sphere->center.y -= 0.5;
-	// else if (key == KEYLEFT)
-	// 	mini->Sphere->center.x -= 0.5;
-	// else if (key == KEYRIGHT)
-	// 	mini->Sphere->center.x += 0.5;
-	// else
-	// 	mini->Mlx->_do = 0; 
-	// printf("hello\n");
+
 	mini->Mlx->_do = 1;
 	if (key == KEYUP){
 		i = -1;
@@ -144,9 +135,6 @@ void edit_sepher(t_minirt *mini, int key)
 
 int rotation_key(int key, t_minirt *mini)
 {
-	// t_matrix M;÷
-	// static int theta;
-	// static int e;
 
 	
 	if (key == ROTATE_X)
@@ -155,97 +143,13 @@ int rotation_key(int key, t_minirt *mini)
 		mini->Mlx->rotate = ROTATE_Y;
 	else if (key == ROTATE_Z)
 		mini->Mlx->rotate = ROTATE_Z;
-	// if (key == R_RIGHT){
-	// 	// printf("hala\n");
-	// 	// if (theta < 360)
-	// 	// 	theta += 30;
-	// 	// else 
-	// 	// 	theta = 0;
-	// 	// // update_matrix_x(theta);
-	// 	// mini->Camera->matrix = cross_matrix(update_matrix_x(theta), mini->Camera->matrix);
-	// 	// print_matrix(mini->Camera);
-	// 	rotation_plane(mini, 1);
-	// 	// printf("plane_dir->x{%f} | plane_dir->y{%f} | plane_dir->z{%f}\n", mini->Plane->normal.x, mini->Plane->normal.y, mini->Plane->normal.z);
-	// 	// else if (mini->Mlx->rotate == ROTATE_X && mini->Plane->normal.x >= -1)
-	// 	// 	mini->Plane->normal.x += ;
-	// 	// else if (mini->Mlx->rotate == ROTATE_Y && mini->Plane->normal.y >= -1)
-	// 	// 	mini->Plane->normal.y += ;
-	// 	// else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->normal.z >= -1)
-	// 	// 	mini->Plane->normal.z += ;
-	// }
-	// else if (key == R_LEFT){
-	// 	// printf("hala\n");
-	// 	// if (theta < 360)
-	// 	// 	theta += 30;
-	// 	// else 
-	// 	// 	theta = 0;
-	// 	// // update_matrix_y(theta);
-	// 	// mini->Camera->matrix = cross_matrix(update_matrix_y(theta), mini->Camera->matrix);
-	// 	// print_matrix(mini->Camera);
-	// 	// if (mini->Mlx->rotate == ROTATE_X && mini->Plane->normal.x <= 1)
-	// 	// 	mini->Plane->normal.x += ;
-	// 	// else if (mini->Mlx->rotate == ROTATE_Y && mini->Plane->normal.y <= 1)
-	// 	// 	mini->Plane->normal.y += ;
-	// 	// else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->normal.z <= 1)
-	// 	// 	mini->Plane->normal.z += ;
-	// 	// else if (mini->Mlx->rotate == ROTATE_X && mini->Plane->normal.x >= -1)
-	// 	// 	mini->Plane->normal.x += ;
-	// 	// else if (mini->Mlx->rotate == ROTATE_Y && mini->Plane->normal.y >= -1)
-	// 	// 	mini->Plane->normal.y += ;
-	// 	// else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->normal.z >= -1)
-	// 	// 	mini->Plane->normal.z += ;
-	// 	rotation_plane(mini, -1);
-	// 	// printf("plane_dir->x{%f} | plane_dir->y{%f} | plane_dir->z{%f}\n", mini->Plane->normal.x, mini->Plane->normal.y, mini->Plane->normal.z);
-	// }
-	// else if (key == R_RIGHT){
-	// 	// printf("hala\n");
-	// 	// if (theta < 360)
-	// 	// 	theta += 30;
-	// 	// else 
-	// 	// 	theta = 0;
-	// 	// // update_matrix_z(theta);
-	// 	// mini->Camera->matrix = cross_matrix(update_matrix_x(theta), mini->Camera->matrix);
-	// 	// print_matrix(mini->Camera);
-	// }
-	// else if (key == KEY_A){
-	// 	// printf("hala\n");
-	// 	// if (theta > 0)
-	// 	// 	theta -= 30;
-	// 	// else 
-	// 	// 	theta = 360;
-	// 	// // update_matrix_x(theta);
-	// 	// mini->Camera->matrix = cross_matrix(update_matrix_x(theta), mini->Camera->matrix);
-	// 	// print_matrix(mini->Camera);
-	// }
-	// else if (key == KEY_A && mini->Mlx->rotate == ROTATE_Y){
-	// 	// printf("hala\n");
-	// 	// if (theta > 0)
-	// 	// 	theta -= 30;
-	// 	// else 
-	// 	// 	theta = 360;
-	// 	// // update_matrix_y(theta);
-	// 	// mini->Camera->matrix = cross_matrix(update_matrix_x(theta), mini->Camera->matrix);
-	// 	// print_matrix(mini->Camera);
-	// }
-	// else if (key == KEY_A && mini->Mlx->rotate == ROTATE_Z){
-	// 	// printf("hala\n");
-	// 	// if (theta > 0)
-	// 	// 	theta -= 30;
-	// 	// else 
-	// 	// 	theta = 360;
-	// 	// // update_matrix_z(theta);
-	// 	// mini->Camera->matrix = cross_matrix(update_matrix_x(theta), mini->Camera->matrix);
-	// 	// print_matrix(mini->Camera);
-	// }
 	return (0);
 }
 
 void edit_plane(t_minirt *mini, int key)
 {
 	int i;
-	// t_Plane *head;
-		// printf("Plane\n");
-	// static int e; 
+ 
 	mini->Mlx->_do = 1;
 	if (key == KEYUP){
 		i = -1;
@@ -272,18 +176,6 @@ void edit_plane(t_minirt *mini, int key)
 		rotation_plane(mini, 1);
 	else if (key == R_LEFT)
 		rotation_plane(mini, -1);
-	// else if (key == KEY_A)
-	// {
-	// 	// i = -1;
-	// 	// while (++i < mini->Data->shape.pl)
-	// 	mini->Plane[0].plane_point = mul_point_matrix(mini->Plane[0].plane_point, mini->Camera->matrix);
-	// }
-	// else if (key == R_RIGHT)
-	// {
-	// 	// i = -1;
-	// 	// while (++i < mini->Data->shape.pl)
-	// 	mini->Plane[0].plane_point = mul_point_matrix(mini->Plane[0].plane_point, mini->Camera->matrix);
-	// }
 	else
 		mini->Mlx->_do = 0; 
 }
@@ -309,7 +201,7 @@ void edit_mini(t_minirt *mini, int key)
 	if (mini->Mlx->_do)
 	{
 		// printf("hello\n");
-		print_matrix(mini->Camera);
+		// print_matrix(mini->Camera);
 		mlx_clear_window(mini->Mlx->mlx, mini->Mlx->win);
 		ray_render(mini);
 	}
@@ -337,82 +229,7 @@ int objs_key(int key, t_minirt *mini)
 	return (0);
 }
 
-t_matrix update_matrix_x(float theta)
-{
-	float _radian;
-	t_matrix matrix;
 
-	_radian = theta * M_PI / 180;
-
-	matrix.M[0][0] = 1;
-	matrix.M[0][1] = 0;
-	matrix.M[0][2] = 0;
-	matrix.M[0][3] = 0;
-	matrix.M[1][0] = 0;
-	matrix.M[1][1] = (float )cos(_radian);
-	matrix.M[1][2] = -(float )sin(_radian);
-	matrix.M[1][3] = 0;
-	matrix.M[2][0] = 0;
-	matrix.M[2][1] = (float )sin(_radian);
-	matrix.M[2][2] = (float )cos(_radian);
-	matrix.M[2][3] = 0;
-	matrix.M[3][0] = 0;
-	matrix.M[3][1] = 0;
-	matrix.M[3][2] = 0;
-	matrix.M[3][3] = 1;
-	return (matrix);
-}
-
-t_matrix update_matrix_y(float theta)
-{
-	float _radian;
-	t_matrix matrix;
-
-	_radian = theta * M_PI / 180;
-	matrix.M[0][0] = (float )cos(_radian);
-	matrix.M[0][1] = 0;
-	matrix.M[0][2] = (float )sin(_radian);
-	matrix.M[0][3] = 0;
-	matrix.M[1][0] = 0;
-	matrix.M[1][1] = 1;
-	matrix.M[1][2] = 0;
-	matrix.M[1][3] = 0;
-	matrix.M[2][0] = -(float )sin(_radian);
-	matrix.M[2][1] = 0;
-	matrix.M[2][2] = (float )cos(_radian);
-	matrix.M[2][3] = 0;
-	matrix.M[3][0] = 0;
-	matrix.M[3][1] = 0;
-	matrix.M[3][2] = 0;
-	matrix.M[3][3] = 1;
-	return (matrix);
-}
-
-t_matrix update_matrix_z(float theta)
-{
-	float _radian;
-	t_matrix matrix;
-
-	_radian = theta * M_PI / 180;
-
-	matrix.M[0][0] = (float )cos(_radian);
-	matrix.M[0][1] = -(float )sin(_radian);
-	matrix.M[0][2] = 0;
-	matrix.M[0][3] = 0;
-	matrix.M[1][0] = (float)sin(_radian);
-	matrix.M[1][1] = (float)cos(_radian);
-	matrix.M[1][2] = 0;
-	matrix.M[1][3] = 0;
-	matrix.M[2][0] = 0;
-	matrix.M[2][1] = 0;
-	matrix.M[2][2] = 1;
-	matrix.M[2][3] = 0;
-	matrix.M[3][1] = 0;
-	matrix.M[3][2] = 0;
-	matrix.M[3][1] = 0;
-	matrix.M[3][2] = 1;
-	return (matrix);
-}
 
 void	rotation_plane(t_minirt *mini, int e)
 {
@@ -435,7 +252,7 @@ void	rotation_plane(t_minirt *mini, int e)
 		else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->ray.direction.z >= -1.000000)
 			mini->Plane->ray.direction.z += 0.1f * e;// cycle * e;
 	}
-	printf("Plane->normal.x = %f, Plane->normal.y = %f, Plane->normal.z = %f\n", mini->Plane->ray.direction.x, mini->Plane->ray.direction.y, mini->Plane->ray.direction.z);
+	// printf("Plane->normal.x = %f, Plane->normal.y = %f, Plane->normal.z = %f\n", mini->Plane->ray.direction.x, mini->Plane->ray.direction.y, mini->Plane->ray.direction.z);
 }
 
 
@@ -471,7 +288,7 @@ int press_key(int key, t_minirt *mini)
 	}
 	objs_key(key, mini);
 	rotation_key(key, mini);
-	printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
+	// printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
 	return (0);
 }
 
@@ -485,46 +302,45 @@ void	setup_controls(t_minirt *mini)
 	mlx_key_hook(mini->Mlx->win, press_key, mini);
 }
 
-void print_matrix(t_Camera *_camera)
+void print_matrix(t_matrix matrix)
 {
-	printf("fd{%d}\n", _camera->fd);
-	ft_putstr_fd("########\n", _camera->fd);
-	ft_putstr_fd("M[0][0] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[0][0], _camera->fd);
-	ft_putstr_fd(" | M[0][1] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[0][1], _camera->fd);
-	ft_putstr_fd(" | M[0][2] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[0][2], _camera->fd);
-	ft_putstr_fd(" | M[0][3] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[0][3], _camera->fd);
-	ft_putchar_fd('\n', _camera->fd);
-	ft_putstr_fd("M[1][0] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[1][0], _camera->fd);
-	ft_putstr_fd(" | M[1][1] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[1][1], _camera->fd);
-	ft_putstr_fd(" | M[1][2] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[1][2], _camera->fd);
-	ft_putstr_fd(" | M[1][3] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[1][3], _camera->fd);
-	ft_putchar_fd('\n', _camera->fd);
-	ft_putstr_fd("M[2][0] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[2][0], _camera->fd);
-	ft_putstr_fd(" | M[2][1] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[2][1], _camera->fd);
-	ft_putstr_fd(" | M[2][2] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[2][2], _camera->fd);
-	ft_putstr_fd(" | M[2][3] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[2][3], _camera->fd);
-	ft_putchar_fd('\n', _camera->fd);
-	ft_putstr_fd("M[3][0] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[3][0], _camera->fd);
-	ft_putstr_fd(" | M[3][1] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[3][1], _camera->fd);
-	ft_putstr_fd(" | M[3][2] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[3][2], _camera->fd);
-	ft_putstr_fd(" | M[3][3] = ", _camera->fd);
-	ft_putnbr_fd(_camera->matrix.M[3][3], _camera->fd);
-	ft_putstr_fd("\n\n", _camera->fd);
+	printf("########\n");
+	printf("M[0][0] = ");
+	printf("%f", matrix.M[0][0]);
+	printf(" | M[0][1] = ");
+	printf("%f", matrix.M[0][1]);
+	printf(" | M[0][2] = ");
+	printf("%f", matrix.M[0][2]);
+	printf(" | M[0][3] = ");
+	printf("%f", matrix.M[0][3]);
+	printf("\n");
+	printf("M[1][0] = ");
+	printf("%f", matrix.M[1][0]);
+	printf(" | M[1][1] = ");
+	printf("%f", matrix.M[1][1]);
+	printf(" | M[1][2] = ");
+	printf("%f", matrix.M[1][2]);
+	printf(" | M[1][3] = ");
+	printf("%f", matrix.M[1][3]);
+	printf("\n");
+	printf("M[2][0] = ");
+	printf("%f", matrix.M[2][0]);
+	printf(" | M[2][1] = ");
+	printf("%f", matrix.M[2][1]);
+	printf(" | M[2][2] = ");
+	printf("%f", matrix.M[2][2]);
+	printf(" | M[2][3] = ");
+	printf("%f", matrix.M[2][3]);
+	printf("\n");
+	printf("M[3][0] = ");
+	printf("%f", matrix.M[3][0]);
+	printf(" | M[3][1] = ");
+	printf("%f", matrix.M[3][1]);
+	printf(" | M[3][2] = ");
+	printf("%f", matrix.M[3][2]);
+	printf(" | M[3][3] = ");
+	printf("%f", matrix.M[3][3]);
+	printf("\n\n");;
 	// close(_camera->fd);
 
 }
@@ -540,9 +356,6 @@ int main(int ac, char **av)
 		miniRT->file = av[1];
 		miniRT->fd = open(miniRT->file, O_RDONLY);
 		fill_data(miniRT->Data, &miniRT->Data->shape, miniRT->fd);
-		// miniRT->Ambient = ft_calloc(1, sizeof(t_Ambient));
-		// miniRT->Camera = ft_calloc(1, sizeof(t_Camera));
-		// miniRT->Light = ft_calloc(1, sizeof(t_Light));
 		miniRT->Mlx = ft_calloc(1, sizeof(t_mlx));
 		fill_Info(miniRT);
 		// miniRT->Camera-> fd = open("had.txt", O_CREAT | O_RDWR, 777);
