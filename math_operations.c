@@ -116,10 +116,12 @@ t_matrix	cross_matrix(t_matrix M1, t_matrix M2)
 	{
 		j = -1;
         while (++j < 4)
+		{
 			M12.M[i][j] = M1.M[i][0] * M2.M[0][j] + \
 			M1.M[i][1] * M2.M[1][j] + \
 			M1.M[i][2] * M2.M[2][j] + \
 			M1.M[i][3] * M2.M[3][j];
+		}
 	}
 	return (M12);
 }

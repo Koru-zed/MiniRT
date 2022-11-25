@@ -122,6 +122,7 @@ void	ray_render(t_minirt *mini)
 	y = 0;
 
 	float t;
+	camera_matrix(mini->Camera);
 	while (y < HEIGHT)
 	{
 		x = 0;

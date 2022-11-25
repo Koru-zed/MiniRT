@@ -36,7 +36,7 @@
 # define ROTATE_X 7
 # define ROTATE_Y 16
 # define ROTATE_Z 6
-# define ZERO 27
+# define ZERO 29
 # define R_LEFT 43
 # define R_RIGHT 47
 # define KEY_A 0
@@ -102,14 +102,17 @@ bool 	intersectRaySphere(t_ray r, t_minirt *s, float *t, COLOR *color);
 
 bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, COLOR *color);
 
-void        fill_camera_matrix(t_Camera *_camera);
+void        camera_matrix(t_Camera *_camera);
 void    fill_plane_matrix(t_Plane *_plane);
 // t_matrix    new_matrix(t_point origin, t_point forward, t_point right, t_point up);
 t_matrix    new_matrix(t_point u, t_point v, t_point w, t_point T);
+t_matrix update_matrix_x(float theta);
+t_matrix update_matrix_y(float theta);
+t_matrix update_matrix_z(float theta);
+
 t_point	mul_point_matrix(t_point p, t_matrix m);
 t_point	at(float t, t_ray *r);
 
-t_matrix update_matrix_x(int theta);
 t_matrix	cross_matrix(t_matrix M1, t_matrix M2);
 void print_matrix(t_Camera *_camera);
 void	rotation_plane(t_minirt *mini, int e);

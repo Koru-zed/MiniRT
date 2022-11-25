@@ -56,7 +56,12 @@ t_ray	ray_generator(t_minirt *mini, int x, int y)
 	return (ray);
 }
 
-// +
+// zoom 
+/*
+		mini->Camera->matrix.M[0][2] = mini->Camera->ray.direction.x;
+		mini->Camera->matrix.M[1][2] = mini->Camera->ray.direction.y;
+		mini->Camera->matrix.M[2][2] = mini->Camera->ray.direction.z;
+*/
 
 void edit_camera(t_minirt *mini, int key)
 {
@@ -70,18 +75,21 @@ void edit_camera(t_minirt *mini, int key)
 		mini->Camera->ray.origin.x -= 0.5;
 	else if (key == KEYRIGHT)
 		mini->Camera->ray.origin.x += 0.5;
-	// else if (key == KEY_A)
-	// 	mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, update_matrix_x());
-	// else if (key == KEY_D)
-	// 	mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, update_matrix_x());
-	// else if (key == KEY_S)
-	// 	mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, update_matrix_x());
-	// else if (key == KEY_W)
-	// 	mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, update_matrix_x());
-	// else if (key == KEY_A)////////////////////////////
-	// 	mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, mini->Camera->matrix);
-	// else if (key == R_RIGHT)
-	// 	mini->Camera->ray.origin = mul_point_matrix(mini->Camera->ray.origin, mini->Camera->matrix);
+	else if (key == KEY_A || key == KEY_D || key == KEY_S || key == KEY_W)
+	{
+		printf("hello\n");
+		if (key == KEY_W)
+			mini->Camera->matrix = cross_matrix(update_matrix_x(3.6), mini->Camera->matrix);
+		else if (key == KEY_S)
+			mini->Camera->matrix = cross_matrix(update_matrix_x(-3.6), mini->Camera->matrix);
+		else if (key == KEY_A)
+			mini->Camera->matrix = cross_matrix(update_matrix_y(-3.6), mini->Camera->matrix);
+		else if (key == KEY_D)
+			mini->Camera->matrix = cross_matrix(update_matrix_y(3.6), mini->Camera->matrix);
+		mini->Camera->ray.direction.x = mini->Camera->matrix.M[2][0];
+		mini->Camera->ray.direction.y = mini->Camera->matrix.M[2][1];
+		mini->Camera->ray.direction.z = mini->Camera->matrix.M[2][2];
+	}
 	else
 		mini->Mlx->_do = 0; 
 }
@@ -147,14 +155,6 @@ int rotation_key(int key, t_minirt *mini)
 		mini->Mlx->rotate = ROTATE_Y;
 	else if (key == ROTATE_Z)
 		mini->Mlx->rotate = ROTATE_Z;
-	else if (key == KEY_A)
-		mini->Mlx->rotate = KEY_A;
-	else if (key == KEY_D)
-		mini->Mlx->rotate = KEY_D;
-	else if (key == KEY_S)
-		mini->Mlx->rotate = KEY_S;
-	else if (key == KEY_W)
-		mini->Mlx->rotate = KEY_W;
 	// if (key == R_RIGHT){
 	// 	// printf("hala\n");
 	// 	// if (theta < 360)
@@ -308,6 +308,8 @@ void edit_mini(t_minirt *mini, int key)
 	// mini->Mlx->addr = mlx_get_data_addr(mini->Mlx->img, &mini->Mlx->bits_per_pixel, &mini->Mlx->line_length, &mini->Mlx->endian);
 	if (mini->Mlx->_do)
 	{
+		// printf("hello\n");
+		print_matrix(mini->Camera);
 		mlx_clear_window(mini->Mlx->mlx, mini->Mlx->win);
 		ray_render(mini);
 	}
@@ -335,62 +337,70 @@ int objs_key(int key, t_minirt *mini)
 	return (0);
 }
 
-t_matrix update_matrix_x(int theta)
+t_matrix update_matrix_x(float theta)
 {
+	float _radian;
 	t_matrix matrix;
+
+	_radian = theta * M_PI / 180;
 
 	matrix.M[0][0] = 1;
 	matrix.M[0][1] = 0;
 	matrix.M[0][2] = 0;
 	matrix.M[0][3] = 0;
 	matrix.M[1][0] = 0;
-	matrix.M[1][1] = (float )cos(theta);
-	matrix.M[1][2] = -(float )sin(theta);
+	matrix.M[1][1] = (float )cos(_radian);
+	matrix.M[1][2] = -(float )sin(_radian);
 	matrix.M[1][3] = 0;
 	matrix.M[2][0] = 0;
-	matrix.M[2][1] = (float )sin(theta);
-	matrix.M[2][2] = (float )cos(theta);
+	matrix.M[2][1] = (float )sin(_radian);
+	matrix.M[2][2] = (float )cos(_radian);
 	matrix.M[2][3] = 0;
+	matrix.M[3][0] = 0;
 	matrix.M[3][1] = 0;
 	matrix.M[3][2] = 0;
-	matrix.M[3][1] = 0;
-	matrix.M[3][2] = 1;
+	matrix.M[3][3] = 1;
 	return (matrix);
 }
 
-t_matrix update_matrix_y(int theta)
+t_matrix update_matrix_y(float theta)
 {
+	float _radian;
 	t_matrix matrix;
 
-	matrix.M[0][0] = (float )cos(theta);
+	_radian = theta * M_PI / 180;
+	matrix.M[0][0] = (float )cos(_radian);
 	matrix.M[0][1] = 0;
-	matrix.M[0][2] = (float )sin(theta);
+	matrix.M[0][2] = (float )sin(_radian);
 	matrix.M[0][3] = 0;
 	matrix.M[1][0] = 0;
 	matrix.M[1][1] = 1;
 	matrix.M[1][2] = 0;
 	matrix.M[1][3] = 0;
-	matrix.M[2][0] = -(float )sin(theta);
+	matrix.M[2][0] = -(float )sin(_radian);
 	matrix.M[2][1] = 0;
-	matrix.M[2][2] = (float )cos(theta);
+	matrix.M[2][2] = (float )cos(_radian);
 	matrix.M[2][3] = 0;
+	matrix.M[3][0] = 0;
 	matrix.M[3][1] = 0;
 	matrix.M[3][2] = 0;
-	matrix.M[3][1] = 0;
-	matrix.M[3][2] = 1;
+	matrix.M[3][3] = 1;
 	return (matrix);
 }
 
-t_matrix update_matrix_z(int theta)
+t_matrix update_matrix_z(float theta)
 {
+	float _radian;
 	t_matrix matrix;
 
-	matrix.M[0][0] = (float )cos(theta);
-	matrix.M[0][1] = -(float )sin(theta);
+	_radian = theta * M_PI / 180;
+
+	matrix.M[0][0] = (float )cos(_radian);
+	matrix.M[0][1] = -(float )sin(_radian);
 	matrix.M[0][2] = 0;
 	matrix.M[0][3] = 0;
-	matrix.M[1][0] = (float)sin(theta);
-	matrix.M[1][1] = (float)cos(theta);
+	matrix.M[1][0] = (float)sin(_radian);
+	matrix.M[1][1] = (float)cos(_radian);
 	matrix.M[1][2] = 0;
 	matrix.M[1][3] = 0;
 	matrix.M[2][0] = 0;
@@ -409,11 +419,11 @@ void	rotation_plane(t_minirt *mini, int e)
 	mini->Mlx->_do = 1;
 	if (e == 1)
 	{
-		if (mini->Mlx->rotate == ROTATE_X && mini->Plane->ray.direction.x <= 1.000000)
+		if (mini->Mlx->rotate == ROTATE_X && mini->Plane->ray.direction.x < 1.000000)
 			mini->Plane->ray.direction.x += 0.1f * e;//cycle * e;
-		else if (mini->Mlx->rotate == ROTATE_Y && mini->Plane->ray.direction.y <= 1.000000)
+		else if (mini->Mlx->rotate == ROTATE_Y && mini->Plane->ray.direction.y < 1.000000)
 			mini->Plane->ray.direction.y += 0.1f * e;// cycle * e;
-		else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->ray.direction.z <= 1.000000)
+		else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->ray.direction.z < 1.000000)
 			mini->Plane->ray.direction.z += 0.1f * e;// cycle * e;
 	}
 	else if (e == -1)
@@ -444,6 +454,14 @@ int press_key(int key, t_minirt *mini)
 	else if (key == R_RIGHT)
 		edit_mini(mini, key);
 	else if (key == R_LEFT)
+		edit_mini(mini, key);
+	else if (key == KEY_A)
+		edit_mini(mini, key);
+	else if (key == KEY_D)
+		edit_mini(mini, key);
+	else if (key == KEY_W)
+		edit_mini(mini, key);
+	else if (key == KEY_S)
 		edit_mini(mini, key);
 	else if (key == ZERO)
 	{
@@ -527,10 +545,7 @@ int main(int ac, char **av)
 		// miniRT->Light = ft_calloc(1, sizeof(t_Light));
 		miniRT->Mlx = ft_calloc(1, sizeof(t_mlx));
 		fill_Info(miniRT);
-		miniRT->Camera-> fd = open("had.txt", O_CREAT | O_RDWR, 777);
-		fill_camera_matrix(miniRT->Camera);
-		fill_plane_matrix(miniRT->Plane);
-		// print_matrix(miniRT->Camera);
+		// miniRT->Camera-> fd = open("had.txt", O_CREAT | O_RDWR, 777);
 		miniRT->Mlx->width = WIDTH;
 		miniRT->Mlx->height = HEIGHT;
 		miniRT->Mlx->mlx = mlx_init();
