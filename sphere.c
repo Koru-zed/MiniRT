@@ -14,7 +14,10 @@ t_point new_point(float x, float y, float z)
 	return pos;
 }
 
-bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color){
+
+
+bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color, t_hit **pHit)
+{
 
 	float t_min;
 	t_point dist;
@@ -25,12 +28,13 @@ bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color){
 	float A;
 	t_Sphere *closestSphere;
 	t_Sphere *s;
-	float hitDestance;
+	float dis_t;
 
 	s = rt->Sphere;
 	/* A = d.d, the vector dot product of the direction */
-	hitDestance = FLT_MAX;
+	dis_t = FLT_MAX;
 	closestSphere = NULL;
+	r.direction = normalizing(r.direction);
 	A = v_dot(r.direction, r.direction);
 	*t = FLT_MAX;
 	while (s) {
@@ -53,9 +57,9 @@ bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color){
 //			continue;
 		sqrt_discr = sqrtf(discriminant);
 		t_min = (-B - sqrt_discr) / (2.0f * A);
-		if (t_min < hitDestance)
+		if (t_min < dis_t)
 		{
-			hitDestance = t_min;
+			dis_t = t_min;
 			closestSphere = s;
 		}
 		s = s->next;
@@ -65,33 +69,28 @@ bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color){
 		*color = BLACK;
 		return false;
 	}
-	*t = hitDestance;
-//	t_point origin = v_sub(r->origin, closestSphere->center);
-//	t_point hitPoint = v_adding(origin, v_mul(hitDestance, r->direction));
-
-//	else
-//	{
-//		sqrt_discr = sqrtf(discriminant);
-//		t_min = (-B - sqrt_discr) / (2.0f * A);
-//		if (t_min > EPSILON)
-//		{
-//			*t = t_min;
-//			// todo : compute the local hit point and normal
-//			return true;
-//		}
-//		t_min = (-B + sqrt_discr) / (2.0f * A);
-//		if (t_min > EPSILON)
-//		{
-//			*t = t_min;
-//			// todo : compute the local hit point and normal
-//			return true;
-//		}
-//	}
+	*t = dis_t;
+//	t_point origin = v_sub(r.origin, closestSphere->center);
+	(*pHit)->hit_pos = v_adding(r.origin, v_mul(dis_t, r.direction));
+	(*pHit)->normal = normalizing(v_sub((*pHit)->hit_pos, closestSphere->center));
 
 	/* We need a vector representing the distance between the start of
 	 * the ray and the position of the circle.
 	 * This is the term (p0 - c)
 	 */
-	*color = rgb(closestSphere->color);
+//	size_t am[3];
+//	am[0] = (size_t) ((float )rt->Ambient->color[0] * rt->Ambient->ratio);
+//	am[1] = (size_t )((float )rt->Ambient->color[1] * rt->Ambient->ratio);
+//	am[2] = (size_t )((float )rt->Ambient->color[2] * rt->Ambient->ratio);
+//	size_t res[3];
+//
+//	res[0] = closestSphere->color[0] * am[0];
+//	res[1] = closestSphere->color[1] * am[1];
+//	res[2] = closestSphere->color[2] * am[2];
+//	*color = rgb(res);
+		*color = rgb(closestSphere->color);
+	(*pHit)->color[0] = closestSphere->color[0];
+	(*pHit)->color[1] = closestSphere->color[1];
+	(*pHit)->color[2] = closestSphere->color[2];
 	return true;
 }

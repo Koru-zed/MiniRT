@@ -67,7 +67,7 @@ typedef struct s_p_intersect {
 	t_point hit_pos;
 	t_point normal;
 	float	hit_mag;
-	size_t 		*color;
+	size_t 	*color;
 } t_hit;
 
     // t_point left_corner;
@@ -103,8 +103,8 @@ typedef struct _Camera
 typedef struct _Light
 {
     t_point   cordinates;//x,y,z coordinates of the view
-    float    brightenss;//the light brightness ratio in range [0.0,1.0]
-    size_t   color[3];//R,G,B colors in range [0-255]: 255, 255, 255
+    float    brightenss;// * shininess light brightness ratio in range [0.0,1.0]
+    size_t   color[3];// * not used in mendatory R,G,B colors in range [0-255]: 255, 255, 255
     size_t   repetition;
 } t_Light;
 
@@ -125,13 +125,13 @@ typedef struct _Plane
     struct _Plane   *next;
 } t_Plane;
 
-typedef struct _Sphere
+typedef struct s_Sphere
 {
 	t_point         center;//x,y,z coordinates of the view
 	float			radius;
 	size_t			color[3];//R,G,B colors in range [0-255]: 255, 255, 255
 	size_t			repetition;
-    struct _Sphere   *next;
+    struct s_Sphere   *next;
 } t_Sphere;
 
 typedef struct _Cylinder

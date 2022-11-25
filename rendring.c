@@ -162,8 +162,8 @@ void	ray_render(t_minirt *rt)
 		while (x < WIDTH)
 		{
 			ray = ray_generator(rt, x, y);
-			intersectRaySphere(ray, rt, &t, &color, &pHit);
-//			add_light(pHit, rt, &color);
+			if (intersectRaySphere(ray, rt, &t, &color, &pHit))
+				add_light(pHit, rt, &color);
 //			iterate_over_objects	(rt, ray, &t, &color);
 			my_mlx_pixel_put(rt->Mlx, x, y, color);
 			x++;
