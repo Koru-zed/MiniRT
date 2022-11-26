@@ -88,9 +88,9 @@ void edit_camera(t_minirt *mini, int key)
 			matrix = cross_matrix(update_matrix_y(-3.6),  matrix);
 		else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y)
 		{
-	printf("matrix.M[2][1] = {%f} | matrix.M[1][2] = {%f}\n", matrix.M[2][1], matrix.M[1][2]);
+	// printf("matrix.M[2][1] = {%f} | matrix.M[1][2] = {%f}\n", matrix.M[2][1], matrix.M[1][2]);
 			if (matrix.M[2][1] == 1.0 && matrix.M[1][2] == 1.0)
-			{printf("hello\n");
+			{//printf("hello\n");
 					mini->Mlx->_do = 0;
 			}
 			else if (matrix.M[2][1] < 1.0 && matrix.M[1][2] < 1.0)
@@ -98,13 +98,21 @@ void edit_camera(t_minirt *mini, int key)
 		}
 		else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y)
 		{
-	printf("matrix.M[2][1] = {%f} | matrix.M[1][2] = {%f}\n", matrix.M[2][1], matrix.M[1][2]);
+	// printf("matrix.M[2][1] = {%f} | matrix.M[1][2] = {%f}\n", matrix.M[2][1], matrix.M[1][2]);
 			if (matrix.M[2][1] == -1.0 && matrix.M[1][2] == -1.0)
-			{printf("hello\n");
+			{//printf("hello\n");
 					mini->Mlx->_do = 0;
 			}
 			else if (matrix.M[2][1] > -1.0 && matrix.M[1][2] > -1.0)
 				matrix = cross_matrix(update_matrix_x(-3.6),  matrix);
+			// if (matrix.M[0][0] == 0.0 && matrix.M[0][2] == -1.0 && matrix.M[2][0] == 1.0 && matrix.M[2][2] == 0.0)
+			// {
+			// 	printf("$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+			// 	matrix.M[0][0] = 1.0;
+			// 	matrix.M[0][2] = 0.0;
+			// 	matrix.M[2][0] = 0.0;
+			// 	matrix.M[2][2] = 1.0;
+			// }
 		}
 		mini->Camera->ray.direction.x = matrix.M[2][0];
 		mini->Camera->ray.direction.y = matrix.M[2][1];
@@ -218,7 +226,7 @@ void edit_mini(t_minirt *mini, int key)
 	// mini->Mlx->addr = mlx_get_data_addr(mini->Mlx->img, &mini->Mlx->bits_per_pixel, &mini->Mlx->line_length, &mini->Mlx->endian);
 	if (mini->Mlx->_do)
 	{
-		printf(" .     				>>>>>>>>>>>\n");
+		// printf(" .     				>>>>>>>>>>>\n");
 	// 	printf("-------------------------\n");
 	// printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
 
