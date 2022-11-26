@@ -47,7 +47,7 @@ void	ray_render(t_minirt *mini)
 	float t;
 	// printf("camera_matrix\n");
 	camera_matrix(mini->Camera);
-	// print_matrix(mini->Camera->matrix);
+	print_matrix(mini->Camera->matrix);
 	// printf("***********************************************\n");
 	// print_matrix(mini->Camera->matrix);
 

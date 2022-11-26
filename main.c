@@ -39,7 +39,7 @@ t_point	ray_pixel_to_world(t_minirt *mini, int x, int y)
 	half_width = half_hight * aspect_ratio;
 	ps_x = (float )(2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
 	ps_y = (float )(1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
-	return (new_point(-ps_x, ps_y, 1));
+	return (new_point(ps_x, ps_y, 1));
 }
 
 t_ray	ray_generator(t_minirt *mini, int x, int y)
@@ -65,36 +65,54 @@ t_ray	ray_generator(t_minirt *mini, int x, int y)
 
 void edit_camera(t_minirt *mini, int key)
 {
-	// printf("Camera\n");
-	mini->Mlx->_do = 1; 
-	if (key == KEYUP)
-		mini->Camera->ray.origin.y -= 0.5;
-	else if (key == KEYDOWN)
-		mini->Camera->ray.origin.y += 0.5;
-	else if (key == KEYLEFT)
-		mini->Camera->ray.origin.x -= 0.5;
-	else if (key == KEYRIGHT)
-		mini->Camera->ray.origin.x += 0.5;
-	else if (key == KEY_A || key == KEY_D || key == KEY_S || key == KEY_W)
+	t_matrix matrix;
+	// static int e;
+	matrix = mini->Camera->matrix;
+	mini->Mlx->_do = 1;
+	if (!mini->Mlx->rotate)
 	{
-		if (key == KEY_A)
-			mini->Camera->matrix = cross_matrix(update_matrix_y(-3.6), mini->Camera->matrix);
-		else if (key == KEY_D)
-			mini->Camera->matrix = cross_matrix(update_matrix_y(3.6),  mini->Camera->matrix);
-		else if (key == KEY_W)
-			mini->Camera->matrix = cross_matrix(update_matrix_x(3.6), mini->Camera->matrix);
-		else if (key == KEY_D)
-			mini->Camera->matrix = cross_matrix(update_matrix_x(-3.6),  mini->Camera->matrix);
-		// printf("cross_matrix\n");
-		// print_matrix(mini->Camera->matrix);
-		mini->Camera->ray.direction.x = mini->Camera->matrix.M[2][0];
-		mini->Camera->ray.direction.y = mini->Camera->matrix.M[2][1];
-		mini->Camera->ray.direction.z = mini->Camera->matrix.M[2][2];
-		// printf("x[%f], y{%f}, z{%f}", mini->Camera->ray.direction.x,mini->Camera->ray.direction.y,mini->Camera->ray.direction.z);
-
+		if (key == KEYUP)
+			mini->Camera->ray.origin.y -= 0.5;
+		else if (key == KEYDOWN)
+			mini->Camera->ray.origin.y += 0.5;
+		else if (key == KEYLEFT)
+			mini->Camera->ray.origin.x -= 0.5;
+		else if (key == KEYRIGHT)
+			mini->Camera->ray.origin.x += 0.5;
+	}
+	else if (mini->Mlx->rotate)
+	{
+		if (key == KEYLEFT && mini->Mlx->rotate == ROTATE_X)
+			matrix = cross_matrix(update_matrix_y(3.6), matrix);
+		else if (key == KEYRIGHT && mini->Mlx->rotate == ROTATE_X)
+			matrix = cross_matrix(update_matrix_y(-3.6),  matrix);
+		else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y)
+		{
+	printf("matrix.M[2][1] = {%f} | matrix.M[1][2] = {%f}\n", matrix.M[2][1], matrix.M[1][2]);
+			if (matrix.M[2][1] == 1.0 && matrix.M[1][2] == 1.0)
+			{printf("hello\n");
+					mini->Mlx->_do = 0;
+			}
+			else if (matrix.M[2][1] < 1.0 && matrix.M[1][2] < 1.0)
+				matrix = cross_matrix(update_matrix_x(3.6),  matrix);
+		}
+		else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y)
+		{
+	printf("matrix.M[2][1] = {%f} | matrix.M[1][2] = {%f}\n", matrix.M[2][1], matrix.M[1][2]);
+			if (matrix.M[2][1] == -1.0 && matrix.M[1][2] == -1.0)
+			{printf("hello\n");
+					mini->Mlx->_do = 0;
+			}
+			else if (matrix.M[2][1] > -1.0 && matrix.M[1][2] > -1.0)
+				matrix = cross_matrix(update_matrix_x(-3.6),  matrix);
+		}
+		mini->Camera->ray.direction.x = matrix.M[2][0];
+		mini->Camera->ray.direction.y = matrix.M[2][1];
+		mini->Camera->ray.direction.z = matrix.M[2][2];
 	}
 	else
 		mini->Mlx->_do = 0; 
+	printf("mini->_do = {%d}\n", mini->Mlx->_do);
 }
 
 // void edit_light(t_minirt *mini, int key)
@@ -200,10 +218,14 @@ void edit_mini(t_minirt *mini, int key)
 	// mini->Mlx->addr = mlx_get_data_addr(mini->Mlx->img, &mini->Mlx->bits_per_pixel, &mini->Mlx->line_length, &mini->Mlx->endian);
 	if (mini->Mlx->_do)
 	{
-		// printf("hello\n");
-		// print_matrix(mini->Camera);
+		printf(" .     				>>>>>>>>>>>\n");
+	// 	printf("-------------------------\n");
+	// printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
+
 		mlx_clear_window(mini->Mlx->mlx, mini->Mlx->win);
 		ray_render(mini);
+	// 			printf("***************************\n");
+	// printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
 	}
 }
 
@@ -211,8 +233,10 @@ void edit_mini(t_minirt *mini, int key)
 // {
 // 	if 
 // }
-int objs_key(int key, t_minirt *mini)
+void objs_key(int key, t_minirt *mini)
 {
+	// 	printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+	// printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
 	if (key == _CAMERA)
 		mini->Mlx->obj = _CAMERA;
 	else if (key == _LIGHT)
@@ -223,10 +247,12 @@ int objs_key(int key, t_minirt *mini)
 		mini->Mlx->obj = _PLANE;
 	else if (key == _CYLINDER)
 		mini->Mlx->obj = _CYLINDER;
+	// printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
+
 	// else
 	// 	mini->Mlx->obj = -1;
 	// printf("key_objs{%d}{%d}\n", key, mini->Mlx->obj);
-	return (0);
+	// return (0);
 }
 
 
@@ -272,14 +298,6 @@ int press_key(int key, t_minirt *mini)
 		edit_mini(mini, key);
 	else if (key == R_LEFT)
 		edit_mini(mini, key);
-	else if (key == KEY_A)
-		edit_mini(mini, key);
-	else if (key == KEY_D)
-		edit_mini(mini, key);
-	else if (key == KEY_W)
-		edit_mini(mini, key);
-	else if (key == KEY_S)
-		edit_mini(mini, key);
 	else if (key == ZERO)
 	{
 		mini->Mlx->obj = 0;
@@ -288,7 +306,8 @@ int press_key(int key, t_minirt *mini)
 	}
 	objs_key(key, mini);
 	rotation_key(key, mini);
-	// printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
+	// printf("##############################\n");
+	printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
 	return (0);
 }
 

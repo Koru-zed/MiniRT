@@ -39,10 +39,10 @@
 # define ZERO 29
 # define R_LEFT 43
 # define R_RIGHT 47
-# define KEY_A 0
-# define KEY_S 1
-# define KEY_D 2
-# define KEY_W 13
+// # define KEY_A 0
+// # define KEY_S 1
+// # define KEY_D 2
+// # define KEY_W 13
 // # define MOUSEMOVE  6
 # define DESTROY  53
 typedef int COLOR;
