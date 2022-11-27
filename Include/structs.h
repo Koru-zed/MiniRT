@@ -63,11 +63,25 @@ typedef struct	point {
 	float	z;
 }	t_point;
 
+typedef struct	s_color {
+
+	int	r;
+	int	g;
+	int	b;
+}	t_color;
+
+typedef struct s_material {
+	t_color	objColor;
+	t_color ambColor;
+	t_color	rgb;
+}	t_rgbMaterial;
+
 typedef struct s_p_intersect {
 	t_point hit_pos;
 	t_point normal;
 	float	hit_mag;
-	size_t 	*color;
+	size_t	*color;
+	t_color	obj_color;
 } t_hit;
 
     // t_point left_corner;

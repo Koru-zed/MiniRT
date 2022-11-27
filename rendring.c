@@ -46,7 +46,7 @@
  */
 
 
-bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
+bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color, t_hit **pHit)
 {
 	float tmin;
 	float hd;
@@ -80,9 +80,9 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 		return false;
 	}
 	*t = closestPlane.tmin;
-//	rt->Plane->normal = closestPlane.normal;
-//	rt->Plane->local_hit_point = v_adding(ray.origin, v_mul(hd, ray.direction));
-	*color = rgb(closestPlane.color);
+	(*pHit)->hit_pos = v_adding(ray.origin, v_mul(hd, ray.direction));
+	(*pHit)->normal = normalizing((*pHit)->hit_pos);
+//	*color = rgb(closestPlane.color);
 /*	if (*t > EPSILON)
 	{
 		rt->Plane->normal = rt->Plane->normal;
@@ -92,7 +92,7 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 	return true;
 }
 
-//
+////
 //void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, COLOR *color)
 //{
 //	float t1;
@@ -146,6 +146,7 @@ void	ray_render(t_minirt *rt)
 	float t;
 	t_hit	*pHit;
 	int color;
+	float intensity;
 
 //	int fd;
 //	fd = open("debug.txt", O_RDWR | O_TRUNC);
@@ -162,9 +163,12 @@ void	ray_render(t_minirt *rt)
 		while (x < WIDTH)
 		{
 			ray = ray_generator(rt, x, y);
+//			intersectRaySphere(ray, rt, &t, &color, &pHit);
 			if (intersectRaySphere(ray, rt, &t, &color, &pHit))
-				add_light(pHit, rt, &color);
-//			iterate_over_objects	(rt, ray, &t, &color);
+				add_light(pHit, rt, &color, &intensity);
+
+//			if (intersectPlane(rt, ray, &t, &color, &pHit))
+//			iterate_over_objects(rt, ray, &t, &color);
 			my_mlx_pixel_put(rt->Mlx, x, y, color);
 			x++;
 		}

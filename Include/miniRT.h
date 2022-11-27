@@ -24,7 +24,7 @@
 # define _INFINITE 1.0e30f
 typedef int COLOR;
 
-
+int check(int r);
 void		free_mini(t_minirt *mini);
 void		free_data(t_data *_data);
 void		free_Cylinder(t_Cylinder *_Cylinder);
@@ -69,24 +69,23 @@ float		 	length_squared(t_point p);
 float			length(t_point p);
 t_point			unit_vector(t_point v);
 t_point			normalizing(t_point p);
-int			rgb(const size_t rgb[3]);
-bool	cylinder_int(t_minirt *rt, t_ray *ray, const int fd);
+int			rgb(const t_color rgb);
+bool		cylinder_int(t_minirt *rt, t_ray *ray, const int fd);
 /* ***		End Math Operations		** */
-void	ft_print_vector(const t_point p, int fd);
-int 	mul_color(size_t *color, float s);
+void		ft_print_vector(const t_point p, int fd);
+t_color 	mul_color(t_color color, float s);
 /*
 	! ~ intersection test functions.
  */
 bool	cylinder_intersection(t_minirt *rt, t_ray *ray, int fd);
 t_ray	ray_generator(t_minirt *mini, int x, int y);
 bool 	intersectRaySphere(t_ray r, t_minirt *s, float *t, COLOR *color, t_hit **pHit);
-
-bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, COLOR *color);
+bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, COLOR *color, t_hit **pHit);
 
 void        fill_matrix(t_Camera *_camera);
 t_matrix    new_matrix(t_point origin, t_point forward, t_point right, t_point up);
 t_point	mul_point_matrix(t_point p, t_matrix m);
 t_point	at(float t, t_ray *r);
-void	add_light(t_hit *pHit, t_minirt *rt, int *c);
+bool	add_light(t_hit *pHit, t_minirt *rt, int *c, float *intensity);
 
 #endif
