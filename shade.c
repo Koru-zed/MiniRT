@@ -121,8 +121,11 @@ bool	is_shadowed(t_minirt *rt, t_hit *hit)
 	r.direction = dir;
 	t_hit *h = malloc(sizeof(t_hit));
 	float t;
-	if (intersectRaySphere(r, rt, &t, &h) && t < distance)
+	iterate_over_objects(rt, r, &t, &h);
+	if (h && t < distance)
 		return true;
+//	if (intersectRaySphere(r, rt, &t, &h) && t < distance)
+//		return true;
 	return false;
 }
 
@@ -145,7 +148,7 @@ bool	add_light(t_hit *pHit, t_minirt *rt, int *c)
 //	rgbMat->eff_color = mul_color(pHit->obj_color, rt->Light->brightenss);
 	ambColor = get_ambient_color(ambColor, rt, pHit->obj_color);
 	diffuse = get_diffuse(lDir, pHit->normal) * rt->Light->brightenss;
-	if (diffuse <= 0.0)
+	if (is_shadowed(rt, pHit))
 	{
 		rgbMat->diffuse_color = creat_color(0, 0, 0);
 	}
@@ -155,7 +158,6 @@ bool	add_light(t_hit *pHit, t_minirt *rt, int *c)
 		rgbMat->diffuse_color.g = (rt->Light->brightenss* pHit->obj_color.g);
 		rgbMat->diffuse_color.b = (rt->Light->brightenss* pHit->obj_color.b);
 		rgbMat->diffuse_color = mul_color(rgbMat->diffuse_color, diffuse);
-//		diffuse_color = mul_color(ambColor, diffuse);
 	}
 	rgbMat->eff_color = addTwoColor(ambColor, rgbMat->diffuse_color);
 	*c = rgb(rgbMat->eff_color);

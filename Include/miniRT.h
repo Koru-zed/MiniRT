@@ -62,6 +62,8 @@ void		set_color(char const *colors, size_t *table, t_minirt *mini);
 void		set_orientation(char const *colors, t_point *cordinate, t_minirt *mini);
 void		set_cordinates(char const *cord, t_point *cordinate, t_minirt *mini);
 
+
+t_color add_color(const size_t *c);
 int         get_Light(t_minirt *mini, t_data *data);
 int         get_Camera(t_minirt *mini, t_data *data);
 int         get_Ambient_lightning(t_minirt *mini, t_data *data);
@@ -100,11 +102,12 @@ t_color 	mul_color(t_color color, float s);
 /*
 	! ~ intersection test functions.
  */
+void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, t_hit **oHit);
 bool	add_light(t_hit *pHit, t_minirt *rt, int *c);
 bool	cylinder_intersection(t_minirt *rt, t_ray *ray, int fd);
 t_ray	ray_generator(t_minirt *mini, int x, int y);
 bool 	intersectRaySphere(t_ray r, t_minirt *s, float *t, t_hit **pHit);
-bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color);
+bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, t_hit **pHit);
 t_matrix	dir_matrix(void);
 void        camera_matrix(t_Camera *_camera);
 void    fill_plane_matrix(t_Plane *_plane);
