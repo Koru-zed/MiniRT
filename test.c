@@ -1,6 +1,12 @@
 #include "Include/miniRT.h"
 
+
+
 int main()
 {
-	t_point n = normalizing()
+	float a = 1;
+	if (a == 1.000000)
+		printf("true");
+	else
+        printf("false");
 }

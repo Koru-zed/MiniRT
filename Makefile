@@ -8,19 +8,25 @@ FILES := get_next_line/get_next_line.c \
 		 Parssing/rt_last_node.c \
 		 Parssing/get_data_part1.c \
 		 Parssing/get_data_part2.c \
-		 Draw/drawing.c \
 		 Dowing/camera.c \
 		 main.c \
-		 math_operations.c rendring.c sphere.c \
-		 cylinder.c shade.c color.c
+		 math_operations.c \
+		Shape/rendring.c \
+		Shape/sphere.c \
+		Shape/plane.c \
+		Shape/Rotation.c \
+		color.c shade.c \
+		ft_matrix.c
 
 OBJES := ${FILES:.c=.o}
 
 CC := cc -g3
 
+FOBJS := ./objs
+
 LIBFT := libft/libft
 
-CFLAGS := -g -fsanitize=address -g3
+CFLAGS :=  -g -fsanitize=address -g3
 
 FRAMWORK = -lmlx -framework OpenGL -framework AppKit
 
@@ -37,6 +43,7 @@ RED = \033[1;91m
 all : ${NAME}
 
 ${NAME} : ${OBJES} ${LIBFT}
+	@ mkdir -p ${FOBJS}
 	@ ${CC} ${CFLAGS} ${LIBFT} ${FRAMWORK} $^ -o $@
 	@ echo "       ${YELLOW}}}}.....${GREEN}!Compile :-> ${NAME} <-: Successe!${YELLOW}.....{{{${WHITE}"
 
@@ -45,7 +52,7 @@ ${NAME} : ${OBJES} ${LIBFT}
 	@$(CC) $(CFLAGS) -Imlx -c $< -o $@ 
 
 clean : 
-	@ ${RM} ${OBJES}
+	@ ${RM} ${OBJES} had.txt
 	@ echo "${YELLOW}-> ${PURPLE}Delete the object files.....${WHITE}"
 
 fclean : clean

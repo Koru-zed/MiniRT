@@ -18,11 +18,11 @@ t_point reflect(t_point normal, t_point in)
 }
 
 
-float get_diffuse(t_point lDir, t_point normal, t_minirt *rt)
+float get_diffuse(t_point lDir, t_point normal)
 {
 	float	cos_angle;
 
-	cos_angle = v_dot(lDir, normal);
+	cos_angle = v_dot(normal, lDir);
 //	if (cos_angle < EPSILON)
 //		cos_angle = 0.0f;
 	return cos_angle;
@@ -33,9 +33,9 @@ t_color convert_array2color(const size_t *color)
 {
 	t_color	c;
 
-	c.r = (int)color[0] / 255;
-	c.g = (int)color[1] / 255;
-	c.b = (int)color[2] / 255;
+	c.r = (int)color[0];
+	c.g = (int)color[1];
+	c.b = (int)color[2];
 	return c;
 }
 
@@ -66,9 +66,9 @@ t_color mulTwoColor(t_color obj, t_color obj2)
 {
 	t_color c;
 
-	c.r = obj.r * obj2.r;
-	c.g = obj.g * obj2.g;
-	c.b = obj.b * obj2.b;
+	c.r = check(obj.r * obj2.r);
+	c.g = check(obj.g * obj2.g);
+	c.b = check(obj.b * obj2.b);
 	return c;
 }
 
@@ -76,9 +76,10 @@ t_color addTwoColor(t_color obj, t_color obj2)
 {
 	t_color c;
 
-	c.r = obj.r + obj2.r;
-	c.g = obj.g + obj2.g;
-	c.b = obj.b + obj2.b;
+	c.r = check((obj.r + obj2.r));
+	c.g = check((obj.g + obj2.g));
+	c.b = check((obj.b + obj2.b));
+
 	return c;
 }
 
@@ -91,78 +92,72 @@ t_color creat_color(size_t r, size_t g, size_t b)
 	rgb.b = b;
 	return rgb;
 }
+
+void	ft_print_color(t_color c)
+{
+	dprintf(1, "r=%d | g%d | b%d\n", c.r, c.g, c.b);
+}
 t_color 	get_ambient_color(t_color ambColor, t_minirt *rt, t_color objColor)
 {
 	t_color eff_color;
-	t_color color;
 
-	eff_color = mul_color(ambColor, rt->Ambient->ratio);
-	ambColor = mulTwoColor(eff_color, objColor);
-//	color.r = (size_t )((float )ambientColor.r * ratio);
-//	color.g = (size_t )((float )ambientColor.g * ratio);
-//	color.b = (size_t )((float )ambientColor.b * ratio);
-//	printf("r = %zu\t g = %zu \tb=%zu\n", color.r, color.g, color.b);
-	return ambColor;
+	eff_color.r = (rt->Ambient->ratio * ambColor.r * objColor.r) / 255;
+	eff_color.g = (rt->Ambient->ratio * ambColor.g * objColor.g) / 255;
+	eff_color.b = (rt->Ambient->ratio * ambColor.b * objColor.b) / 255;
+//	printf("******%f\n", rt->Ambient->ratio);
+//	ft_print_color(objColor);
+//	eff_color = mul_color(ambColor, rt->Ambient->ratio);
+//	ambColor = mulTwoColor(eff_color, objColor);
+	return eff_color;
 }
 
-bool	add_light(t_hit *pHit, t_minirt *rt, int *c, float *intensity)
+bool	is_shadowed(t_minirt *rt, t_hit *hit)
+{
+	t_point lDir = v_sub(rt->Light->cordinates, hit->hit_pos);
+	float distance = length_squared(lDir);
+	t_point dir = normalizing(lDir);
+	t_ray r;
+	r.origin = hit->hit_pos;
+	r.direction = dir;
+	t_hit *h = malloc(sizeof(t_hit));
+	float t;
+	if (intersectRaySphere(r, rt, &t, &h) && t < distance)
+		return true;
+	return false;
+}
+
+bool	add_light(t_hit *pHit, t_minirt *rt, int *c)
 {
 //	t_color diffuse_color;
-//	t_color eff_color;
+////	t_color eff_color;
 //	t_color objColor;
-//	t_color ambColor;
+	t_color ambColor;
 	t_rgbMaterial	*rgbMat;
 	t_point lDir;
 	float i = 0.0f;
 	float diffuse = 0.f;
 
+	ambColor = convert_array2color(rt->Ambient->color);
 	rgbMat = malloc(sizeof(t_rgbMaterial));
 	if (!rgbMat)
 		exit(EXIT_FAILURE);
 	lDir = normalizing(v_sub(rt->Light->cordinates, pHit->hit_pos));
-/*	eff_color = mul_color(objColor, rt->Light->brightenss);
-	ambColor = get_ambient_color(ambColor, rt, objColor);
-	diffuse = get_diffuse(lDir, pHit->normal, rt);
-	if (diffuse < EPSILON)
-		diffuse_color = creat_color(0, 0, 0);
+//	rgbMat->eff_color = mul_color(pHit->obj_color, rt->Light->brightenss);
+	ambColor = get_ambient_color(ambColor, rt, pHit->obj_color);
+	diffuse = get_diffuse(lDir, pHit->normal) * rt->Light->brightenss;
+	if (diffuse <= 0.0)
+	{
+		rgbMat->diffuse_color = creat_color(0, 0, 0);
+	}
 	else
 	{
-		diffuse_color = mul_color(eff_color, diffuse);
+		rgbMat->diffuse_color.r = (rt->Light->brightenss* pHit->obj_color.r);
+		rgbMat->diffuse_color.g = (rt->Light->brightenss* pHit->obj_color.g);
+		rgbMat->diffuse_color.b = (rt->Light->brightenss* pHit->obj_color.b);
+		rgbMat->diffuse_color = mul_color(rgbMat->diffuse_color, diffuse);
 //		diffuse_color = mul_color(ambColor, diffuse);
 	}
-	eff_color = addTwoColor(ambColor, diffuse_color);
-	*c = rgb(convert_color2array(eff_color));*/
+	rgbMat->eff_color = addTwoColor(ambColor, rgbMat->diffuse_color);
+	*c = rgb(rgbMat->eff_color);
 	return true;
 }
-/*	if (diffuse > EPSILON) {
-
-//		diffuse += + rt->Light->brightenss * diffuse / (length_squared(pHit->normal) * length_squared(lDir));
-	}
-	diffuse += rt->Ambient->ratio;
-//	printf("dif %f\n", diffuse);
-	pHit->color[0] *= diffuse;
-	pHit->color[1] *= diffuse;
-	pHit->color[2] *= diffuse;
-	effective_color = mul_color(rt->Ambient->color, diffuse);
-	effective_color[0] = Ambient[0] + effective_color[0];
-	effective_color[1] = Ambient[1] + effective_color[1];
-	effective_color[2] = Ambient[2] + effective_color[2];*/
-//	*c = mul_color(pHit->color, diffuse);
-//	printf("%d\n", *c);
-//	if (angle < EPSILON)
-//	{
-//		diffuse = 0.0f;
-//	}
-//	if (angle > 1.5708f)
-//	{
-//		// No illumination
-//		*intensity = 0.0f;
-//		*c = BLACK;
-//		return false;
-//	}
-//	printf("angel =%f\n", angle);
-//	*intensity = rt->Light->brightenss * (1.0f - (angle / 1.5708f));
-//	pHit->color[0] *=  (size_t )(rt->Light->brightenss * 1.0f - (angle));// / 1.5708f)));
-//	pHit->color[1] = (size_t )(rt->Light->brightenss * 1.0f - angle);//(angle / 1.5708f)));
-//	pHit->color[2] = (size_t )(rt->Light->brightenss * 1.0f - angle);//(angle / 1.5708f)));
-//	*c = rgb(pHit->color);

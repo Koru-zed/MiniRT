@@ -6,6 +6,8 @@ int check(int r)
 {
 	if (r > 255)
 		return 255;
+	else if (r < 0)
+		return 0;
 	return r;
 }
 
@@ -16,8 +18,8 @@ t_color  mul_color(t_color color, float s)
 	if (s > EPSILON) {
 
 		l.r = check(color.r * s);
-		l.g = check(color.r * s);
-		l.b = check(color.r * s);
+		l.g = check(color.g * s);
+		l.b = check(color.b * s);
 		return l;
 	}
 	return color;

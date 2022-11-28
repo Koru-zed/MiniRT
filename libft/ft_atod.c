@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 12:33:08 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/10/12 16:38:52 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/11/16 15:45:08 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ double	ft_atod(const char *str, int *check)
 	}
     if (*str)
     {
-		printf("!!%s\n", str);
 		*check = -1;
         ft_putstr_fd("# Bad value #", 1);
         exit(EXIT_FAILURE);

@@ -11,17 +11,40 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
-# define ambient "A"
-# define camera "C"
-# define light "L"
-# define plane "pl"
-# define sphre "sp"
-# define cylinder "cy"
+# define AMBIENT "A"
+# define CAMERA "C"
+# define LIGHT "L"
+# define PLANE "pl"
+# define SEPHER "sp"
+# define CYLINDER "cy"
 # define HEIGHT 720
 # define WIDTH 1080
 # define EPSILON 1.0e-4f
 # define BLACK 0x000000
 # define _INFINITE 1.0e30f
+# define KEYDOWN  125
+# define KEYUP  126
+# define KEYLEFT  123
+# define KEYRIGHT  124
+# define _SEPHER 1 //s
+# define _PLANE 35 //p
+# define _LIGHT 37 //l
+# define _CYLINDER 8 // c
+# define _CAMERA 9 //v
+# define MOUSEDOWN  4
+# define MOUSEUP  5
+# define ROTATE_X 7
+# define ROTATE_Y 16
+# define ROTATE_Z 6
+# define ZERO 29
+# define R_LEFT 43
+# define R_RIGHT 47
+// # define KEY_A 0
+// # define KEY_S 1
+// # define KEY_D 2
+// # define KEY_W 13
+// # define MOUSEMOVE  6
+# define DESTROY  53
 typedef int COLOR;
 
 int check(int r);
@@ -46,8 +69,8 @@ int         get_Plane(t_minirt *mini, t_data *data);
 int         get_Sphere(t_minirt *mini, t_data *data);
 int         get_Cylinder(t_minirt *mini, t_data *data);
 
-void        fill_data(t_data *n_data, int fd);
-int         ft_check_valid(char *filename, t_data *data);
+void        fill_data(t_data *n_data, t_num_shape *n_shape, int fd);
+int         ft_check_valid(char *filename, t_data *data, t_num_shape *_shape);
 
 size_t      check_data(t_minirt *mini, t_data *data);
 void        fill_Info(t_minirt *mini);
@@ -77,15 +100,25 @@ t_color 	mul_color(t_color color, float s);
 /*
 	! ~ intersection test functions.
  */
+bool	add_light(t_hit *pHit, t_minirt *rt, int *c);
 bool	cylinder_intersection(t_minirt *rt, t_ray *ray, int fd);
 t_ray	ray_generator(t_minirt *mini, int x, int y);
-bool 	intersectRaySphere(t_ray r, t_minirt *s, float *t, COLOR *color, t_hit **pHit);
-bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, COLOR *color, t_hit **pHit);
+bool 	intersectRaySphere(t_ray r, t_minirt *s, float *t, t_hit **pHit);
+bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color);
+t_matrix	dir_matrix(void);
+void        camera_matrix(t_Camera *_camera);
+void    fill_plane_matrix(t_Plane *_plane);
+// t_matrix    new_matrix(t_point origin, t_point forward, t_point right, t_point up);
+t_matrix    new_matrix(t_point u, t_point v, t_point w, t_point T);
+t_matrix update_matrix_x(float theta);
+t_matrix update_matrix_y(float theta);
+t_matrix update_matrix_z(float theta);
 
-void        fill_matrix(t_Camera *_camera);
-t_matrix    new_matrix(t_point origin, t_point forward, t_point right, t_point up);
 t_point	mul_point_matrix(t_point p, t_matrix m);
 t_point	at(float t, t_ray *r);
-bool	add_light(t_hit *pHit, t_minirt *rt, int *c, float *intensity);
+
+t_matrix	cross_matrix(t_matrix M1, t_matrix M2);
+void print_matrix(t_matrix matrix);
+void	rotation_plane(t_minirt *mini, int e);
 
 #endif

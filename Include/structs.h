@@ -1,7 +1,6 @@
 #pragma once
 #include "miniRT.h"
 #include <float.h>
-#include <stdbool.h>
 /********* struct for test ********/
 
 
@@ -45,15 +44,29 @@ typedef struct s_mlx
     int		bits_per_pixel;
     int		line_length;
 	int		endian;
+    int     obj;
+    int     rotate;
+    // int     dir;
+    int     _do;
 }			t_mlx;
+
+typedef struct _num_shape
+{
+    int     A;
+    int     C;
+    int     L;
+    int     pl;
+    int     sp;
+    int     cy;
+} t_num_shape;
 
 typedef struct _data {
 
     char    *info;//change
     char    **pars;
     int     check_empty;
-    struct _data *next;
-
+    t_num_shape shape;
+    struct  _data *next;
 }   t_data;
 
 typedef struct	point {
@@ -62,6 +75,7 @@ typedef struct	point {
 	float	y;
 	float	z;
 }	t_point;
+
 
 typedef struct	s_color {
 
@@ -72,6 +86,8 @@ typedef struct	s_color {
 
 typedef struct s_material {
 	t_color	objColor;
+	t_color eff_color;
+	t_color diffuse_color;
 	t_color ambColor;
 	t_color	rgb;
 }	t_rgbMaterial;
@@ -80,10 +96,8 @@ typedef struct s_p_intersect {
 	t_point hit_pos;
 	t_point normal;
 	float	hit_mag;
-	size_t	*color;
 	t_color	obj_color;
 } t_hit;
-
     // t_point left_corner;
     // t_point horizontal;
     // t_point vertical;
@@ -108,6 +122,7 @@ typedef struct _Ambient_light
 
 typedef struct _Camera
 {
+    int fd;
     size_t    fov;// ->
     size_t    repetition;
     t_ray	  ray;
@@ -117,8 +132,8 @@ typedef struct _Camera
 typedef struct _Light
 {
     t_point   cordinates;//x,y,z coordinates of the view
-    float    brightenss;// * shininess light brightness ratio in range [0.0,1.0]
-    size_t   color[3];// * not used in mendatory R,G,B colors in range [0-255]: 255, 255, 255
+    float    brightenss;//the light brightness ratio in range [0.0,1.0]
+    size_t   color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t   repetition;
 } t_Light;
 
@@ -126,40 +141,39 @@ typedef struct s_intersect {
 	float	tmin;
 	t_point	closestPoint;
 	size_t	*color;
-
 } t_intersect;
+
 typedef struct _Plane
 {
-    t_point         plane_point;//x,y,z coordinates of the view
-    t_point         normal;//3d normalized orientation vector. In range [-1,1]
+    // t_point         plane_point;//x,y,z coordinates of the view
+    // t_point         normal;//3d normalized orientation vector. In range [-1,1]
     t_ray	        ray;
     size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t          repetition;
 	t_point			local_hit_point; // store the hit point
-    struct _Plane   *next;
+    t_matrix  matrix;
+    // struct _Plane   *next;
 } t_Plane;
 
-typedef struct s_Sphere
+typedef struct _Sphere
 {
 	t_point         center;//x,y,z coordinates of the view
 	float			radius;
 	size_t			color[3];//R,G,B colors in range [0-255]: 255, 255, 255
 	size_t			repetition;
-    struct s_Sphere   *next;
+
+    // struct _Sphere   *next;
 } t_Sphere;
 
 typedef struct _Cylinder
 {
-    t_point		cordinates;//x,y,z coordinates of the view
-    t_point	orientation;//3d normalized orientation vector. In range [-1,1]
-    size_t	color[3];//R,G,B colors in range [0-255]: 255, 255, 255
-    float	radius;
-    float	height;
-    size_t 	repetition;
-	bool	closed;
-	float cyMin;
-	float cyMax;
-    struct _Cylinder    *next;
+    t_point             cordinates;//x,y,z coordinates of the view
+    t_point             orientation;//3d normalized orientation vector. In range [-1,1]
+    size_t              color[3];//R,G,B colors in range [0-255]: 255, 255, 255
+    float               redius;
+    float               height;
+    size_t              repetition;
+    // struct _Cylinder    *next;
 } t_Cylinder;
 
 typedef struct _minirt {

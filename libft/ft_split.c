@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 18:17:03 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/10/12 21:52:34 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/11/16 17:01:47 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static int	ft_count_str(const char *str, char c)
 	count = 0;
 	while (str[i])
 	{
-		if (str[i] != c)
+		if (str[i] != c && str[i] != '\t')
 		{
 			count++;
-			while (str[i] && str[i] != c && str[i] != '\n')
+			while (str[i] && str[i] != c && str[i] != '\t' && str[i] != '\n')
 				i++;
 		}
 		if (str[i])
@@ -52,9 +52,9 @@ static char	**ft_spl_ito(char **arry, const char *s, char c)
 	x = -1;
 	while (i <= ft_strlen(s))
 	{
-		if (s[i] != c && x < 0)
+		if ((s[i] != c && s[i] != '\t') && x < 0)
 			x = i;
-		else if ((s[i] == c || i == ft_strlen(s)) && x >= 0)
+		else if ((s[i] == c || s[i] == '\t' || i == ft_strlen(s)) && x >= 0)
 		{
 			arry[j] = ft_str_begin_to_fin((char *)s, x, i);
 			if (!arry[j])
