@@ -108,18 +108,18 @@ t_color 	get_ambient_color(t_color ambColor, t_minirt *rt, t_color objColor)
  */
 bool	is_shadowed(t_minirt *rt, t_point hit, t_point normal)
 {
-	hit = v_adding(hit, v_mul(EPSILON, normal));
+//	t_point light_dir = v_adding(hit, v_mul(EPSILON, normal));
 	t_point lDir = v_sub(rt->Light->cordinates, hit);
 //	lDir = v_mul(-1., lDir);
-	double distance = length_squared(lDir);
-	t_point dir = normalizing(lDir);
-	t_ray r;
-	r.origin = hit;
-	r.direction = dir;
+	double len = length_squared(lDir);
+//	t_point dir = normalizing(lDir);
+	t_ray ray;
+	ray.origin = v_adding(hit, v_mul(EPSILON, normal));
+	ray.direction = lDir;
 	t_hit *h = malloc(sizeof(t_hit));
 	double t;
-	iterate_over_objects(rt, r, &t, &h);
-	if (h && t < distance)
+	iterate_over_objects(rt, ray, &t, &h);
+	if (t > EPSILON && len > t)
 		return true;
 //	if (intersectRaySphere(r, rt, &t, &h) && t < distance)
 //		return true;
@@ -143,10 +143,9 @@ bool	add_light(t_hit *pHit, t_minirt *rt, int *c)
 		exit(EXIT_FAILURE);
 //	pHit->hit_pos = v_mul(EPSILON, pHit->hit_pos);
 	lDir = normalizing(v_sub(rt->Light->cordinates, pHit->hit_pos));
-//	rgbMat->eff_color = mul_color(pHit->obj_color, rt->Light->brightenss);
 	ambColor = get_ambient_color(ambColor, rt, pHit->obj_color);
 	diffuse = get_diffuse(lDir, pHit->normal);
-	if ( diffuse < EPSILON)
+	if (is_shadowed(rt, pHit->hit_pos, pHit->normal) || diffuse < EPSILON)
 	{
 		rgbMat->diffuse_color = creat_color(0, 0, 0);
 	}
