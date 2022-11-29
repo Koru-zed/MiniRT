@@ -11,11 +11,11 @@
  */
 //bool	cylinder_intersection(t_minirt *rt, t_ray *ray)
 //{
-//	float r = rt->Cylinder->diameter / 2;
-//	float a = powf(ray->dir.x, 2.0) + powf(ray->dir.z, 2.0);
-//	float b = 2.0 * ray->origin.x * ray->dir.x + 2.0 * ray->origin.z * ray->dir.z;
-//	float c = powf(ray->origin.x, 2.0) + powf(ray->origin.z, 2) - r; // they put 1 i don't know why
-//	float disc = powf(b, 2) - 4 * a * c;
+//	double r = rt->Cylinder->diameter / 2;
+//	double a = powf(ray->dir.x, 2.0) + powf(ray->dir.z, 2.0);
+//	double b = 2.0 * ray->origin.x * ray->dir.x + 2.0 * ray->origin.z * ray->dir.z;
+//	double c = powf(ray->origin.x, 2.0) + powf(ray->origin.z, 2) - r; // they put 1 i don't know why
+//	double disc = powf(b, 2) - 4 * a * c;
 //	// ? if the disc is equals to 0  the ray does not intersect with the cylinder
 //	if (disc < EPSILON)
 //		return false;

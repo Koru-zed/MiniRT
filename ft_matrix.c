@@ -1,52 +1,48 @@
 #include "Include/miniRT.h"
 
-
-bool	float_equal(float a, float b)
+t_matrix    new_matrix(t_point right,  t_point up, t_point forward, t_point origin)
 {
-	if (fabsf(a - b) < EPSILON)
-		return true;
-	return false;
+    t_matrix	new;
+
+	new.M[0][0] = right.x;
+	new.M[0][1] = right.y;
+	new.M[0][2] = right.z;
+	new.M[0][3] = 0;
+	new.M[1][0] = up.x;
+	new.M[1][1] = up.y;
+	new.M[1][2] = up.z;
+	new.M[1][3] = 0;
+	new.M[2][0] = forward.x;
+	new.M[2][1] = forward.y;
+	new.M[2][2] = forward.z;
+	new.M[2][3] = 0;
+	new.M[3][0] = origin.x;
+	new.M[3][1] = origin.y;
+	new.M[3][2] = origin.z;
+	new.M[3][3] = 1;
+	return (new);
 }
 
-t_matrix	*creat_matrix(size_t c)
+t_matrix	dir_matrix(void)
 {
-	t_matrix	*matrix;
-	int			 i;
+	t_point forward;
+    t_point origin;
+    t_point right;
+    t_point up;
 
-	i = 0;
-	matrix = ft_calloc(1, sizeof(t_matrix));
-	if (!matrix)
-		return (NULL);
-	matrix->row = c;
-	matrix->col = c;
-	matrix->mat = ft_calloc(c, sizeof(float *));
-	while (i < c)
-	{
-		matrix->mat[i] = ft_calloc(c, sizeof(float));
-		i++;
-	}
-	return matrix;
+	right = new_point(1, 0, 0);
+	up = new_point(0, 1, 0);
+	forward = new_point(0, 0, 1);
+	origin = new_point(0, 0, 0);
+	return new_matrix(right, up, forward, origin);
 }
 
-// Matrix multiplication computes the dot product of every row-column combination in the two matrices
-t_matrix *matrix_multiplication(t_matrix *a, t_matrix *b)
+void    camera_matrix(t_Camera *_camera)
 {
-	t_matrix *m;
-	int 	r;
-	int 	c;
+    t_point right;
+    t_point up;
 
-	r = -1;
-	c = -1;
-	m = ft_calloc(1, sizeof(t_matrix));
-	m->mat = ft_calloc(4, sizeof(float*));
-	while (r++ < 3)
-	{
-		m->mat[r] = ft_calloc(4, sizeof(float ));
-		while (c++ < 3)
-		{
-			m->mat[r][c] = a->mat[r][0] * b->mat[0][c] + a->mat[r][1] * b->mat[1][c]
-					+ a->mat[r][2] * b->mat[2][c] + a->mat[r][3] * b->mat[3][c];
-		}
-	}
-	return m;
+    right = normalizing(v_cross(new_point(0, 1, 0), _camera->ray.direction));
+    up = normalizing(v_cross(_camera->ray.direction, right));
+    _camera->matrix = new_matrix(right, up, _camera->ray.direction, _camera->ray.origin);
 }

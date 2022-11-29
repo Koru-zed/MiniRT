@@ -12,8 +12,8 @@ int    get_Plane(t_minirt *mini, t_data *data)
 
     // _plane = ft_calloc(1, sizeof(t_Plane));
 
-    set_cordinates(data->pars[1], &mini->Plane[i].plane_point, mini);
-    set_orientation(data->pars[2], &mini->Plane[i].normal, mini);
+    set_cordinates(data->pars[1], &mini->Plane[i].ray.origin, mini);
+    set_orientation(data->pars[2], &mini->Plane[i].ray.direction, mini);
     set_color(data->pars[3], mini->Plane[i].color, mini);
     i++;
     // if (empty)
@@ -64,7 +64,7 @@ int    get_Cylinder(t_minirt *mini, t_data *data)
     set_cordinates(data->pars[1], &mini->Cylinder[i].cordinates, mini);
     set_orientation(data->pars[2], &mini->Cylinder[i].orientation, mini);
 	/*
-	 *  todo : ! turn atod from double to float !
+	 *  todo : ! turn atod from double to double !
 	 */
     mini->Cylinder[i].redius = ft_atod(data->pars[3], &mini->check) / 2;
     mini->Cylinder[i].height = ft_atod(data->pars[4], &mini->check);

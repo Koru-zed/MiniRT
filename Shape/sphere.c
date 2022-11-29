@@ -4,7 +4,7 @@
 
 
 
-t_point new_point(float x, float y, float z)
+t_point new_point(double x, double y, double z)
 {
 	t_point pos;
 
@@ -14,20 +14,21 @@ t_point new_point(float x, float y, float z)
 	return pos;
 }
 
-bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color){
+bool intersectRaySphere(t_ray r, t_minirt *rt, double *t, int *color){
 
-	float t_min;
+	double t_min;
 	t_point dist;
-	float discriminant;
-	float C;
-	float B;
-	float sqrt_discr;
-	float A;
+	double discriminant;
+	double C;
+	double B;
+	double sqrt_discr;
+	double A;
 	t_Sphere *closestSphere;
 	t_Sphere *s;
-	float hitDestance;
+	double hitDestance;
 	int i;
 	s = rt->Sphere;
+	// r.direction = normalizing(r.direction);
 	/* A = d.d, the vector dot product of the direction */
 	hitDestance = FLT_MAX;
 	closestSphere = NULL;
@@ -58,34 +59,12 @@ bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color){
 			closestSphere = &s[i];
 		}
 	}
-	if (!closestSphere)
+	if (0 >= closestSphere)
 	{
 		*color = BLACK;
 		return false;
 	}
 	*t = hitDestance;
-                // printf("-- Sphere --\n");
-//	t_point origin = v_sub(r->origin, closestSphere->center);
-//	t_point hitPoint = v_adding(origin, v_mul(hitDestance, r->direction));
-
-//	else
-//	{
-//		sqrt_discr = sqrtf(discriminant);
-//		t_min = (-B - sqrt_discr) / (2.0f * A);
-//		if (t_min > EPSILON)
-//		{
-//			*t = t_min;
-//			// todo : compute the local hit point and normal
-//			return true;
-//		}
-//		t_min = (-B + sqrt_discr) / (2.0f * A);
-//		if (t_min > EPSILON)
-//		{
-//			*t = t_min;
-//			// todo : compute the local hit point and normal
-//			return true;
-//		}
-//	}
 
 	/* We need a vector representing the distance between the start of
 	 * the ray and the position of the circle.

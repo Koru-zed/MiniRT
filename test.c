@@ -4,7 +4,9 @@
 
 int main()
 {
-	size_t a[3]= {0, 51, 25};
-	size_t af = rgb(a);
-	printf("%zu", af);
+	double a = 1;
+	if (a == 1.000000)
+		printf("true");
+	else
+        printf("false");
 }

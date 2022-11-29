@@ -13,7 +13,9 @@ FILES := get_next_line/get_next_line.c \
 		 math_operations.c \
 		Shape/rendring.c \
 		Shape/sphere.c \
-		Shape/plane.c
+		Shape/plane.c \
+		Shape/Rotation.c \
+		ft_matrix.c
 
 OBJES := ${FILES:.c=.o}
 
@@ -49,7 +51,7 @@ ${NAME} : ${OBJES} ${LIBFT}
 	@$(CC) $(CFLAGS) -Imlx -c $< -o $@ 
 
 clean : 
-	@ ${RM} ${OBJES}
+	@ ${RM} ${OBJES} had.txt
 	@ echo "${YELLOW}-> ${PURPLE}Delete the object files.....${WHITE}"
 
 fclean : clean

@@ -33,6 +33,16 @@
 # define _CAMERA 9 //v
 # define MOUSEDOWN  4
 # define MOUSEUP  5
+# define ROTATE_X 7
+# define ROTATE_Y 16
+# define ROTATE_Z 6
+# define ZERO 29
+# define R_LEFT 43
+# define R_RIGHT 47
+// # define KEY_A 0
+// # define KEY_S 1
+// # define KEY_D 2
+// # define KEY_W 13
 // # define MOUSEMOVE  6
 # define DESTROY  53
 typedef int COLOR;
@@ -67,18 +77,18 @@ void        fill_Info(t_minirt *mini);
 void		draw_line(t_mlx *info, int color);
 void 		ray_render(t_minirt *minirt);
 
-t_point	new_point(float x, float y, float z);
+t_point	new_point(double x, double y, double z);
 
 /* ***		Math Operations		** */
-float		v_dot(const t_point u, const t_point v);
+double		v_dot(const t_point u, const t_point v);
 t_point		v_cross(const t_point u, const t_point v);
-t_point		v_mul(const float t,  t_point p);
-t_point		v_division(t_point p, float t);
+t_point		v_mul(const double t,  t_point p);
+t_point		v_division(t_point p, double t);
 t_point		v_adding(t_point p, t_point v);
 t_point		v_sub(t_point center, t_point origin);
 
-float		 	length_squared(t_point p);
-float			length(t_point p);
+double		 	length_squared(t_point p);
+double			length(t_point p);
 t_point			unit_vector(t_point v);
 t_point			normalizing(t_point p);
 int			rgb(const size_t rgb[3]);
@@ -88,14 +98,24 @@ int			rgb(const size_t rgb[3]);
 	! ~ intersection test functions.
  */
 t_ray	ray_generator(t_minirt *mini, int x, int y);
-bool 	intersectRaySphere(t_ray r, t_minirt *s, float *t, COLOR *color);
+bool 	intersectRaySphere(t_ray r, t_minirt *s, double *t, COLOR *color);
 
-bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, COLOR *color);
+bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, COLOR *color);
 
-void        fill_matrix(t_Camera *_camera);
+t_matrix	dir_matrix(void);
+void        camera_matrix(t_Camera *_camera);
+void    fill_plane_matrix(t_Plane *_plane);
 // t_matrix    new_matrix(t_point origin, t_point forward, t_point right, t_point up);
 t_matrix    new_matrix(t_point u, t_point v, t_point w, t_point T);
+t_matrix update_matrix_x(double theta);
+t_matrix update_matrix_y(double theta);
+t_matrix update_matrix_z(double theta);
+
 t_point	mul_point_matrix(t_point p, t_matrix m);
-t_point	at(float t, t_ray *r);
+t_point	at(double t, t_ray *r);
+
+t_matrix	cross_matrix(t_matrix M1, t_matrix M2);
+void print_matrix(t_matrix matrix);
+void	rotation_plane(t_minirt *mini, int e);
 
 #endif
