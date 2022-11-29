@@ -4,7 +4,7 @@
 
 int main()
 {
-	float a = 1;
+	double a = 1;
 	if (a == 1.000000)
 		printf("true");
 	else
