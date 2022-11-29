@@ -11,34 +11,34 @@ long long	get_time(void)
 
 // t_point	ray_pixel_to_world(t_minirt *mini, int x, int y)
 // {
-// 	float	aspect_ratio;
-// 	float	half_hight;
-// 	float   half_width;
-// 	float	p_x;
-// 	float	p_y;
+// double	aspect_ratio;
+// 	double	half_hight;
+// 	double   half_width;
+// 	double	p_x;
+// 	double	p_y;
 
-// 	half_hight = tanf((float )((float )mini->Camera->fov * M_PI / 180) / 2);
-// 	aspect_ratio = (float )mini->Mlx->width / (float )mini->Mlx->height;
+// 	half_hight = tanf((double )((double )mini->Camera->fov * M_PI / 180) / 2);
+// 	aspect_ratio = (double )mini->Mlx->width / (double )mini->Mlx->height;
 // 	half_width = half_hight * aspect_ratio;
-// 	p_x = (float )(2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
-// 	p_y = (float )(1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
+// 	p_x = (double )(2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
+// 	p_y = (double )(1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
 // 	return (new_point(-p_x, p_y, 1));
 // }
 
 t_point	ray_pixel_to_world(t_minirt *mini, int x, int y)
 {
-	float	aspect_ratio;
-	float	half_hight;
-	float   half_width;
-	float	ps_x;
-	float	ps_y;
+	double	aspect_ratio;
+	double	half_hight;
+	double   half_width;
+	double	ps_x;
+	double	ps_y;
 
-	// half_hight = tanf((float )mini->Camera->fov / 2.0f);
-	half_hight = tanf((float )((float )mini->Camera->fov * M_PI / 180) / 2);
-	aspect_ratio = (float)mini->Mlx->width / (float)mini->Mlx->height;
+	// half_hight = tanf((double )mini->Camera->fov / 2.0f);
+	half_hight = tanf((double )((double )mini->Camera->fov * M_PI / 180) / 2);
+	aspect_ratio = (double)mini->Mlx->width / (double)mini->Mlx->height;
 	half_width = half_hight * aspect_ratio;
-	ps_x = (float )(2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
-	ps_y = (float )(1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
+	ps_x = (double )(2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
+	ps_y = (double )(1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
 	return (new_point(ps_x, ps_y, 1));
 }
 

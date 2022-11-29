@@ -79,46 +79,46 @@ void        fill_Info(t_minirt *mini);
 void		draw_line(t_mlx *info, int color);
 void 		ray_render(t_minirt *minirt);
 
-t_point	new_point(float x, float y, float z);
+t_point	new_point(double x, double y, double z);
 
 /* ***		Math Operations		** */
 bool	cylinder_int(t_minirt *rt, t_ray *ray, const int fd);
-float		v_dot(const t_point u, const t_point v);
+double		v_dot(const t_point u, const t_point v);
 t_point		v_cross(const t_point u, const t_point v);
-t_point		v_mul(const float t,  t_point p);
-t_point		v_division(t_point p, float t);
+t_point		v_mul(const double t,  t_point p);
+t_point		v_division(t_point p, double t);
 t_point		v_adding(t_point p, t_point v);
 t_point		v_sub(t_point center, t_point origin);
 
-float		 	length_squared(t_point p);
-float			length(t_point p);
+double		 	length_squared(t_point p);
+double			length(t_point p);
 t_point			unit_vector(t_point v);
 t_point			normalizing(t_point p);
 int			rgb(const t_color rgb);
 bool		cylinder_int(t_minirt *rt, t_ray *ray, const int fd);
 /* ***		End Math Operations		** */
 void		ft_print_vector(const t_point p, int fd);
-t_color 	mul_color(t_color color, float s);
+t_color 	mul_color(t_color color, double s);
 /*
 	! ~ intersection test functions.
  */
-void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, t_hit **oHit);
+void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **oHit);
 bool	add_light(t_hit *pHit, t_minirt *rt, int *c);
 bool	cylinder_intersection(t_minirt *rt, t_ray *ray, int fd);
 t_ray	ray_generator(t_minirt *mini, int x, int y);
-bool 	intersectRaySphere(t_ray r, t_minirt *s, float *t, t_hit **pHit);
-bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, t_hit **pHit);
+bool 	intersectRaySphere(t_ray r, t_minirt *s, double *t, t_hit **pHit);
+bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, t_hit **pHit);
 t_matrix	dir_matrix(void);
 void        camera_matrix(t_Camera *_camera);
 void    fill_plane_matrix(t_Plane *_plane);
 // t_matrix    new_matrix(t_point origin, t_point forward, t_point right, t_point up);
 t_matrix    new_matrix(t_point u, t_point v, t_point w, t_point T);
-t_matrix update_matrix_x(float theta);
-t_matrix update_matrix_y(float theta);
-t_matrix update_matrix_z(float theta);
+t_matrix update_matrix_x(double theta);
+t_matrix update_matrix_y(double theta);
+t_matrix update_matrix_z(double theta);
 
 t_point	mul_point_matrix(t_point p, t_matrix m);
-t_point	at(float t, t_ray *r);
+t_point	at(double t, t_ray *r);
 
 t_matrix	cross_matrix(t_matrix M1, t_matrix M2);
 void print_matrix(t_matrix matrix);

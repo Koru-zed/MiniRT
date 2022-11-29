@@ -11,7 +11,7 @@ int check(int r)
 	return r;
 }
 
-t_color  mul_color(t_color color, float s)
+t_color  mul_color(t_color color, double s)
 {
 	t_color l;
 

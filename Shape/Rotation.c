@@ -1,8 +1,8 @@
 # include "../Include/miniRT.h"
 
-t_matrix update_matrix_x(float theta)
+t_matrix update_matrix_x(double theta)
 {
-	float _radian;
+	double _radian;
 	t_matrix matrix;
 
 	_radian = theta * M_PI / 180;
@@ -17,9 +17,9 @@ t_matrix update_matrix_x(float theta)
 	return (matrix);
 }
 
-t_matrix update_matrix_y(float theta)
+t_matrix update_matrix_y(double theta)
 {
-	float _radian;
+	double _radian;
 	t_matrix matrix;
 
 	_radian = theta * M_PI / 180;
@@ -37,9 +37,9 @@ t_matrix update_matrix_y(float theta)
 	return (matrix);
 }
 
-t_matrix update_matrix_z(float theta)
+t_matrix update_matrix_z(double theta)
 {
-	float _radian;
+	double _radian;
 	t_matrix matrix;
 
 	_radian = theta * M_PI / 180;

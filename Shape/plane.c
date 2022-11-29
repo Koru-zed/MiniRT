@@ -8,11 +8,11 @@
  *		∗ R,G,B colors in range [0-255]: 0, 0, 255
  */
 
-bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, t_hit **pHit)
+bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, t_hit **pHit)
 {
 	int	i;
-	float tmin;
-	float hd;
+	double tmin;
+	double hd;
 	t_Plane *tPlane;
 	t_intersect closestPlane;
 
@@ -20,10 +20,11 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, t_hit **pHit)
 	hd = EPSILON;
 	tPlane = rt->Plane;
 	closestPlane.tmin = FLT_MAX;
+	t_point n;
 	ray.direction = normalizing(ray.direction);
 	while (++i < rt->Data->shape.pl)
 	{
-		float p = v_dot(tPlane[i].ray.direction, ray.direction);
+		double p = v_dot(tPlane[i].ray.direction, ray.direction);
 		t_point resultOfSub = v_sub(tPlane[i].ray.origin, ray.origin);
 		tmin = v_dot(resultOfSub, tPlane[i].ray.direction) / p;
 
@@ -33,6 +34,7 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, t_hit **pHit)
 			if (closestPlane.tmin > tmin) {
 				closestPlane.closestPoint = tPlane[i].ray.origin;
 				closestPlane.color = tPlane[i].color;
+				n = tPlane[i].ray.direction;
 				closestPlane.tmin = tmin;
 			}
 		}
@@ -45,7 +47,7 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, t_hit **pHit)
     *t = closestPlane.tmin;
 	(*pHit)->obj_color = add_color(closestPlane.color);
 	(*pHit)->hit_pos = v_adding(ray.origin, v_mul(*t, ray.direction));
-	(*pHit)->normal = normalizing((*pHit)->hit_pos);
+	(*pHit)->normal = n;
 //	*color = rgb(closestPlane.color);
 	return true;
 }

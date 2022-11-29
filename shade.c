@@ -1,6 +1,6 @@
 #include "Include/miniRT.h"
 
-float max(const float a, const float b)
+double max(const double a, const double b)
 {
 	if (a > b)
 		return a;
@@ -8,19 +8,10 @@ float max(const float a, const float b)
 //	return (a > b ) ? a : b;
 }
 
-//	normal * 2 * dot(in, normal)
-t_point reflect(t_point normal, t_point in)
+
+double get_diffuse(t_point lDir, t_point normal)
 {
-	t_point new;
-
-	new = v_mul(v_dot(in, normal), v_mul(2.0f, normal));
-	return new;
-}
-
-
-float get_diffuse(t_point lDir, t_point normal)
-{
-	float	cos_angle;
+	double	cos_angle;
 
 	cos_angle = v_dot(normal, lDir);
 //	if (cos_angle < EPSILON)
@@ -48,7 +39,7 @@ t_color rollBackColor(const t_color color)
 	return c;
 }
 
-/*int combine_colors(const size_t *am, const float diffuse, t_color objColor, t_minirt *rt)
+/*int combine_colors(const size_t *am, const double diffuse, t_color objColor, t_minirt *rt)
 {
 	size_t re[3];
 	size_t diff[3];
@@ -111,16 +102,22 @@ t_color 	get_ambient_color(t_color ambColor, t_minirt *rt, t_color objColor)
 	return eff_color;
 }
 
-bool	is_shadowed(t_minirt *rt, t_hit *hit)
+/*
+ *  # after computing and (if appropriate) negating
+# the normal vector...
+ */
+bool	is_shadowed(t_minirt *rt, t_point hit, t_point normal)
 {
-	t_point lDir = v_sub(rt->Light->cordinates, hit->hit_pos);
-	float distance = length_squared(lDir);
+	hit = v_adding(hit, v_mul(EPSILON, normal));
+	t_point lDir = v_sub(rt->Light->cordinates, hit);
+//	lDir = v_mul(-1., lDir);
+	double distance = length_squared(lDir);
 	t_point dir = normalizing(lDir);
 	t_ray r;
-	r.origin = hit->hit_pos;
+	r.origin = hit;
 	r.direction = dir;
 	t_hit *h = malloc(sizeof(t_hit));
-	float t;
+	double t;
 	iterate_over_objects(rt, r, &t, &h);
 	if (h && t < distance)
 		return true;
@@ -137,29 +134,31 @@ bool	add_light(t_hit *pHit, t_minirt *rt, int *c)
 	t_color ambColor;
 	t_rgbMaterial	*rgbMat;
 	t_point lDir;
-	float i = 0.0f;
-	float diffuse = 0.f;
+	double i = 0.0f;
+	double diffuse = 0.f;
 
 	ambColor = convert_array2color(rt->Ambient->color);
 	rgbMat = malloc(sizeof(t_rgbMaterial));
 	if (!rgbMat)
 		exit(EXIT_FAILURE);
+//	pHit->hit_pos = v_mul(EPSILON, pHit->hit_pos);
 	lDir = normalizing(v_sub(rt->Light->cordinates, pHit->hit_pos));
 //	rgbMat->eff_color = mul_color(pHit->obj_color, rt->Light->brightenss);
 	ambColor = get_ambient_color(ambColor, rt, pHit->obj_color);
-	diffuse = get_diffuse(lDir, pHit->normal) * rt->Light->brightenss;
-	if (is_shadowed(rt, pHit))
+	diffuse = get_diffuse(lDir, pHit->normal);
+	if ( diffuse < EPSILON)
 	{
 		rgbMat->diffuse_color = creat_color(0, 0, 0);
 	}
 	else
 	{
-		rgbMat->diffuse_color.r = (rt->Light->brightenss* pHit->obj_color.r);
-		rgbMat->diffuse_color.g = (rt->Light->brightenss* pHit->obj_color.g);
-		rgbMat->diffuse_color.b = (rt->Light->brightenss* pHit->obj_color.b);
-		rgbMat->diffuse_color = mul_color(rgbMat->diffuse_color, diffuse);
+		rgbMat->diffuse_color.r = (rt->Light->brightenss * ambColor.r);
+		rgbMat->diffuse_color.g = (rt->Light->brightenss * ambColor.g);
+		rgbMat->diffuse_color.b = (rt->Light->brightenss * ambColor.b);
+		rgbMat->diffuse_color = mul_color(rgbMat->diffuse_color,   diffuse * 1.5);
 	}
 	rgbMat->eff_color = addTwoColor(ambColor, rgbMat->diffuse_color);
 	*c = rgb(rgbMat->eff_color);
+	free(rgbMat);
 	return true;
 }
