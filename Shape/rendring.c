@@ -16,24 +16,32 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, COLOR *color)
 	COLOR color1;
 	COLOR color2;
 	
+	*t = 0;
+	*color = BLACK;
 	bool isP = intersectPlane(rt, ray, &t1, &color1);
 	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
-	*color = BLACK;
 	if (isP || isS) {
-		if (t1 > t2 && t2 > 0) {
+		if (t1 > t2 && t2 > EPSILON)
+		{
 			*color = color2;
 			*t = t2;
 		}
-		else if (t2 > t1 && t1 > 0) {
+		else if (t2 > t1 && t1 > EPSILON)
+		{
 			*color = color1;
 			*t = t1;
 		}
-		else {
-			*color = BLACK;
-			*t = 0;
+		else if (t2 > t1 && t1 > EPSILON)
+		{
+			*color = color1;
+			*t = t1;
+		}
+		else if (t2 > t1 && t2 > EPSILON)
+		{
+            *color = color2;
+			*t = t2;
 		}
 	}
-
 }
 
 
