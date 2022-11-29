@@ -4,7 +4,7 @@
 
 
 
-t_point new_point(float x, float y, float z)
+t_point new_point(double x, double y, double z)
 {
 	t_point pos;
 
@@ -14,18 +14,18 @@ t_point new_point(float x, float y, float z)
 	return pos;
 }
 
-bool intersectRaySphere(t_ray r, t_minirt *rt, float *t, int *color){
+bool intersectRaySphere(t_ray r, t_minirt *rt, double *t, int *color){
 
-	float t_min;
+	double t_min;
 	t_point dist;
-	float discriminant;
-	float C;
-	float B;
-	float sqrt_discr;
-	float A;
+	double discriminant;
+	double C;
+	double B;
+	double sqrt_discr;
+	double A;
 	t_Sphere *closestSphere;
 	t_Sphere *s;
-	float hitDestance;
+	double hitDestance;
 	int i;
 	s = rt->Sphere;
 	// r.direction = normalizing(r.direction);

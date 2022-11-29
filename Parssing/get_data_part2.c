@@ -64,7 +64,7 @@ int    get_Cylinder(t_minirt *mini, t_data *data)
     set_cordinates(data->pars[1], &mini->Cylinder[i].cordinates, mini);
     set_orientation(data->pars[2], &mini->Cylinder[i].orientation, mini);
 	/*
-	 *  todo : ! turn atod from double to float !
+	 *  todo : ! turn atod from double to double !
 	 */
     mini->Cylinder[i].redius = ft_atod(data->pars[3], &mini->check) / 2;
     mini->Cylinder[i].height = ft_atod(data->pars[4], &mini->check);

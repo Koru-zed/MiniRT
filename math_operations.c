@@ -1,6 +1,6 @@
 #include "Include/miniRT.h"
 
-float	v_dot(const t_point u, const t_point v)
+double	v_dot(const t_point u, const t_point v)
 {
 	return (u.x * v.x
 			+ u.y * v.y
@@ -17,7 +17,7 @@ t_point	v_cross(const t_point u, const t_point v) {
 	return vec;
 }
 
-t_point v_mul(const float t,  t_point p)
+t_point v_mul(const double t,  t_point p)
 {
 	t_point a;
 
@@ -27,7 +27,7 @@ t_point v_mul(const float t,  t_point p)
 	return a;
 }
 
-t_point v_division(t_point p, float t)
+t_point v_division(t_point p, double t)
 {
 	return v_mul(1/t, p);
 }
@@ -61,13 +61,13 @@ int rgb(const size_t rgb[3])
 
 
 
-float 	length(t_point p)
+double 	length(t_point p)
 {
 	return (p.x * p.x + p.y * p.y + p.z * p.z);
 }
 
 // magnitude
-float length_squared(t_point p)
+double length_squared(t_point p)
 {
 	return sqrtf (length(p));
 }
@@ -76,7 +76,7 @@ float length_squared(t_point p)
  ! " P(t) = A + tb ", Here P is a 3D position along a line in 3D,
  ! A is the ray origin and b is the ray direction
 */
-t_point	at(float t, t_ray *r) {
+t_point	at(double t, t_ray *r) {
 	t_point	m;
 
 	m = v_mul(t, r->direction);
@@ -89,7 +89,7 @@ t_point	at(float t, t_ray *r) {
  */
 t_point	normalizing(t_point p)
 {
-	float	mag;
+	double	mag;
 
 	mag = length_squared(p);
 	if (mag > 0) {

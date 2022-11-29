@@ -30,22 +30,19 @@ t_matrix	dir_matrix(void)
     t_point right;
     t_point up;
 
-	right = new_point(0, 1, 0);
+	right = new_point(1, 0, 0);
 	up = new_point(0, 1, 0);
 	forward = new_point(0, 0, 1);
 	origin = new_point(0, 0, 0);
-	return new_matrix(up, right, forward, origin);
+	return new_matrix(right, up, forward, origin);
 }
 
 void    camera_matrix(t_Camera *_camera)
 {
-    t_point random;
     t_point right;
     t_point up;
 
-    random =  new_point(0, 1, 0);
-
-    right = normalizing(v_cross(random, _camera->ray.direction));
+    right = normalizing(v_cross(new_point(0, 1, 0), _camera->ray.direction));
     up = normalizing(v_cross(_camera->ray.direction, right));
     _camera->matrix = new_matrix(right, up, _camera->ray.direction, _camera->ray.origin);
 }

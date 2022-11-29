@@ -9,10 +9,10 @@ void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
 }
 
 
-void iterate_over_objects(t_minirt *rt, t_ray ray, float *t, COLOR *color)
+void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, COLOR *color)
 {
-	float t1 = FLT_MAX;
-	float t2 = FLT_MAX;
+	double t1 = FLT_MAX;
+	double t2 = FLT_MAX;
 	COLOR color1;
 	COLOR color2;
 	
@@ -44,7 +44,7 @@ void	ray_render(t_minirt *mini)
 	int y, x;
 	y = 0;
 
-	float t;
+	double t;
 	// printf("camera_matrix\n");
 	camera_matrix(mini->Camera);
 	print_matrix(mini->Camera->matrix);

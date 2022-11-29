@@ -9,36 +9,21 @@ long long	get_time(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-// t_point	ray_pixel_to_world(t_minirt *mini, int x, int y)
-// {
-// 	float	aspect_ratio;
-// 	float	half_hight;
-// 	float   half_width;
-// 	float	p_x;
-// 	float	p_y;
-
-// 	half_hight = tanf((float )((float )mini->Camera->fov * M_PI / 180) / 2);
-// 	aspect_ratio = (float )mini->Mlx->width / (float )mini->Mlx->height;
-// 	half_width = half_hight * aspect_ratio;
-// 	p_x = (float )(2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
-// 	p_y = (float )(1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
-// 	return (new_point(-p_x, p_y, 1));
-// }
 
 t_point	ray_pixel_to_world(t_minirt *mini, int x, int y)
 {
-	float	aspect_ratio;
-	float	half_hight;
-	float   half_width;
-	float	ps_x;
-	float	ps_y;
+	double	aspect_ratio;
+	double	half_hight;
+	double   half_width;
+	double	ps_x;
+	double	ps_y;
 
-	// half_hight = tanf((float )mini->Camera->fov / 2.0f);
-	half_hight = tanf((float )((float )mini->Camera->fov * M_PI / 180) / 2);
-	aspect_ratio = (float)mini->Mlx->width / (float)mini->Mlx->height;
+	// half_hight = tanf((double )mini->Camera->fov / 2.0f);
+	half_hight = tanf((double )((double )mini->Camera->fov * M_PI / 180) / 2);
+	aspect_ratio = (double)mini->Mlx->width / (double)mini->Mlx->height;
 	half_width = half_hight * aspect_ratio;
-	ps_x = (float )(2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
-	ps_y = (float )(1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
+	ps_x = (double )(2 * (x + 0.5) / mini->Mlx->width - 1) * half_width;
+	ps_y = (double )(1 - 2 * (y + 0.5) / mini->Mlx->height) * half_hight;
 	return (new_point(ps_x, ps_y, 1));
 }
 
@@ -83,44 +68,17 @@ void edit_camera(t_minirt *mini, int key)
 	else if (mini->Mlx->rotate)
 	{
 		if (key == KEYLEFT && mini->Mlx->rotate == ROTATE_X)
-			matrix = cross_matrix(update_matrix_y(3.6), matrix);
+			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_y(-3.6));
 		else if (key == KEYRIGHT && mini->Mlx->rotate == ROTATE_X)
-			matrix = cross_matrix(update_matrix_y(-3.6),  matrix);
+			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_y(3.6));
 		else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y)
-		{
-	// printf("matrix.M[2][1] = {%f} | matrix.M[1][2] = {%f}\n", matrix.M[2][1], matrix.M[1][2]);
-			if (matrix.M[2][1] == 1.0 && matrix.M[1][2] == 1.0)
-			{//printf("hello\n");
-					mini->Mlx->_do = 0;
-			}
-			else if (matrix.M[2][1] < 1.0 && matrix.M[1][2] < 1.0)
-				matrix = cross_matrix(update_matrix_x(3.6),  matrix);
-		}
+			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_x(3.6));
 		else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y)
-		{
-	// printf("matrix.M[2][1] = {%f} | matrix.M[1][2] = {%f}\n", matrix.M[2][1], matrix.M[1][2]);
-			if (matrix.M[2][1] == -1.0 && matrix.M[1][2] == -1.0)
-			{//printf("hello\n");
-					mini->Mlx->_do = 0;
-			}
-			else if (matrix.M[2][1] > -1.0 && matrix.M[1][2] > -1.0)
-				matrix = cross_matrix(update_matrix_x(-3.6),  matrix);
-			// if (matrix.M[0][0] == 0.0 && matrix.M[0][2] == -1.0 && matrix.M[2][0] == 1.0 && matrix.M[2][2] == 0.0)
-			// {
-			// 	printf("$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
-			// 	matrix.M[0][0] = 1.0;
-			// 	matrix.M[0][2] = 0.0;
-			// 	matrix.M[2][0] = 0.0;
-			// 	matrix.M[2][2] = 1.0;
-			// }
-		}
-		mini->Camera->ray.direction.x = matrix.M[2][0];
-		mini->Camera->ray.direction.y = matrix.M[2][1];
-		mini->Camera->ray.direction.z = matrix.M[2][2];
+			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_x(-3.6));
 	}
 	else
 		mini->Mlx->_do = 0; 
-	printf("mini->_do = {%d}\n", mini->Mlx->_do);
+	// printf("mini->_do = {%d}\n", mini->Mlx->_do);
 }
 
 // void edit_light(t_minirt *mini, int key)
@@ -286,7 +244,7 @@ void	rotation_plane(t_minirt *mini, int e)
 		else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->ray.direction.z >= -1.000000)
 			mini->Plane->ray.direction.z += 0.1f * e;// cycle * e;
 	}
-	// printf("Plane->normal.x = %f, Plane->normal.y = %f, Plane->normal.z = %f\n", mini->Plane->ray.direction.x, mini->Plane->ray.direction.y, mini->Plane->ray.direction.z);
+	// printf("Plane->normal.x = %lf, Plane->normal.y = %lf, Plane->normal.z = %lf\n", mini->Plane->ray.direction.x, mini->Plane->ray.direction.y, mini->Plane->ray.direction.z);
 }
 
 
@@ -333,40 +291,40 @@ void print_matrix(t_matrix matrix)
 {
 	printf("########\n");
 	printf("M[0][0] = ");
-	printf("%f", matrix.M[0][0]);
+	printf("%lf", matrix.M[0][0]);
 	printf(" | M[0][1] = ");
-	printf("%f", matrix.M[0][1]);
+	printf("%lf", matrix.M[0][1]);
 	printf(" | M[0][2] = ");
-	printf("%f", matrix.M[0][2]);
+	printf("%lf", matrix.M[0][2]);
 	printf(" | M[0][3] = ");
-	printf("%f", matrix.M[0][3]);
+	printf("%lf", matrix.M[0][3]);
 	printf("\n");
 	printf("M[1][0] = ");
-	printf("%f", matrix.M[1][0]);
+	printf("%lf", matrix.M[1][0]);
 	printf(" | M[1][1] = ");
-	printf("%f", matrix.M[1][1]);
+	printf("%lf", matrix.M[1][1]);
 	printf(" | M[1][2] = ");
-	printf("%f", matrix.M[1][2]);
+	printf("%lf", matrix.M[1][2]);
 	printf(" | M[1][3] = ");
-	printf("%f", matrix.M[1][3]);
+	printf("%lf", matrix.M[1][3]);
 	printf("\n");
 	printf("M[2][0] = ");
-	printf("%f", matrix.M[2][0]);
+	printf("%lf", matrix.M[2][0]);
 	printf(" | M[2][1] = ");
-	printf("%f", matrix.M[2][1]);
+	printf("%lf", matrix.M[2][1]);
 	printf(" | M[2][2] = ");
-	printf("%f", matrix.M[2][2]);
+	printf("%lf", matrix.M[2][2]);
 	printf(" | M[2][3] = ");
-	printf("%f", matrix.M[2][3]);
+	printf("%lf", matrix.M[2][3]);
 	printf("\n");
 	printf("M[3][0] = ");
-	printf("%f", matrix.M[3][0]);
+	printf("%lf", matrix.M[3][0]);
 	printf(" | M[3][1] = ");
-	printf("%f", matrix.M[3][1]);
+	printf("%lf", matrix.M[3][1]);
 	printf(" | M[3][2] = ");
-	printf("%f", matrix.M[3][2]);
+	printf("%lf", matrix.M[3][2]);
 	printf(" | M[3][3] = ");
-	printf("%f", matrix.M[3][3]);
+	printf("%lf", matrix.M[3][3]);
 	printf("\n\n");;
 	// close(_camera->fd);
 

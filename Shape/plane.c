@@ -8,11 +8,11 @@
  *		∗ R,G,B colors in range [0-255]: 0, 0, 255
  */
 
-bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
+bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, int *color)
 {
 	int	i;
-	float tmin;
-	float hd;
+	double tmin;
+	double hd;
 	t_Plane *tPlane;
 	t_intersect closestPlane;
 
@@ -22,7 +22,7 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, float *t, int *color)
 	closestPlane.tmin = FLT_MAX;
 	while (++i < rt->Data->shape.pl)
 	{
-		float p = v_dot(tPlane[i].ray.direction, ray.direction);
+		double p = v_dot(tPlane[i].ray.direction, ray.direction);
 		t_point resultOfSub = v_sub(tPlane[i].ray.origin, ray.origin);
 		tmin = v_dot(resultOfSub, tPlane[i].ray.direction) / p;
 
