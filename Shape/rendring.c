@@ -9,41 +9,6 @@ void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
 }
 
 
-// void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, COLOR *color)
-// {
-// 	double t1 = FLT_MAX;
-// 	double t2 = FLT_MAX;
-// 	COLOR color1;
-// 	COLOR color2;
-	
-// 	*t = 0;
-// 	*color = BLACK;
-// 	bool isP = intersectPlane(rt, ray, &t1, &color1);
-// 	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
-// 	if (isP || isS) {
-// 		if (t1 > t2 && t2 > EPSILON)
-// 		{
-// 			*color = color2;
-// 			*t = t2;
-// 		}
-// 		else if (t2 > t1 && t1 > EPSILON)
-// 		{
-// 			*color = color1;
-// 			*t = t1;
-// 		}
-// 		else if (t2 > t1 && t1 > EPSILON)
-// 		{
-// 			*color = color1;
-// 			*t = t1;
-// 		}
-// 		else if (t2 > t1 && t2 > EPSILON)
-// 		{
-//             *color = color2;
-// 			*t = t2;
-// 		}
-// 	}
-// }
-
 void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, COLOR *color)
 {
 	double t1 = FLT_MAX;
@@ -56,30 +21,25 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, COLOR *color)
 	bool isP = intersectPlane(rt, ray, &t1, &color1);
 	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
 	if (isP || isS) {
-		if (t1 > t2)
-		{
-		if (t2 > EPSILON)
+		if (t1 > t2 && t2 > EPSILON)
 		{
 			*color = color2;
 			*t = t2;
 		}
-		else if (t1 > EPSILON)
+		else if (t1 > t2 && t1 > EPSILON)
 		{
 			*color = color1;
 			*t = t1;
 		}
-		}
-		else if (t2 > t1){
-		if ( t1 > EPSILON)
+		else if (t2 > t1 && t1 > EPSILON)
 		{
 			*color = color1;
 			*t = t1;
 		}
-		else if (t2 > EPSILON)
+		else if (t2 > t1 && t2 > EPSILON)
 		{
             *color = color2;
 			*t = t2;
-		}
 		}
 	}
 }
