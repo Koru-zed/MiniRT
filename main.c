@@ -176,15 +176,18 @@ void edit_mini(t_minirt *mini, int key)
 
 void	rotation_plane(t_minirt *mini, int key)
 {
+	int i;
+
+	i = mini->Mlx->obj.index;
 	printf("rotation plane");
 	if (key == KEYLEFT && mini->Mlx->rotate == ROTATE_X)
-		mini->Plane->ray.direction = mul_point_matrix(mini->Plane->ray.direction, update_matrix_y(-3.6));
+		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_y(-3.6));
 	else if (key == KEYRIGHT && mini->Mlx->rotate == ROTATE_X)
-		mini->Plane->ray.direction = mul_point_matrix(mini->Plane->ray.direction, update_matrix_y(3.6));
+		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_y(3.6));
 	else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y)
-		mini->Plane->ray.direction = mul_point_matrix(mini->Plane->ray.direction, update_matrix_x(3.6));
+		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_x(3.6));
 	else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y)
-		mini->Plane->ray.direction = mul_point_matrix(mini->Plane->ray.direction, update_matrix_x(-3.6));
+		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_x(-3.6));
 	// printf("Plane->normal.x = %lf, Plane->normal.y = %lf, Plane->normal.z = %lf\n", mini->Plane->ray.direction.x, mini->Plane->ray.direction.y, mini->Plane->ray.direction.z);
 }
 
