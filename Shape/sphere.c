@@ -26,6 +26,7 @@ bool 	intersectRaySphere(t_ray r, t_minirt *rt, double *t,t_hit **pHit)
 {
 
 	double t_min;
+	double t_max;
 	t_point dist;
 	double discriminant;
 	double C;
@@ -48,8 +49,11 @@ bool 	intersectRaySphere(t_ray r, t_minirt *rt, double *t,t_hit **pHit)
 		B = 2 * v_dot(r.direction, dist);
 		C = v_dot(dist, dist) - (s[i].radius * s[i].radius);
 		discriminant = B * B - 4.0f * A * C;
-		sqrt_discr = sqrtf(discriminant);
+		sqrt_discr = sqrt(discriminant);
 		t_min = (-B - sqrt_discr) / (2.0f * A);
+		t_max = (-B + sqrt_discr) / (2.0f * A);
+		if (t_max < t_min)
+			t_min = t_max;
 //		printf("%f\n", t_min);
 		if (t_min < hitDestance)
 		{

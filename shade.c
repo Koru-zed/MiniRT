@@ -114,7 +114,7 @@ bool	is_shadowed(t_minirt *rt, t_point hit, t_point normal)
 	double len = length_squared(lDir);
 //	t_point dir = normalizing(lDir);
 	t_ray ray;
-	ray.origin = v_adding(hit, v_mul(EPSILON, normal));
+	ray.origin = hit;//v_adding(hit, v_mul(EPSILON, normal));
 	ray.direction = lDir;
 	t_hit *h = malloc(sizeof(t_hit));
 	double t;
@@ -151,10 +151,10 @@ bool	add_light(t_hit *pHit, t_minirt *rt, int *c)
 	}
 	else
 	{
-		rgbMat->diffuse_color.r = (rt->Light->brightenss * ambColor.r);
-		rgbMat->diffuse_color.g = (rt->Light->brightenss * ambColor.g);
-		rgbMat->diffuse_color.b = (rt->Light->brightenss * ambColor.b);
-		rgbMat->diffuse_color = mul_color(rgbMat->diffuse_color,   diffuse * 1.5);
+		rgbMat->diffuse_color.r = (rt->Light->brightenss * pHit->obj_color.r);
+		rgbMat->diffuse_color.g = (rt->Light->brightenss * pHit->obj_color.g);
+		rgbMat->diffuse_color.b = (rt->Light->brightenss * pHit->obj_color.b);
+		rgbMat->diffuse_color = mul_color(rgbMat->diffuse_color,   diffuse);
 	}
 	rgbMat->eff_color = addTwoColor(ambColor, rgbMat->diffuse_color);
 	*c = rgb(rgbMat->eff_color);
