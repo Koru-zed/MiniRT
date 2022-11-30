@@ -231,14 +231,42 @@ int ft_mouse(int button, int x, int y, t_minirt *mini)
 		if (mini->Mlx->obj.object)
 			printf("mini->obj.object[%d] | mini->obj.index[%d]\n", mini->Mlx->obj.object, mini->Mlx->obj.index);
 	}
+	else if (button  == 4)
+    {
+		mini->Mlx->_do = 1;
+		if (!mini->Mlx->obj.object)
+			mini->Camera->ray.origin.z -= 5;
+		else
+        {
+			if (mini->Mlx->obj.object == _SEPHER)
+				mini->Sphere->radius -= 1;
+			// else if (mini->Mlx->obj.object == _PLANE)
+			// 	edit_plane(mini, key);;
+		}
+	}
+	else if (button  == 5)
+    {
+		mini->Mlx->_do = 1;
+		if (!mini->Mlx->obj.object)
+			mini->Camera->ray.origin.z += 5;
+		else
+		{
+			if (mini->Mlx->obj.object == _SEPHER)
+				mini->Sphere->radius += 1;
+		}
+	}
+	if (mini->Mlx->_do)
+	{
+		mlx_clear_window(mini->Mlx->mlx, mini->Mlx->win);
+		ray_render(mini);
+	}
 	return (0);
 }
 // +
 void	setup_controls(t_minirt *mini)
 {
-	// mlx_hook(mini->Mlx->win, 4, 0, ft_mouse, mini);
-	// ft_mouse(mini);
-
+	mlx_hook(mini->Mlx->win, 4, 0, ft_mouse, mini);
+	mlx_hook(mini->Mlx->win, 5, 0, ft_mouse, mini);
 	mlx_mouse_hook(mini->Mlx->win, ft_mouse, mini);
 
 	// mlx_key_hook(mini->Mlx->win, objs, mini);
