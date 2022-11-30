@@ -72,9 +72,9 @@ void edit_camera(t_minirt *mini, int key)
 		else if (key == KEYRIGHT && mini->Mlx->rotate == ROTATE_X)
 			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_y(3.6));
 		else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y)
-			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_x(3.6));
-		else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y)
 			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_x(-3.6));
+		else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y)
+			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_x(3.6));
 	}
 	else
 		mini->Mlx->_do = 0; 
@@ -137,7 +137,7 @@ void edit_plane(t_minirt *mini, int key)
 
 void edit_mini(t_minirt *mini, int key)
 {
-	if (mini->Mlx->obj.object == _CAMERA)
+	if (!mini->Mlx->obj.object)
 		edit_camera(mini, key);
 	// else if (key == _LIGHT)
 	// 	edit_light(mini, key);
