@@ -20,7 +20,7 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, COLOR *color)
 	*color = BLACK;
 	bool isP = intersectPlane(rt, ray, &t1, &color1);
 	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
-	if (isP || isS) {
+	if (isP && isS) {
 		if (t1 > t2 && t2 > EPSILON)
 		{
 			*color = color2;
@@ -42,6 +42,16 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, COLOR *color)
 			*t = t2;
 		}
 	}
+	else if (isP)
+    {
+        *color = color1;
+		*t = t1;
+	}
+	else if (isS)
+    {
+        *color = color2;
+		*t = t2;
+	}
 }
 
 void intersection_over_objects(t_minirt *rt, t_ray ray)
@@ -53,7 +63,7 @@ void intersection_over_objects(t_minirt *rt, t_ray ray)
 	
 	bool isP = intersectPlane(rt, ray, &t1, &color1);
 	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
-	if (isP || isS) {
+	if (isP && isS) {
 		if (t1 > t2 && t2 > EPSILON)
 			rt->Mlx->obj.object =  _SEPHER;
 		else if (t1 > t2 && t1 > EPSILON)
@@ -63,6 +73,10 @@ void intersection_over_objects(t_minirt *rt, t_ray ray)
 		else if (t2 > t1 && t2 > EPSILON)
 			rt->Mlx->obj.object =  _SEPHER;
 	}
+	else if (isP)
+		rt->Mlx->obj.object =  _PLANE;
+	else if (isS)
+		rt->Mlx->obj.object =  _SEPHER;
 	else 
 		rt->Mlx->obj.object = 0;
 }

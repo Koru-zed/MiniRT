@@ -234,12 +234,15 @@ int ft_mouse(int button, int x, int y, t_minirt *mini)
 	else if (button  == 4)
     {
 		mini->Mlx->_do = 1;
-		if (!mini->Mlx->obj.object)
-			mini->Camera->ray.origin.z -= 5;
+		if (!mini->Mlx->obj.object && mini->Camera->fov > 0)
+			mini->Camera->fov -= 5;
 		else
         {
-			if (mini->Mlx->obj.object == _SEPHER)
-				mini->Sphere->radius -= 1;
+			if (mini->Mlx->obj.object == _SEPHER && mini->Sphere->radius > 0){
+			// printf("hello\n");
+				mini->Sphere->radius -= 0.5;
+			}
+			// printf("mini->Sphere->radius {%f}\n", mini->Sphere->radius);
 			// else if (mini->Mlx->obj.object == _PLANE)
 			// 	edit_plane(mini, key);;
 		}
@@ -247,12 +250,15 @@ int ft_mouse(int button, int x, int y, t_minirt *mini)
 	else if (button  == 5)
     {
 		mini->Mlx->_do = 1;
-		if (!mini->Mlx->obj.object)
-			mini->Camera->ray.origin.z += 5;
+		if (!mini->Mlx->obj.object && mini->Camera->fov + 5 <= 180)
+			mini->Camera->fov += 5;
 		else
 		{
-			if (mini->Mlx->obj.object == _SEPHER)
-				mini->Sphere->radius += 1;
+			if (mini->Mlx->obj.object == _SEPHER){
+				// printf("hello\n");
+				mini->Sphere->radius += 0.5;
+			}
+			// printf("mini->Sphere->radius {%f}\n", mini->Sphere->radius);
 		}
 	}
 	if (mini->Mlx->_do)
@@ -265,10 +271,10 @@ int ft_mouse(int button, int x, int y, t_minirt *mini)
 // +
 void	setup_controls(t_minirt *mini)
 {
-	mlx_hook(mini->Mlx->win, 4, 0, ft_mouse, mini);
-	mlx_hook(mini->Mlx->win, 5, 0, ft_mouse, mini);
 	mlx_mouse_hook(mini->Mlx->win, ft_mouse, mini);
 
+	mlx_hook(mini->Mlx->win, 4, 0, ft_mouse, mini);
+	mlx_hook(mini->Mlx->win, 5, 0, ft_mouse, mini);
 	// mlx_key_hook(mini->Mlx->win, objs, mini);
 	mlx_key_hook(mini->Mlx->win, press_key, mini);
 }
