@@ -42,7 +42,6 @@ bool 	intersectRaySphere(t_ray r, t_minirt *rt, double *t,t_hit **pHit)
 	hitDestance = FLT_MAX;
 	closestSphere = NULL;
 	A = v_dot(r.direction, r.direction);
-	*t = FLT_MAX;
 	i = -1;
 	while (++i < rt->Data->shape.sp) {
 		dist = v_sub(r.origin, s[i].center);
@@ -51,9 +50,9 @@ bool 	intersectRaySphere(t_ray r, t_minirt *rt, double *t,t_hit **pHit)
 		discriminant = B * B - 4.0f * A * C;
 		sqrt_discr = sqrt(discriminant);
 		t_min = (-B - sqrt_discr) / (2.0f * A);
-		t_max = (-B + sqrt_discr) / (2.0f * A);
-		if (t_max < t_min)
-			t_min = t_max;
+//		t_max = (-B + sqrt_discr) / (2.0f * A);
+//		if (t_max < t_min)
+//			t_min = t_max;
 //		printf("%f\n", t_min);
 		if (t_min < hitDestance)
 		{
@@ -61,6 +60,7 @@ bool 	intersectRaySphere(t_ray r, t_minirt *rt, double *t,t_hit **pHit)
 			closestSphere = &s[i];
 		}
 	}
+	*t = FLT_MAX;
 	if (!closestSphere)
 		return false;
 	*t = hitDestance;

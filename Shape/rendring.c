@@ -9,12 +9,11 @@ void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
 }
 
 
-void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **oHit)
-{
+void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **oHit) {
 	double t1 = FLT_MAX;
 	double t2 = FLT_MAX;
-	t_hit	*pHit;
-	t_hit	*pHit1;
+	t_hit *pHit;
+	t_hit *pHit1;
 	COLOR color1;
 	COLOR color2;
 
@@ -33,14 +32,12 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **oHit)
 			pHit = NULL;
 			*oHit = pHit1;
 			*t = t2;
-		}
-		else if (t2 > t1) {
+		} else if (t2 > t1) {
 			free(pHit1);
 			pHit1 = NULL;
 			*oHit = pHit;
 			*t = t1;
-		}
-		else {
+		} else {
 			free(pHit);
 			free(pHit1);
 			pHit = NULL;
@@ -48,8 +45,7 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **oHit)
 			(*oHit) = NULL;
 			*t = FLT_MAX;
 		}
-	}
-	else {
+	} else {
 		free(pHit);
 		free(pHit1);
 		pHit = NULL;
@@ -58,7 +54,6 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **oHit)
 		*t = FLT_MAX;
 	}
 }
-
 void	ray_render(t_minirt *mini)
 {
 	COLOR color;

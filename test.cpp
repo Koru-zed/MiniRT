@@ -7,13 +7,13 @@
 //
 ///* The vector structure */
 //typedef struct{
-//      float x,y,z;
+//      double x,y,z;
 //}vector;
 //
 ///* The sphere */
 //typedef struct{
 //        vector pos;
-//        float  radius;
+//        double  radius;
 //}sphere;
 //
 ///* The ray */
@@ -29,7 +29,7 @@
 //}
 //
 ///* Multiply two vectors and return the resulting scalar (dot product) */
-//float vectorDot(vector *v1, vector *v2){
+//double vectorDot(vector *v1, vector *v2){
 //	return v1->x * v2->x + v1->y * v2->y + v1->z * v2->z;
 //}
 //
@@ -38,7 +38,7 @@
 //bool intersectRaySphere(ray *r, sphere *s){
 //
 //	/* A = d.d, the vector dot product of the direction */
-//	float A = vectorDot(&r->dir, &r->dir);
+//	double A = vectorDot(&r->dir, &r->dir);
 //
 //	/* We need a vector representing the distance between the start of
 //	 * the ray and the position of the circle.
@@ -47,13 +47,13 @@
 //	vector dist = vectorSub(&r->start, &s->pos);
 //
 //	/* 2d.(p0 - c) */
-//	float B = 2 * vectorDot(&r->dir, &dist);
+//	double B = 2 * vectorDot(&r->dir, &dist);
 //
 //	/* (p0 - c).(p0 - c) - r^2 */
-//	float C = vectorDot(&dist, &dist) - (s->radius * s->radius);
+//	double C = vectorDot(&dist, &dist) - (s->radius * s->radius);
 //
 //	/* Solving the discriminant */
-//	float discr = B * B - 4 * A * C;
+//	double discr = B * B - 4 * A * C;
 //
 //	/* If the discriminant is negative, there are no real roots.
 //	 * Return false in that case as the ray misses the sphere.
@@ -175,35 +175,35 @@ public:
     } 
 }; 
  
-typedef Vec3<float> Vec3f; 
+typedef Vec3<double> Vec3f; 
  
 class Sphere 
 { 
 public: 
     Vec3f center;                           /// position of the sphere 
-    float radius, radius2;                  /// sphere radius and radius^2 
+    double radius, radius2;                  /// sphere radius and radius^2 
     Vec3f surfaceColor, emissionColor;      /// surface color and emission (light) 
-    float transparency, reflection;         /// surface transparency and reflectivity 
+    double transparency, reflection;         /// surface transparency and reflectivity 
     Sphere( 
         const Vec3f &c, 
-        const float &r, 
+        const double &r, 
         const Vec3f &sc, 
-        const float &refl = 0, 
-        const float &transp = 0, 
+        const double &refl = 0, 
+        const double &transp = 0, 
         const Vec3f &ec = 0) : 
         center(c), radius(r), radius2(r * r), surfaceColor(sc), emissionColor(ec), 
         transparency(transp), reflection(refl) 
     { /* empty */ } 
 // Compute a ray-sphere intersection using the geometric solution
 
-    bool intersect(const Vec3f &rayorig, const Vec3f &raydir, float &t0, float &t1) const 
+    bool intersect(const Vec3f &rayorig, const Vec3f &raydir, double &t0, double &t1) const 
     { 
         Vec3f l = center - rayorig; 
-        float tca = l.dot(raydir); 
+        double tca = l.dot(raydir); 
         if (tca < 0) return false; 
-        float d2 = l.dot(l) - tca * tca; 
+        double d2 = l.dot(l) - tca * tca; 
         if (d2 > radius2) return false; 
-        float thc = sqrt(radius2 - d2); 
+        double thc = sqrt(radius2 - d2); 
         t0 = tca - thc; 
         t1 = tca + thc; 
  
@@ -214,7 +214,7 @@ public:
 // This variable controls the maximum recursion depth
 #define MAX_RAY_DEPTH 5 
  
-float mix(const float &a, const float &b, const float &mix) 
+double mix(const double &a, const double &b, const double &mix) 
 { 
     return b * mix + a * (1 - mix); 
 } 
@@ -227,11 +227,11 @@ Vec3f trace(
     const int &depth) 
 { 
     //if (raydir.length() != 1) std::cerr << "Error " << raydir << std::endl;
-    float tnear = INFINITY; 
+    double tnear = INFINITY; 
     const Sphere* sphere = NULL; 
     // find intersection of this ray with the sphere in the scene
     for (unsigned i = 0; i < spheres.size(); ++i) { 
-        float t0 = INFINITY, t1 = INFINITY; 
+        double t0 = INFINITY, t1 = INFINITY; 
         if (spheres[i].intersect(rayorig, raydir, t0, t1)) { 
             if (t0 < 0) t0 = t1; 
             if (t0 < tnear) { 
@@ -250,13 +250,13 @@ Vec3f trace(
     // reverse the normal direction. That also means we are inside the sphere so set
     // the inside bool to true. Finally reverse the sign of IdotN which we want
     // positive.
-    float bias = 1e-4;  //add some bias to the point from which we will be tracing 
+    double bias = 1e-4;  //add some bias to the point from which we will be tracing 
     bool inside = false; 
     if (raydir.dot(nhit) > 0) nhit = -nhit, inside = true; 
     if ((sphere->transparency > 0 || sphere->reflection > 0) && depth < MAX_RAY_DEPTH) { 
-        float facingratio = -raydir.dot(nhit); 
+        double facingratio = -raydir.dot(nhit); 
         // change the mix value to tweak the effect
-        float fresneleffect = mix(pow(1 - facingratio, 3), 1, 0.1); 
+        double fresneleffect = mix(pow(1 - facingratio, 3), 1, 0.1); 
         // compute reflection direction (not need to normalize because all vectors
         // are already normalized)
         Vec3f refldir = raydir - nhit * 2 * raydir.dot(nhit); 
@@ -265,9 +265,9 @@ Vec3f trace(
         Vec3f refraction = 0; 
         // if the sphere is also transparent compute refraction ray (transmission)
         if (sphere->transparency) { 
-            float ior = 1.1, eta = (inside) ? ior : 1 / ior;  //are we inside or outside the surface? 
-            float cosi = -nhit.dot(raydir); 
-            float k = 1 - eta * eta * (1 - cosi * cosi); 
+            double ior = 1.1, eta = (inside) ? ior : 1 / ior;  //are we inside or outside the surface? 
+            double cosi = -nhit.dot(raydir); 
+            double k = 1 - eta * eta * (1 - cosi * cosi); 
             Vec3f refrdir = raydir * eta + nhit * (eta *  cosi - sqrt(k)); 
             refrdir.normalize(); 
             refraction = trace(phit - nhit * bias, refrdir, spheres, depth + 1); 
@@ -287,7 +287,7 @@ Vec3f trace(
                 lightDirection.normalize(); 
                 for (unsigned j = 0; j < spheres.size(); ++j) { 
                     if (i != j) { 
-                        float t0, t1; 
+                        double t0, t1; 
                         if (spheres[j].intersect(phit + nhit * bias, lightDirection, t0, t1)) { 
                             transmission = 0; 
                             break; 
@@ -295,7 +295,7 @@ Vec3f trace(
                     } 
                 } 
                 surfaceColor += sphere->surfaceColor * transmission * 
-                std::max(float(0), nhit.dot(lightDirection)) * spheres[i].emissionColor; 
+                std::max(double(0), nhit.dot(lightDirection)) * spheres[i].emissionColor; 
             } 
         } 
     } 
@@ -308,14 +308,14 @@ void render(const std::vector<Sphere> &spheres)
 { 
     unsigned width = 640, height = 480; 
     Vec3f *image = new Vec3f[width * height], *pixel = image; 
-    float invWidth = 1 / float(width), invHeight = 1 / float(height); 
-    float fov = 30, aspectratio = width / float(height); 
-    float angle = tan(M_PI * 0.5 * fov / 180.); 
+    double invWidth = 1 / double(width), invHeight = 1 / double(height); 
+    double fov = 30, aspectratio = width / double(height); 
+    double angle = tan(M_PI * 0.5 * fov / 180.); 
     // Trace rays
     for (unsigned y = 0; y < height; ++y) { 
         for (unsigned x = 0; x < width; ++x, ++pixel) { 
-            float xx = (2 * ((x + 0.5) * invWidth) - 1) * angle * aspectratio; 
-            float yy = (1 - 2 * ((y + 0.5) * invHeight)) * angle; 
+            double xx = (2 * ((x + 0.5) * invWidth) - 1) * angle * aspectratio; 
+            double yy = (1 - 2 * ((y + 0.5) * invHeight)) * angle; 
             Vec3f raydir(xx, yy, -1); 
             raydir.normalize(); 
             *pixel = trace(Vec3f(0), raydir, spheres, 0); 
@@ -325,9 +325,9 @@ void render(const std::vector<Sphere> &spheres)
     std::ofstream ofs("./untitled.ppm", std::ios::out | std::ios::binary); 
     ofs << "P6\n" << width << " " << height << "\n255\n"; 
     for (unsigned i = 0; i < width * height; ++i) { 
-        ofs << (unsigned char)(std::min(float(1), image[i].x) * 255) << 
-               (unsigned char)(std::min(float(1), image[i].y) * 255) << 
-               (unsigned char)(std::min(float(1), image[i].z) * 255); 
+        ofs << (unsigned char)(std::min(double(1), image[i].x) * 255) << 
+               (unsigned char)(std::min(double(1), image[i].y) * 255) << 
+               (unsigned char)(std::min(double(1), image[i].z) * 255); 
     } 
     ofs.close(); 
     delete [] image; 
