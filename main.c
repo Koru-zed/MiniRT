@@ -88,30 +88,18 @@ void edit_camera(t_minirt *mini, int key)
 
 void edit_sepher(t_minirt *mini, int key)
 {
-	int i;
-
 	mini->Mlx->_do = 1;
-	if (key == KEYUP){
-		i = -1;
-		while (++i < mini->Data->shape.sp)
-			mini->Sphere[i].center.y += 0.75;
-	}
-	else if (key == KEYDOWN){
-		i = -1;
-		while (++i < mini->Data->shape.sp)
-			mini->Sphere[i].center.y -= 0.75;
-	}
-	else if (key == KEYLEFT){
-		i = -1;
-		while (++i < mini->Data->shape.sp)
-			mini->Sphere[i].center.x += 0.75;
-	}
+	// if (mini->obj.object != _SEPHER || mini->Mlx->rotate)
+	// 	return ;
+	// printf("*********\nindex [%d]\n**********\n", mini->Mlx->obj.index);
+	if (key == KEYUP)
+		mini->Sphere[mini->Mlx->obj.index].center.y += 0.75;
+	else if (key == KEYDOWN)
+		mini->Sphere[mini->Mlx->obj.index].center.y -= 0.75;
+	else if (key == KEYLEFT)
+		mini->Sphere[mini->Mlx->obj.index].center.x += 0.75;
 	else if (key == KEYRIGHT)
-	{
-		i = -1;
-		while (++i < mini->Data->shape.sp)
-			mini->Sphere[i].center.x -= 0.75;
-	}
+		mini->Sphere[mini->Mlx->obj.index].center.x -= 0.75;
 	else
 		mini->Mlx->_do = 0; 
 
@@ -132,124 +120,79 @@ int rotation_key(int key, t_minirt *mini)
 
 void edit_plane(t_minirt *mini, int key)
 {
-	int i;
- 
 	mini->Mlx->_do = 1;
-	if (key == KEYUP){
-		i = -1;
-		while (++i < mini->Data->shape.pl)
-			mini->Plane[i].ray.origin.y += 0.75;
-	}
-	else if (key == KEYDOWN){
-		i = -1;
-		while (++i < mini->Data->shape.pl)
-			mini->Plane[i].ray.origin.y -= 0.75;
-	}
-	else if (key == KEYLEFT){
-		i = -1;
-		while (++i < mini->Data->shape.pl)
-			mini->Plane[i].ray.origin.x += 0.75;
-	}
+	if (mini->Mlx->rotate)
+		rotation_plane(mini, key);
+	else if (key == KEYUP)
+		mini->Plane[mini->Mlx->obj.index].ray.origin.y += 0.75;
+	else if (key == KEYDOWN)
+		mini->Plane[mini->Mlx->obj.index].ray.origin.y -= 0.75;
+	else if (key == KEYLEFT)
+		mini->Plane[mini->Mlx->obj.index].ray.origin.x += 0.75;
 	else if (key == KEYRIGHT)
-	{
-		i = -1;
-		while (++i < mini->Data->shape.pl)
-			mini->Plane[i].ray.origin.x -= 0.75;
-	}
-	else if (key == R_RIGHT)
-		rotation_plane(mini, 1);
-	else if (key == R_LEFT)
-		rotation_plane(mini, -1);
+		mini->Plane[mini->Mlx->obj.index].ray.origin.x -= 0.75;
 	else
 		mini->Mlx->_do = 0; 
 }
 
-// void edit_cylinder(t_minirt *mini, int key)
-// {
-
-// }
-
 void edit_mini(t_minirt *mini, int key)
 {
-	if (mini->Mlx->obj == _CAMERA)
+	if (mini->Mlx->obj.object == _CAMERA)
 		edit_camera(mini, key);
 	// else if (key == _LIGHT)
 	// 	edit_light(mini, key);
-	else if (mini->Mlx->obj == _SEPHER)
+	else if (mini->Mlx->obj.object == _SEPHER)
 		edit_sepher(mini, key);
-	else if (mini->Mlx->obj == _PLANE)
+	else if (mini->Mlx->obj.object == _PLANE)
 		edit_plane(mini, key);
 	// else if (key == _CYLINDER)
 	// 	edit_cylinder(mini, key);
 	// mini->Mlx->addr = mlx_get_data_addr(mini->Mlx->img, &mini->Mlx->bits_per_pixel, &mini->Mlx->line_length, &mini->Mlx->endian);
 	if (mini->Mlx->_do)
 	{
-		// printf(" .     				>>>>>>>>>>>\n");
-	// 	printf("-------------------------\n");
-	// printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
 
 		mlx_clear_window(mini->Mlx->mlx, mini->Mlx->win);
+
 		ray_render(mini);
-	// 			printf("***************************\n");
-	// printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
+
 	}
+
 }
 
-// void edit_mini(t_minirt *mini, int key)
+// void objs_key(int key, t_minirt *mini)
 // {
-// 	if 
+
+// 	if (key == _CAMERA)
+// 		mini->Mlx->obj = _CAMERA;
+// 	else if (key == _LIGHT)
+// 		mini->Mlx->obj = _LIGHT;
+// 	else if (key == _SEPHER)
+// 		mini->Mlx->obj = _SEPHER;
+// 	else if (key == _PLANE)
+// 		mini->Mlx->obj = _PLANE;
+// 	else if (key == _CYLINDER)
+// 		mini->Mlx->obj = _CYLINDER;
 // }
-void objs_key(int key, t_minirt *mini)
+
+void	rotation_plane(t_minirt *mini, int key)
 {
-	// 	printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-	// printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
-	if (key == _CAMERA)
-		mini->Mlx->obj = _CAMERA;
-	else if (key == _LIGHT)
-		mini->Mlx->obj = _LIGHT;
-	else if (key == _SEPHER)
-		mini->Mlx->obj = _SEPHER;
-	else if (key == _PLANE)
-		mini->Mlx->obj = _PLANE;
-	else if (key == _CYLINDER)
-		mini->Mlx->obj = _CYLINDER;
-	// printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
-
-	// else
-	// 	mini->Mlx->obj = -1;
-	// printf("key_objs{%d}{%d}\n", key, mini->Mlx->obj);
-	// return (0);
-}
-
-
-
-void	rotation_plane(t_minirt *mini, int e)
-{
-	mini->Mlx->_do = 1;
-	if (e == 1)
-	{
-		if (mini->Mlx->rotate == ROTATE_X && mini->Plane->ray.direction.x < 1.000000)
-			mini->Plane->ray.direction.x += 0.1f * e;//cycle * e;
-		else if (mini->Mlx->rotate == ROTATE_Y && mini->Plane->ray.direction.y < 1.000000)
-			mini->Plane->ray.direction.y += 0.1f * e;// cycle * e;
-		else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->ray.direction.z < 1.000000)
-			mini->Plane->ray.direction.z += 0.1f * e;// cycle * e;
-	}
-	else if (e == -1)
-	{
-		if (mini->Mlx->rotate == ROTATE_X && mini->Plane->ray.direction.x >= -1.000000)
-			mini->Plane->ray.direction.x += 0.1f * e;//cycle * e;
-		else if (mini->Mlx->rotate == ROTATE_Y && mini->Plane->ray.direction.y >= -1.000000)
-			mini->Plane->ray.direction.y += 0.1f * e;// cycle * e;
-		else if (mini->Mlx->rotate == ROTATE_Z && mini->Plane->ray.direction.z >= -1.000000)
-			mini->Plane->ray.direction.z += 0.1f * e;// cycle * e;
-	}
+	printf("rotation plane");
+	if (key == KEYLEFT && mini->Mlx->rotate == ROTATE_X)
+		mini->Plane->ray.direction = mul_point_matrix(mini->Plane->ray.direction, update_matrix_y(-3.6));
+	else if (key == KEYRIGHT && mini->Mlx->rotate == ROTATE_X)
+		mini->Plane->ray.direction = mul_point_matrix(mini->Plane->ray.direction, update_matrix_y(3.6));
+	else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y)
+		mini->Plane->ray.direction = mul_point_matrix(mini->Plane->ray.direction, update_matrix_x(3.6));
+	else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y)
+		mini->Plane->ray.direction = mul_point_matrix(mini->Plane->ray.direction, update_matrix_x(-3.6));
 	// printf("Plane->normal.x = %lf, Plane->normal.y = %lf, Plane->normal.z = %lf\n", mini->Plane->ray.direction.x, mini->Plane->ray.direction.y, mini->Plane->ray.direction.z);
 }
 
 
 int press_key(int key, t_minirt *mini)
 {
+	// printf("befor -> index [%d]\n", mini->Mlx->obj.index);
+	printf("mini->obj.object[%d] | mini->obj.index[%d]\n", mini->Mlx->obj.object, mini->Mlx->obj.index);
 	if (key == KEYUP)
 		edit_mini(mini, key);
 	else if (key == KEYDOWN)
@@ -260,29 +203,44 @@ int press_key(int key, t_minirt *mini)
 		edit_mini(mini, key);
 	else if (key == DESTROY)
 		edit_mini(mini, key);
-	else if (key == R_RIGHT)
-		edit_mini(mini, key);
-	else if (key == R_LEFT)
-		edit_mini(mini, key);
 	else if (key == ZERO)
 	{
-		mini->Mlx->obj = 0;
+		mini->Mlx->obj.object = 0;
+		mini->Mlx->obj.index = 0;
 		mini->Mlx->rotate = 0;
 		mini->Mlx->_do = -1;
 	}
-	objs_key(key, mini);
+	// objs_key(key, mini);
 	rotation_key(key, mini);
 	// printf("##############################\n");
-	printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj);
+	printf("key_press{%d} | rotate {%d} | shape{%d}\n", key, mini->Mlx->rotate, mini->Mlx->obj.object);
 	return (0);
 }
 
+int ft_mouse(int button, int x, int y, t_minirt *mini)
+{
 
+	mini->Mlx->_do = 0;
+	if (button  == 1)
+	{
+		mini->Mlx->mouse = 1;
+			printf ("x[%d] | y[%d]\n", x, y);
+		mini->Mlx->rotate = 0;
+		intersection_over_objects(mini, ray_generator(mini, x, y));
+		mini->Mlx->mouse = 0;
+		if (mini->Mlx->obj.object)
+			printf("mini->obj.object[%d] | mini->obj.index[%d]\n", mini->Mlx->obj.object, mini->Mlx->obj.index);
+	}
+	return (0);
+}
 // +
 void	setup_controls(t_minirt *mini)
 {
 	// mlx_hook(mini->Mlx->win, 4, 0, ft_mouse, mini);
-	// mlx_hook(mini->Mlx->win, 5, 0, ft_mouse, mini);
+	// ft_mouse(mini);
+
+	mlx_mouse_hook(mini->Mlx->win, ft_mouse, mini);
+
 	// mlx_key_hook(mini->Mlx->win, objs, mini);
 	mlx_key_hook(mini->Mlx->win, press_key, mini);
 }

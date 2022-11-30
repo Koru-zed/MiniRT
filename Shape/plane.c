@@ -33,6 +33,8 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, int *color)
 				closestPlane.closestPoint = tPlane[i].ray.origin;
 				closestPlane.color = tPlane[i].color;
 				closestPlane.tmin = tmin;
+				if (rt->Mlx->mouse)
+					rt->Mlx->obj.index = i;
 			}
 		}
 	}

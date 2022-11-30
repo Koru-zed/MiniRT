@@ -25,7 +25,7 @@ FOBJS := ./objs
 
 LIBFT := libft/libft
 
-CFLAGS := -Wall -Wextra -Werror -g -fsanitize=address -g3
+CFLAGS := #-Wall -Wextra -Werror -g -fsanitize=address -g3
 
 FRAMWORK = -lmlx -framework OpenGL -framework AppKit
 

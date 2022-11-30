@@ -33,6 +33,13 @@ typedef struct	s_sphere {
 */
 
 /********************/
+
+typedef struct _select
+{
+    int index;
+    int object;
+} t_select;
+
 typedef struct s_mlx
 {
 	void	*mlx;
@@ -44,10 +51,11 @@ typedef struct s_mlx
     int		bits_per_pixel;
     int		line_length;
 	int		endian;
-    int     obj;
     int     rotate;
+    int     mouse;
     // int     dir;
     int     _do;
+    t_select     obj;
 }			t_mlx;
 
 typedef struct _num_shape
