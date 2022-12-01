@@ -54,6 +54,7 @@ void edit_camera(t_minirt *mini, int key)
 	// static int e;
 	matrix = mini->Camera->matrix;
 	mini->Mlx->_do = 1;
+	// printf("mini->Camera->ray.direction.z[%f]\n", mini->Camera->ray.direction.z);
 	if (!mini->Mlx->rotate)
 	{
 		if (key == KEYUP)
@@ -71,10 +72,14 @@ void edit_camera(t_minirt *mini, int key)
 			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_y(-3.6));
 		else if (key == KEYRIGHT && mini->Mlx->rotate == ROTATE_X)
 			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_y(3.6));
-		else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y)
+		else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y && mini->Camera->ray.direction.z > EPSILON)
 			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_x(-3.6));
-		else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y)
+		else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y && mini->Camera->ray.direction.z > EPSILON)
 			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_x(3.6));
+		else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y && mini->Camera->ray.direction.z < EPSILON)
+			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_x(3.6));
+		else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y && mini->Camera->ray.direction.z < EPSILON)
+			mini->Camera->ray.direction = mul_point_matrix(mini->Camera->ray.direction, update_matrix_x(-3.6));
 	}
 	else
 		mini->Mlx->_do = 0; 
