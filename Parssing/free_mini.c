@@ -1,43 +1,34 @@
 # include "../Include/miniRT.h"
 
-// void free_Sphere(t_Sphere *_Sphere)
-// {
-//     t_Sphere *tmp;
+void free_Sphere(t_Sphere *_Sphere)
+{
+    int i;
 
-//     tmp = NULL;
-//     while (_Sphere)
-//     {
-//         tmp = _Sphere->next;
-//         free(_Sphere);
-//         _Sphere = tmp;
-//     }
-// }
+    i = -1;
+    while (_Sphere[++i])
+        free(_Sphere[i]);
+    free(_Sphere);
+}
 
-// void free_Plane(t_Plane *_Plane)
-// {
-//     t_Plane *tmp;
+void free_Plane(t_Plane *_Plane)
+{
+    int i;
 
-//     tmp = NULL;
-//     while (_Plane)
-//     {
-//         tmp = _Plane->next;
-//         free(_Plane);
-//         _Plane = tmp;
-//     }
-// }
+    i = -1;
+    while (_Plane[++i])
+        free(_Plane[i]);
+    free(_Plane);
+}
 
-// void free_Cylinder(t_Cylinder *_Cylinder)
-// {
-//     t_Cylinder *tmp;
+void free_Cylinder(t_Cylinder *_Cylinder)
+{
+    int i;
 
-//     tmp = NULL;
-//     while (_Cylinder)
-//     {
-//         tmp =_Cylinder->next;
-//         free(_Cylinder);
-//         _Cylinder = tmp;
-//     }
-// }
+    i = -1;
+    while (_Cylinder[++i])
+        free(_Cylinder[i]);
+    free(_Cylinder);
+}
 
 void free_data(t_data *_data)
 {
@@ -58,15 +49,15 @@ void free_data(t_data *_data)
 
 void    free_mini(t_minirt *mini)
 {
-    // if (mini->Ambient)
-    //     free(mini->Ambient);
-    // if (mini->Camera)
-    //     free(mini->Camera);
-    // if (mini->Light)
-    //     free(mini->Light);
-    // free_Sphere(mini->Sphere);
-    // free_Plane(mini->Plane);
-    // free_Cylinder(mini->Cylinder);
+    if (mini->Ambient)
+        free(mini->Ambient);
+    if (mini->Camera)
+        free(mini->Camera);
+    if (mini->Light)
+        free(mini->Light);
+    free_Sphere(mini->Sphere);
+    free_Plane(mini->Plane);
+    free_Cylinder(mini->Cylinder);
     free_data(mini->Data);
     free(mini);
 }

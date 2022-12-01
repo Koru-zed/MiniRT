@@ -1,38 +1,6 @@
 #pragma once
 #include "miniRT.h"
 #include <float.h>
-/********* struct for test ********/
-
-
-/*
- *  we could represent the color by percentage
- *  between 0.0 to 1.0
- * */
-/*
-typedef struct s_color {
-	double red, green, blue;
-} colour;
-
-
-typedef struct s_material{
-	colour diffuse;
-	double	reflection;
-}	t_material;
-
-typedef struct	s_light {
-	t_point	pos;
-	colour 	intensity;
-}	t_light;
-
-
-typedef struct	s_sphere {
-	t_point	pos;
-	double	radius;
-	int		material;
-}	t_sphere;
-*/
-
-/********************/
 
 typedef struct _select
 {
@@ -53,7 +21,6 @@ typedef struct s_mlx
 	int		endian;
     int     rotate;
     int     mouse;
-    // int     dir;
     int     _do;
     t_select     obj;
 }			t_mlx;
@@ -84,9 +51,6 @@ typedef struct	point {
 	double	z;
 }	t_point;
 
-    // t_point left_corner;
-    // t_point horizontal;
-    // t_point vertical;
 typedef struct	s_ray {
 
     t_point origin;
@@ -109,7 +73,7 @@ typedef struct _Ambient_light
 typedef struct _Camera
 {
     int fd;
-    size_t    fov;// ->
+    size_t    fov;
     size_t    repetition;
     t_ray	  ray;
     t_matrix  matrix;
@@ -131,14 +95,11 @@ typedef struct s_intersect {
 } t_intersect;
 typedef struct _Plane
 {
-    // t_point         plane_point;//x,y,z coordinates of the view
-    // t_point         normal;//3d normalized orientation vector. In range [-1,1]
     t_ray	        ray;
     size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t          repetition;
 	t_point			local_hit_point; // store the hit point
     t_matrix  matrix;
-    // struct _Plane   *next;
 } t_Plane;
 
 typedef struct _Sphere
@@ -147,8 +108,6 @@ typedef struct _Sphere
 	double			radius;
 	size_t			color[3];//R,G,B colors in range [0-255]: 255, 255, 255
 	size_t			repetition;
-
-    // struct _Sphere   *next;
 } t_Sphere;
 
 typedef struct _Cylinder
@@ -159,7 +118,6 @@ typedef struct _Cylinder
     double               redius;
     double               height;
     size_t              repetition;
-    // struct _Cylinder    *next;
 } t_Cylinder;
 
 typedef struct _minirt {
