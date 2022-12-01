@@ -118,4 +118,6 @@ t_matrix	cross_matrix(t_matrix M1, t_matrix M2);
 void print_matrix(t_matrix matrix);
 void	rotation_plane(t_minirt *mini, int e);
 
+void intersection_over_objects(t_minirt *rt, t_ray ray);
+
 #endif

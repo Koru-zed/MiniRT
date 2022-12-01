@@ -49,7 +49,7 @@ t_matrix update_matrix_z(double theta)
 	matrix.M[1][0] = -sin(_radian);
 	matrix.M[1][1] = cos(_radian);
 	// printf("dir_matrix\n");
-	print_matrix(matrix);
-	printf("---------------------------------------------------\n");
+	// print_matrix(matrix);
+	// printf("---------------------------------------------------\n");
 	return (matrix);
 }
