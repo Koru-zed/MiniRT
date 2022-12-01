@@ -18,7 +18,6 @@ t_point	ray_pixel_to_world(t_minirt *mini, int x, int y)
 	double	ps_x;
 	double	ps_y;
 
-	// half_hight = tanf((double )mini->Camera->fov / 2.0f);
 	half_hight = tanf((double )((double )mini->Camera->fov * M_PI / 180) / 2);
 	aspect_ratio = (double)mini->Mlx->width / (double)mini->Mlx->height;
 	half_width = half_hight * aspect_ratio;
@@ -171,8 +170,8 @@ int press_key(int key, t_minirt *mini)
 		edit_mini(mini, key);
 	else if (key == KEYRIGHT)
 		edit_mini(mini, key);
-	else if (key == DESTROY)
-		edit_mini(mini, key);
+	else if (key == DESTROY || key == CLOSE)
+		free_mini(mini);
 	else if (key == ZERO)
 	{
 		mini->Mlx->obj.object = 0;
@@ -227,6 +226,7 @@ int ft_mouse(int button, int x, int y, t_minirt *mini)
 void	setup_controls(t_minirt *mini)
 {
 	mlx_mouse_hook(mini->Mlx->win, ft_mouse, mini);
+	mlx_hook(mini->Mlx->win, 17, 0, free_mini, mini);
 	mlx_hook(mini->Mlx->win, 4, 0, ft_mouse, mini);
 	mlx_hook(mini->Mlx->win, 5, 0, ft_mouse, mini);
 	mlx_key_hook(mini->Mlx->win, press_key, mini);

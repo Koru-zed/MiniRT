@@ -9,77 +9,137 @@ void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
 }
 
 
+// void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, COLOR *color)
+// {
+// 	double t1 = FLT_MAX;
+// 	double t2 = FLT_MAX;
+// 	COLOR color1;
+// 	COLOR color2;
+	
+// 	*t = 0;
+// 	*color = BLACK;
+// 	bool isP = intersectPlane(rt, ray, &t1, &color1);
+// 	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
+// 	if (isP && isS) {
+// 		if (t1 > t2 && t2 > EPSILON)
+// 		{
+// 			*color = color2;
+// 			*t = t2;
+// 		}
+// 		else if (t1 > t2 && t1 > EPSILON)
+// 		{
+// 			*color = color1;
+// 			*t = t1;
+// 		}
+// 		else if (t2 > t1 && t1 > EPSILON)
+// 		{
+// 			*color = color1;
+// 			*t = t1;
+// 		}
+// 		else if (t2 > t1 && t2 > EPSILON)
+// 		{
+//             *color = color2;
+// 			*t = t2;
+// 		}
+// 	}
+// 	else if (isP && t1 > EPSILON)
+//     {
+//         *color = color1;
+// 		*t = t1;
+// 	}
+// 	else if (isS && t2 > EPSILON)
+//     {
+//         *color = color2;
+// 		*t = t2;
+// 	}
+// }
+
 void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, COLOR *color)
 {
 	double t1 = FLT_MAX;
 	double t2 = FLT_MAX;
+	double t3 = FLT_MAX;
 	COLOR color1;
 	COLOR color2;
+	COLOR color3;
 	
 	*t = 0;
 	*color = BLACK;
 	bool isP = intersectPlane(rt, ray, &t1, &color1);
 	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
-	if (isP && isS) {
-		if (t1 > t2 && t2 > EPSILON)
+	bool isC = cylinder_intersection(rt, ray, &t3, &color3);
+	if (isP || isS || isC) {
+		if (t1 > t2 && t2 < t3 && t2 > EPSILON)
 		{
 			*color = color2;
-			*t = t2;
+			*t = t2; 
 		}
-		else if (t1 > t2 && t1 > EPSILON)
+		else if (t2 > t1 && t1 < t3 && t1 > EPSILON)
 		{
-			*color = color1;
-			*t = t1;
+			*color = color2;
+			*t = t1; 
 		}
-		else if (t2 > t1 && t1 > EPSILON)
+		else if (t2 > t3 && t3 < t1 && t3 > EPSILON)
 		{
-			*color = color1;
-			*t = t1;
-		}
-		else if (t2 > t1 && t2 > EPSILON)
-		{
-            *color = color2;
-			*t = t2;
+			*color = color3;
+			*t = t3; 
 		}
 	}
-	else if (isP && t1 > EPSILON)
-    {
-        *color = color1;
-		*t = t1;
-	}
-	else if (isS && t2 > EPSILON)
-    {
-        *color = color2;
-		*t = t2;
-	}
+	// printf("t -> [%f]\n", *t);
 }
-
 void intersection_over_objects(t_minirt *rt, t_ray ray)
 {
 	double t1 = FLT_MAX;
 	double t2 = FLT_MAX;
+	double t3 = FLT_MAX;
 	COLOR color1;
 	COLOR color2;
+	COLOR color3;
 	
 	bool isP = intersectPlane(rt, ray, &t1, &color1);
 	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
-	if (isP && isS) {
-		if (t1 > t2 && t2 > EPSILON)
+	bool isC = cylinder_intersection(rt, ray, &t3, &color3);
+	if (isP || isS || isC) {
+		if (t1 > t2 && t2 < t3 && t2 < EPSILON)
 			rt->Mlx->obj.object =  _SEPHER;
-		else if (t1 > t2 && t1 > EPSILON)
+		else if (t2 > t1 && t1 < t3 && t1 < EPSILON)
 			rt->Mlx->obj.object =  _PLANE;
-		else if (t2 > t1 && t1 > EPSILON)
-			rt->Mlx->obj.object =  _PLANE;
-		else if (t2 > t1 && t2 > EPSILON)
-			rt->Mlx->obj.object =  _SEPHER;
+		else if (t2 > t3 && t3 < t1 && t3 < EPSILON)
+			rt->Mlx->obj.object =  _CYLINDER;
 	}
-	else if (isP && t1 > EPSILON)
-		rt->Mlx->obj.object =  _PLANE;
-	else if (isS && t2 > EPSILON)
-		rt->Mlx->obj.object =  _SEPHER;
 	else 
 		rt->Mlx->obj.object = 0;
 }
+
+// void intersection_over_objects(t_minirt *rt, t_ray ray)
+// {
+// 	double t1 = FLT_MAX;
+// 	double t2 = FLT_MAX;
+// 	double t3 = FLT_MAX;
+// 	COLOR color1;
+// 	COLOR color2;
+// 	COLOR color3;
+	
+// 	bool isP = intersectPlane(rt, ray, &t1, &color1);
+// 	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
+// 	bool isC = cylinder_intersection(rt, ray, &t3, &color1);
+// 	if (isP && isS) {
+// 		if (t1 > t2 && t2 > EPSILON)
+// 			rt->Mlx->obj.object =  _SEPHER;
+// 		else if (t1 > t2 && t1 > EPSILON)
+// 			rt->Mlx->obj.object =  _PLANE;
+// 		else if (t2 > t1 && t1 > EPSILON)
+// 			rt->Mlx->obj.object =  _PLANE;
+// 		else if (t2 > t1 && t2 > EPSILON)
+// 			rt->Mlx->obj.object =  _SEPHER;
+// 	}
+// 	else if (isP && t1 > EPSILON)
+// 		rt->Mlx->obj.object =  _PLANE;
+// 	else if (isS && t2 > EPSILON)
+// 		rt->Mlx->obj.object =  _SEPHER;
+// 	else 
+// 		rt->Mlx->obj.object = 0;
+// }
 
 void	ray_render(t_minirt *mini)
 {

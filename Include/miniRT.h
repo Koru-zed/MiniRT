@@ -45,14 +45,12 @@
 // # define KEY_W 13
 // # define MOUSEMOVE  6
 # define DESTROY  53
+# define CLOSE 17
 typedef int COLOR;
 
 
-void		free_mini(t_minirt *mini);
+int			free_mini(t_minirt *mini);
 void		free_data(t_data *_data);
-void		free_Cylinder(t_Cylinder *_Cylinder);
-void		free_Plane(t_Plane *_Plane);
-void		free_Sphere(t_Sphere *_Sphere);
 void		my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color);
 t_Cylinder	*rt_last_Cylinder(t_Cylinder *Cylinder);
 t_Sphere	*rt_last_Sphere(t_Sphere *Sphere);
@@ -119,5 +117,6 @@ void print_matrix(t_matrix matrix);
 void	rotation_plane(t_minirt *mini, int e);
 
 void intersection_over_objects(t_minirt *rt, t_ray ray);
+bool cylinder_intersection(t_minirt *rt, t_ray ray, double *t, int *color);
 
 #endif

@@ -14,6 +14,7 @@ FILES := get_next_line/get_next_line.c \
 		Shape/rendring.c \
 		Shape/sphere.c \
 		Shape/plane.c \
+		Shape/cylinder.c \
 		Shape/Rotation.c \
 		ft_matrix.c
 
@@ -25,7 +26,7 @@ FOBJS := ./objs
 
 LIBFT := libft/libft
 
-CFLAGS := #-Wall -Wextra -Werror -g -fsanitize=address -g3
+CFLAGS := -Wall -Wextra -Werror -g -fsanitize=address -g3
 
 FRAMWORK = -lmlx -framework OpenGL -framework AppKit
 
