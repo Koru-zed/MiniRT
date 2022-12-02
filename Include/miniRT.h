@@ -82,7 +82,7 @@ void 		ray_render(t_minirt *minirt);
 t_point	new_point(double x, double y, double z);
 
 /* ***		Math Operations		** */
-bool	cylinder_int(t_minirt *rt, t_ray *ray, const int fd);
+//bool	cylinder_int(t_minirt *rt, t_ray *ray, const int fd);
 double		v_dot(const t_point u, const t_point v);
 t_point		v_cross(const t_point u, const t_point v);
 t_point		v_mul(const double t,  t_point p);
@@ -95,7 +95,7 @@ double			length(t_point p);
 t_point			unit_vector(t_point v);
 t_point			normalizing(t_point p);
 int			rgb(const t_color rgb);
-bool		cylinder_int(t_minirt *rt, t_ray *ray, const int fd);
+bool		cylinder_int(t_minirt *rt, t_ray ray);
 /* ***		End Math Operations		** */
 void		ft_print_vector(const t_point p, int fd);
 t_color 	mul_color(t_color color, double s);

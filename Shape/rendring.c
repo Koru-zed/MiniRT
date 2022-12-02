@@ -76,11 +76,14 @@ void	ray_render(t_minirt *mini)
 		{
 			ray = ray_generator(mini, x, y);
 			color = BLACK;
-			iterate_over_objects(mini, ray, &t, &hit);
-			if (hit) {
-				add_light(hit, mini, &color);
-				free(hit);
-			}
+//			iterate_over_objects(mini, ray, &t, &hit);
+//			if (hit) {
+//				add_light(hit, mini, &color);
+//				free(hit);
+//			}
+		color = BLACK;
+			if (cylinder_int(mini, ray))
+				color = 0x00FF00;
 			my_mlx_pixel_put(mini->Mlx, x, y, color);
 			x++;
 		}

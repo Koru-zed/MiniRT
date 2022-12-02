@@ -128,7 +128,12 @@ typedef struct _Camera
     t_ray	  ray;
     t_matrix  matrix;
 } t_Camera;
-
+typedef struct delta {
+	double a;
+	double b;
+	double c;
+	double delta;
+} t_delta;
 typedef struct _Light
 {
     t_point   cordinates;//x,y,z coordinates of the view
@@ -172,6 +177,8 @@ typedef struct _Cylinder
     size_t              color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     double               redius;
     double               height;
+	double				cyMin;
+	double				cyMax;
     size_t              repetition;
     // struct _Cylinder    *next;
 } t_Cylinder;
