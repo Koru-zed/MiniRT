@@ -54,62 +54,60 @@ void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
 // 	}
 // }
 
-void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, COLOR *color)
+void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, COLOR *Color)
 {
-	double t1 = FLT_MAX;
-	double t2 = FLT_MAX;
-	double t3 = FLT_MAX;
-	COLOR color1;
-	COLOR color2;
-	COLOR color3;
+	int i;
+	double T[3];
+	COLOR color[3];
+	T[0] = FLT_MAX;
+	T[1] = FLT_MAX;
+	T[2] = FLT_MAX;
 	
-	*t = 0;
+	i = -1;
+	*t = FLT_MAX;
 	*color = BLACK;
-	bool isP = intersectPlane(rt, ray, &t1, &color1);
-	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
-	bool isC = cylinder_intersection(rt, ray, &t3, &color3);
-	if (isP || isS || isC) {
-		if (t1 > t2 && t2 < t3 && t2 > EPSILON)
+	bool isP = intersectPlane(rt, ray, &t[0], &color[0]);
+	bool isS = intersectRaySphere(ray, rt, &t[1], &color[1]);
+	bool isC = cylinder_intersection(rt, ray, &t[2], &color[2]);
+	while (++i < 3)
+	{
+		if (t[i] > EPSILON && t[i] < *t)
 		{
-			*color = color2;
-			*t = t2; 
-		}
-		else if (t2 > t1 && t1 < t3 && t1 > EPSILON)
-		{
-			*color = color2;
-			*t = t1; 
-		}
-		else if (t2 > t3 && t3 < t1 && t3 > EPSILON)
-		{
-			*color = color3;
-			*t = t3; 
+			*t = t[i];
+			*Color = color[i];
+			if (i == 0)
+				rt->Mlx->obj.object = _PLANE;
+			else if (i == 1)
+				rt->Mlx->obj.object = _SEPHER;
+			else if (i == 2)
+				rt->Mlx->obj.object = _CYLINDER;
 		}
 	}
 	// printf("t -> [%f]\n", *t);
 }
-void intersection_over_objects(t_minirt *rt, t_ray ray)
-{
-	double t1 = FLT_MAX;
-	double t2 = FLT_MAX;
-	double t3 = FLT_MAX;
-	COLOR color1;
-	COLOR color2;
-	COLOR color3;
+// void intersection_over_objects(t_minirt *rt, t_ray ray)
+// {
+// 	int i;
+// 	double T[3];
+// 	COLOR color[3];
+// 	T[0] = FLT_MAX;
+// 	T[1] = FLT_MAX;
+// 	T[2] = FLT_MAX;
 	
-	bool isP = intersectPlane(rt, ray, &t1, &color1);
-	bool isS = intersectRaySphere(ray, rt, &t2, &color2);
-	bool isC = cylinder_intersection(rt, ray, &t3, &color3);
-	if (isP || isS || isC) {
-		if (t1 > t2 && t2 < t3 && t2 < EPSILON)
-			rt->Mlx->obj.object =  _SEPHER;
-		else if (t2 > t1 && t1 < t3 && t1 < EPSILON)
-			rt->Mlx->obj.object =  _PLANE;
-		else if (t2 > t3 && t3 < t1 && t3 < EPSILON)
-			rt->Mlx->obj.object =  _CYLINDER;
-	}
-	else 
-		rt->Mlx->obj.object = 0;
-}
+// 	i = -1;
+// 	*t = FLT_MAX;
+// 	*color = BLACK;
+// 	bool isP = intersectPlane(rt, ray, &t[0], &color[0]);
+// 	bool isS = intersectRaySphere(ray, rt, &t[1], &color[1]);
+// 	bool isC = cylinder_intersection(rt, ray, &t[2], &color[2]);
+// 	while (++i < 3)
+// 	{
+// 		if (t[i] > EPSILON && t[i] < *t)
+// 			rt->Mlx->obj.object = 
+// 	}
+// 	else 
+// 		rt->Mlx->obj.object = 0;
+// }
 
 // void intersection_over_objects(t_minirt *rt, t_ray ray)
 // {
