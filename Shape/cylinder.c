@@ -103,6 +103,25 @@ void print_point(t_point p)
 
 }
 
+double	get_root(double disc, double b, double a)
+{
+	double	t1;
+	double	t2;
+	double	t;
+	double	min;
+	double	max;
+
+	t1 = (-b + sqrt(disc)) / (2 * a);
+	t2 = (-b - sqrt(disc)) / (2 * a);
+	min = fmin(t1, t2);
+	max = fmax(t1, t2);
+	if (min >= EPSILON)
+		t = min;
+	else
+		t = max;
+	return (t);
+}
+
 bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, int *color)
 {
 	int i = -1;
@@ -113,36 +132,54 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, int *color)
 	t_Cylinder *cy=  rt->Cylinder;
 	while (++i < rt->Data->shape.cy)
 	{
+		// t_point A = v_mul(cy[i].height, cy[i].orientation); //to find orign of top
+		// t_point B = normalizing(A); //to find direction of top 
+		// t_point top = v_mul(cy[i].height, B); //find top point
+		// double h_2 = cy[i].height * cy[i].height; 
+		// t_point ro = v_sub(ray.origin, cy[i].cordinates);
+		// double a = h_2 - v_dot(top, ray.direction) * v_dot(top, ray.direction);
+		// double b = h_2 * v_dot(ro, ray.direction) - v_dot(top, ro) * v_dot(top, ray.direction);
+		// double c = h_2 * v_dot(ro, ro) - v_dot(top, ro)
+		// 								* v_dot(top, ro) - (cy[i].redius) * (cy[i].redius) * h_2;
+		
 		t_point A = v_mul(cy[i].height, cy[i].orientation); //to find orign of top
-		print_point(A);
 		t_point B = normalizing(A); //to find direction of top 
-		print_point(B);
 		t_point top = v_mul(cy[i].height, B); //find top point
-		print_point(top);
-		double h_2 = cy[i].height * cy[i].height; 
-		printf("h^2 [%f]\n", h_2);
-		t_point ro = v_sub(ray.origin, cy[i].cordinates);
-		print_point(ro);
-		exit(0);
-		double a = h_2 - v_dot(top, ray.direction) * v_dot(top, ray.direction);
-		double b = h_2 * v_dot(ro, ray.direction) - v_dot(top, ro) * v_dot(top, ray.direction);
-		double c = h_2 * v_dot(ro, ro) - v_dot(top, ro)
-										* v_dot(top, ro) - (cy[i].redius) * (cy[i].redius) * h_2;
-		if ((b * b - a * c) < 0)
-			continue;
-		double t1 = (-b - sqrtf((b * b - a * c))) / a;
-		double t2 = v_dot(top, ro) + (t1) * v_dot(top, ray.direction);
-		if (t2 > 0 && t2 < h_2)
-			t_min = t2;
-		t2 = calc_root(v_dot(top, ro), v_dot(top, ray.direction), h_2, t2);
-		if (fabs(b + a * t2) < sqrtf((b * b - a * c)))
-			t_min = t1;
-		if (t_min < *t)
+		// Clear 
+		// printf(top);
+		t_point X = v_sub(ray.origin, top);
+		double a = v_dot(ray.direction, ray.direction) - powf(v_dot(ray.direction, cy[i].orientation), 2);
+		double b = 2 * (v_dot(ray.direction, X) - (v_dot(ray.direction, cy[i].orientation) * v_dot(X, cy[i].orientation)));
+		double c = v_dot(X, X) - powf(v_dot(X, cy[i].orientation), 2) - powf(cy[i].redius, 2);
+		double discriminant = powf(b, 2) - (4 * a * c);
+		if (discriminant < EPSILON)
+			continue ;
+		t_min = get_root(discriminant, b, a);
+		double m = (v_dot(ray.direction, v_mul(t_min, cy[i].orientation))) + v_dot(X, cy[i].orientation);
+		if (m > EPSILON && m <= cy[i].height)
 		{
-			*t= t_min;
-			*color = rgb(cy[i].color);
-			if (rt->Mlx->mouse)
-				rt->Mlx->obj.index = i;
+			printf("hello\n");
+			t_point p = v_adding(ray.origin, v_mul(t_min, ray.direction));
+			t_point q = v_adding(top, v_mul(m, cy[i].orientation));
+			double stap1 = v_dot(v_sub(p, q), cy[i].orientation);
+			double stap2 = length_squared(v_sub(p, q));
+			// double solution = v_dot(v_sub(v_sub(p , top), v_mul(m, cy[i].orientation)), cy[i].orientation);
+	// printf ("soution[%f]\n", solution);
+ 			if (fabs(stap2 - cy[i].redius) < EPSILON)
+			{
+			// if (t2 > EPSILON && t2 < h_2)
+			// 	t_min = t2;
+			// t2 = calc_root(v_dot(top, ro), v_dot(top, ray.direction), h_2, t2);
+			// if (fabs(b + a * t2) < sqrtf((b * b - a * c)))
+			// 	t_min = t1;
+				if (t_min < *t)
+				{
+					*t= t_min;
+					*color = rgb(cy[i].color);
+					if (rt->Mlx->mouse)
+						rt->Mlx->obj.index = i;
+				}
+			}
 		}
 	}
 	if (*t == FLT_MAX)
