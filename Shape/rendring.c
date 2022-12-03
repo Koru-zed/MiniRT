@@ -9,51 +9,71 @@ void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
 }
 
 
-void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **oHit) {
-	double t1 = FLT_MAX;
-	double t2 = FLT_MAX;
-	t_hit *pHit;
-	t_hit *pHit1;
-	COLOR color1;
-	COLOR color2;
+void iterate_over_objects(t_minirt *rt, t_ray ray, double *t,  t_hit **oHit)
+{
+	int i;
+	double t_t[3];
+	t_hit pHit[3];
+	bool is[3];
 
-
-	pHit = malloc(sizeof(t_hit));
-	if (!pHit)
-		exit(EXIT_FAILURE);
-	pHit1 = malloc(sizeof(t_hit));
-	if (!pHit1)
-		exit(EXIT_FAILURE);
-	bool isP = intersectPlane(rt, ray, &t1, &pHit);
-	bool isS = intersectRaySphere(ray, rt, &t2, &pHit1);
-	if (isP || isS) {
-		if (t1 > t2) {
-			free(pHit);
-			pHit = NULL;
-			*oHit = pHit1;
-			*t = t2;
-		} else if (t2 > t1) {
-			free(pHit1);
-			pHit1 = NULL;
-			*oHit = pHit;
-			*t = t1;
-		} else {
-			free(pHit);
-			free(pHit1);
-			pHit = NULL;
-			pHit1 = NULL;
-			(*oHit) = NULL;
-			*t = FLT_MAX;
+	i = -1;
+	*t = FLT_MAX;
+	*oHit = NULL;
+	t_t[0] = FLT_MAX;
+	t_t[1] = FLT_MAX;
+	t_t[2] = FLT_MAX;
+	is[PL] = intersectPlane(rt, ray, &t_t[PL], &pHit[PL]);
+	is[SP] = intersectRaySphere(ray, rt, &t_t[SP], &pHit[SP]);
+	is[CY] = cylinder_intersection(rt, ray, &t_t[CY], &pHit[CY]);
+	while (++i < 3)
+	{
+		if (is[i] && t_t[i] > EPSILON && t_t[i] < *t)
+		{
+			*t = t_t[i];
+			*oHit = &pHit[i];
+			if (i == PL)
+				rt->Mlx->obj.object = _PLANE;
+			else if (i == SP)
+				rt->Mlx->obj.object = _SEPHER;
+			else if (i == CY)
+				rt->Mlx->obj.object = _CYLINDER;
 		}
-	} else {
-		free(pHit);
-		free(pHit1);
-		pHit = NULL;
-		pHit1 = NULL;
-		(*oHit) = NULL;
-		*t = FLT_MAX;
 	}
 }
+
+
+void intersection_over_objects(t_minirt *rt, t_ray ray)
+{
+
+	int i;
+	double t;
+	double t_t[3];
+	t_hit pHit[3];
+	bool is[3];
+
+	i = -1;
+	t = FLT_MAX;
+	t_t[0] = FLT_MAX;
+	t_t[1] = FLT_MAX;
+	t_t[2] = FLT_MAX;
+	is[PL] = intersectPlane(rt, ray, &t_t[PL], &pHit[PL]);
+	is[SP] = intersectRaySphere(ray, rt, &t_t[SP], &pHit[SP]);
+	is[CY] = cylinder_intersection(rt, ray, &t_t[CY], &pHit[CY]);
+	while (++i < 3)
+	{
+		if (is[i] && t_t[i] > EPSILON && t_t[i] < t)
+		{
+			t = t_t[i];
+			if (i == PL)
+				rt->Mlx->obj.object = _PLANE;
+			else if (i == SP)
+				rt->Mlx->obj.object = _SEPHER;
+			else if (i == CY)
+				rt->Mlx->obj.object = _CYLINDER;
+		}
+	}
+}
+
 void	ray_render(t_minirt *mini)
 {
 	COLOR color;
@@ -65,7 +85,7 @@ void	ray_render(t_minirt *mini)
 	double t;
 	// printf("camera_matrix\n");
 	camera_matrix(mini->Camera);
-	print_matrix(mini->Camera->matrix);
+	// print_matrix(mini->Camera->matrix);
 	// printf("***********************************************\n");
 	// print_matrix(mini->Camera->matrix);
 
@@ -76,14 +96,15 @@ void	ray_render(t_minirt *mini)
 		{
 			ray = ray_generator(mini, x, y);
 			color = BLACK;
-//			iterate_over_objects(mini, ray, &t, &hit);
-//			if (hit) {
-//				add_light(hit, mini, &color);
-//				free(hit);
+			iterate_over_objects(mini, ray, &t, &hit);
+			if (hit) {
+				add_light(hit, mini, &color);
+			}
+//			else if (mini->Mlx->obj.object == _CYLINDER)
+//			{
+//				printf("here \n");
+//				color = rgb(hit->obj_color);
 //			}
-		color = BLACK;
-			if (cylinder_int(mini, ray))
-				color = 0x00FF00;
 			my_mlx_pixel_put(mini->Mlx, x, y, color);
 			x++;
 		}

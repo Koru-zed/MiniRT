@@ -2,6 +2,7 @@
 
 
 
+<<<<<<< HEAD
 int main()
 {
 	double a = 1;
@@ -10,3 +11,5 @@ int main()
 	else
         printf("false");
 }
+=======
+>>>>>>> new_data

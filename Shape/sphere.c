@@ -22,7 +22,7 @@ t_color add_color(const size_t *c)
 	obj.b = (int)c[2];
 	return obj;
 }
-bool 	intersectRaySphere(t_ray r, t_minirt *rt, double *t,t_hit **pHit)
+bool 	intersectRaySphere(t_ray r, t_minirt *rt, double *t,t_hit *pHit)
 {
 
 	double t_min;
@@ -58,15 +58,17 @@ bool 	intersectRaySphere(t_ray r, t_minirt *rt, double *t,t_hit **pHit)
 		{
 			hitDestance = t_min;
 			closestSphere = &s[i];
+			if (rt->Mlx->mouse)
+				rt->Mlx->obj.index = i;
 		}
 	}
 	*t = FLT_MAX;
 	if (!closestSphere)
 		return false;
 	*t = hitDestance;
-	(*pHit)->hit_pos = v_adding(r.origin, v_mul(hitDestance, r.direction));
-	(*pHit)->obj_color = add_color(closestSphere->color);
-	(*pHit)->normal = normalizing(v_sub((*pHit)->hit_pos, closestSphere->center));
+	(pHit)->hit_pos = v_adding(r.origin, v_mul(hitDestance, r.direction));
+	(pHit)->obj_color = add_color(closestSphere->color);
+	(pHit)->normal = normalizing(v_sub((pHit)->hit_pos, closestSphere->center));
 //	(*pHit)->normal = normalizing((*pHit)->hit_pos);
 	return true;
 }

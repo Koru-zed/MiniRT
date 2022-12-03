@@ -27,7 +27,8 @@ FOBJS := ./objs
 
 LIBFT := libft/libft
 
-CFLAGS :=  -g 
+CFLAGS := -fsanitize=address -g3
+
 FRAMWORK = -lmlx -framework OpenGL -framework AppKit
 
 RM := /bin/rm -rf

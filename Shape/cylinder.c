@@ -1,106 +1,142 @@
 #include "../Include/miniRT.h"
 
-bool	check_caps(t_ray ray, double t, double r)
+/*
+ *  ∗ identifier: cy
+	* cy 50.0,0.0,20.6 0.0,0.0,1.0 14.2 21.42 10,0,255
+	* ∗ x,y,z coordinates: 50.0,0.0,20.6
+	* ∗ 3d normalized orientation vector. In range [-1,1] for each x,y,z axis: 0.0,0.0,1.0
+	* ∗ the cylinder diameter: 14.2
+	* ∗ the cylinder height: 21.42
+	* ∗ R,G,B colors in range [0,255]: 10, 0, 255
+ */
+//bool	cylinder_intersection(t_minirt *rt, t_ray *ray)
+//{
+//	double r = rt->Cylinder->diameter / 2;
+//	double a = powf(ray.dir.x, 2.0) + powf(ray.dir.z, 2.0);
+//	double b = 2.0 * ray.origin.x * ray.dir.x + 2.0 * ray.origin.z * ray.dir.z;
+//	double c = powf(ray.origin.x, 2.0) + powf(ray.origin.z, 2) - r; // they put 1 i don't know why
+//	double disc = powf(b, 2) - 4 * a * c;
+//	// ? if the disc is equals to 0  the ray does not intersect with the cylinder
+//	if (disc < EPSILON)
+//		return false;
+//	return true;
+//}
+
+double	calc_root(double top_roco, double toprd, double h_2, double t)
 {
-	double x = ray.origin.x + t * ray.direction.x;
-	double z = ray.origin.z + t * ray.direction.z;
-	return (powf(x, 2) + powf(z, 2) <= powf(r, 2.0f));
+	double	root;
+
+	if (t < 0)
+		root = -top_roco / toprd;
+	else
+		root = (h_2 - top_roco) / toprd;
+	return (root);
 }
 
-t_point local_normal_at(t_Cylinder *cy, t_point p)
+double	vec_dot(t_point u, t_point v)
 {
-	// compute the square of the distance from the y axis
-	double dist = powf(p.x, 2) + powf(p.z, 2);
-	if (dist < 1 && p.y >= cy->cyMax - EPSILON)
-		return new_point(0, 1, 0);
-	else if (dist < 1 && p.y <= cy->cyMin + EPSILON)
-	return new_point(0, -1, 0);
-	return new_point(p.x, 0, p.y);
+	double	distance;
+
+	distance = (u.x * v.x) + (u.y * v.y) + (u.z * v.z);
+	return (distance);
 }
 
-void	ft_swap(double *a, double *b);
 
-
-void	find_t(t_minirt *rt, t_ray ray, double *t)
+void print_point(t_point p)
 {
-	t_Cylinder *cy;
-	double A;
-	double B;
-	double C;
-	double discriminant;
+	printf("p.x = [%f] | ", p.x);
+	printf("p.y = [%f] | ", p.y);
+	printf("p.z = [%f]\n", p.z);
+	printf("************************************************\n");
 
+}
 
-	cy = rt->Cylinder;
-	t_point dir_n = normalizing(ray.direction);
-	A = powf(dir_n.x, 2.0) + powf(dir_n.z, 2);
-	if (A < EPSILON)
-		return ;
-	B = 2.0f * ray.origin.x * dir_n.x + 2 * ray.origin.z * dir_n.z;
-	C = powf(ray.origin.x, 2.0f) + powf(ray.origin.z, 2.0) - powf(cy->redius, 2.0); // 1. for raduis
-	discriminant = powf(B, 2.0f) - 4.0f * A * C;
-	if (discriminant < EPSILON)
+double	get_root(double disc, double b, double a)
+{
+	double	t1;
+	double	t2;
+	double	t;
+	double	min;
+	double	max;
+
+	t1 = (-b + sqrt(disc)) / (2 * a);
+	t2 = (-b - sqrt(disc)) / (2 * a);
+	min = fmin(t1, t2);
+	max = fmax(t1, t2);
+	if (min >= EPSILON)
+		t = min;
+	else
+		t = max;
+	return (t);
+}
+t_color convet(int *c)
+{
+	t_color re;
+
+	re.r = c[0];
+	re.g = c[1];
+	re.b = c[2];
+	return re;
+}
+bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
+{
+	int i = -1;
+	double t_min;
+
+	*t = FLT_MAX;
+	t_min = FLT_MAX;
+	t_Cylinder *cy=  rt->Cylinder;
+	while (++i < rt->Data->shape.cy)
 	{
-		t[0] = INFINITY;
-		t[1] = INFINITY;
-		return;
-	}
-	t[0] = (-B - sqrtf(discriminant)) / (2 * A);
-	t[1] = (-B + sqrtf(discriminant)) / (2 * A);
-	if (t[0] > t[1])
-		ft_swap(&t[0], &t[1]);
-}
-void	ft_swap(double *a, double *b)
-{
-	double tmp;
+		// t_point A = v_mul(cy[i].height, cy[i].orientation); //to find orign of top
+		// t_point B = normalizing(A); //to find direction of top
+		// t_point top = v_mul(cy[i].height, B); //find top point
+		// double h_2 = cy[i].height * cy[i].height;
+		// t_point ro = v_sub(ray.origin, cy[i].cordinates);
+		// double a = h_2 - v_dot(top, ray.direction) * v_dot(top, ray.direction);
+		// double b = h_2 * v_dot(ro, ray.direction) - v_dot(top, ro) * v_dot(top, ray.direction);
+		// double c = h_2 * v_dot(ro, ro) - v_dot(top, ro)
+		// 								* v_dot(top, ro) - (cy[i].redius) * (cy[i].redius) * h_2;
 
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-bool intersect_caps(t_Cylinder cy, t_ray ray)
-{
-	if (ray.direction.y < EPSILON)
+		t_point A = v_mul(cy[i].height, cy[i].orientation); //to find orign of top
+		t_point B = normalizing(A); //to find direction of top
+		t_point top = v_mul(cy[i].height, B); //find top point
+		// Clear
+		// printf(top);
+		t_point X = v_sub(ray.origin, top);
+		t_point hHat = normalizing(v_sub(top, v_adding(top, v_mul(cy[i].height, cy[i].orientation))));
+
+		double a = v_dot(ray.direction, ray.direction) - pow(v_dot(ray.direction, hHat), 2);
+		double b = 2 * (v_dot(ray.direction, X) - (v_dot(ray.direction, hHat) * v_dot(X, hHat)));
+		double c = v_dot(X, X) - pow(v_dot(X, hHat), 2) - pow(cy[i].redius, 2);
+		double discriminant = pow(b, 2) - (4 * a * c);
+		if (discriminant < EPSILON)
+			continue ;
+		t_min = get_root(discriminant, b, a);
+		double m = (v_dot(ray.direction, v_mul(t_min, cy[i].orientation))) + v_dot(X, cy[i].orientation);
+		if (m > EPSILON && m <= cy[i].height)
+		{
+//			t_point p = v_adding(ray.origin, v_mul(t_min, ray.direction));
+//			t_point q = v_adding(top, v_mul(m, cy[i].orientation));
+//			double stap1 = v_dot(v_sub(p, q), cy[i].orientation);
+//			double stap2 = length_squared(v_sub(p, q));
+//			// double solution = v_dot(v_sub(v_sub(p , top), v_mul(m, cy[i].orientation)), cy[i].orientation);
+//	// printf ("soution[%f]\n", solution);
+// 			if (fabs(stap2 - cy[i].redius) < EPSILON)
+//			{
+				if (t_min < *t)
+				{
+					*t= t_min;
+					hit->obj_color = convet((int *)cy[i].color);
+//					*color = rgb(cy[i].color);
+					if (rt->Mlx->mouse)
+						rt->Mlx->obj.index = i;
+				}
+//			}
+		}
+	}
+	if (*t == FLT_MAX)
 		return false;
-
-//	# check for an intersection with the lower end cap by intersecting
-//	# the ray with the plane at y=cyl.minimum
-	double t = (cy.cyMin - ray.origin.y) / ray.direction.y;
-	if (check_caps(ray, t, cy.redius))
-		return true;
-	t = (cy.cyMax - ray.origin.y) / ray.direction.y;
-	if (check_caps(ray, t, cy.redius))
-		return true;
-	return false;
-}
-
-
-bool	cylinder_int(t_minirt *rt, t_ray ray)
-{
-	t_Cylinder *cy;
-	double t[2];
-
-	rt->Cylinder->cyMin = 0;
-	rt->Cylinder->cyMax = rt->Cylinder->height;
-	cy = rt->Cylinder;
-	ray.direction = normalizing(ray.direction);
-	find_t(rt, ray, t); // above this
-	if (t[0] != INFINITY && t[1] != INFINITY) {
-		ray.direction = normalizing(ray.direction);
-		double y0 = ray.origin.y + t[0] * ray.direction.y;
-//		if (y0 >= cy->cordinates.y && y0 <= cy->cordinates.y + cy->height)
-//			return true;
-		 if (cy->cyMin < y0 && y0 < cy->cyMax) {
-			 // t[0] well be returned for calculating the position
-			 return true;
-		 }
-		double y1 = ray.origin.y + t[1] * ray.direction.y;
-//		if (y1 >= cy->cordinates.y && y1 <= cy->cordinates.y + cy->height)
-//			return true;
-		 if (cy->cyMin < y1 && y1 < cy->cyMax) {
-			 // t[1] well be returned for calculating the position
-			 return true;
-		 }
-	}
-//	 return intersect_caps(*cy, ray) this function only checks for end caps to be closed
-//	return  false;
+	else
+ 		return true;
 }

@@ -8,7 +8,7 @@
  *		∗ R,G,B colors in range [0-255]: 0, 0, 255
  */
 
-bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, t_hit **pHit)
+bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, t_hit *pHit)
 {
 	int	i;
 	double tmin;
@@ -36,6 +36,8 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, t_hit **pHit)
 				closestPlane.color = tPlane[i].color;
 				n = tPlane[i].ray.direction;
 				closestPlane.tmin = tmin;
+				if (rt->Mlx->mouse)
+					rt->Mlx->obj.index = i;
 			}
 		}
 	}
@@ -45,9 +47,9 @@ bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, t_hit **pHit)
 		return false;
 	}
     *t = closestPlane.tmin;
-	(*pHit)->obj_color = add_color(closestPlane.color);
-	(*pHit)->hit_pos = v_adding(ray.origin, v_mul(*t, ray.direction));
-	(*pHit)->normal = n;
+	(pHit)->obj_color = add_color(closestPlane.color);
+	(pHit)->hit_pos = v_adding(ray.origin, v_mul(*t, ray.direction));
+	(pHit)->normal = n;
 //	*color = rgb(closestPlane.color);
 	return true;
 }

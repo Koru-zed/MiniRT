@@ -1,38 +1,13 @@
 #pragma once
 #include "miniRT.h"
 #include <float.h>
-/********* struct for test ********/
 
+typedef struct _select
+{
+    int index;
+    int object;
+} t_select;
 
-/*
- *  we could represent the color by percentage
- *  between 0.0 to 1.0
- * */
-/*
-typedef struct s_color {
-	double red, green, blue;
-} colour;
-
-
-typedef struct s_material{
-	colour diffuse;
-	double	reflection;
-}	t_material;
-
-typedef struct	s_light {
-	t_point	pos;
-	colour 	intensity;
-}	t_light;
-
-
-typedef struct	s_sphere {
-	t_point	pos;
-	double	radius;
-	int		material;
-}	t_sphere;
-*/
-
-/********************/
 typedef struct s_mlx
 {
 	void	*mlx;
@@ -44,10 +19,10 @@ typedef struct s_mlx
     int		bits_per_pixel;
     int		line_length;
 	int		endian;
-    int     obj;
     int     rotate;
-    // int     dir;
+    int     mouse;
     int     _do;
+    t_select     obj;
 }			t_mlx;
 
 typedef struct _num_shape
@@ -123,7 +98,7 @@ typedef struct _Ambient_light
 typedef struct _Camera
 {
     int fd;
-    size_t    fov;// ->
+    size_t    fov;
     size_t    repetition;
     t_ray	  ray;
     t_matrix  matrix;
@@ -146,12 +121,10 @@ typedef struct s_intersect {
 	double	tmin;
 	t_point	closestPoint;
 	size_t	*color;
-} t_intersect;
 
+} t_intersect;
 typedef struct _Plane
 {
-    // t_point         plane_point;//x,y,z coordinates of the view
-    // t_point         normal;//3d normalized orientation vector. In range [-1,1]
     t_ray	        ray;
     size_t          color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     size_t          repetition;
@@ -177,8 +150,6 @@ typedef struct _Cylinder
     size_t              color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     double               redius;
     double               height;
-	double				cyMin;
-	double				cyMax;
     size_t              repetition;
     // struct _Cylinder    *next;
 } t_Cylinder;
