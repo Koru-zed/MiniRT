@@ -51,11 +51,11 @@ t_point v_sub(t_point center, t_point origin)
 	return (p);
 }
 
-int rgb(const size_t rgb[3])
+int rgb(const t_color rgb)
 {
 	int color;
 
-	color = (int) ((rgb[0] << 16) + (rgb[1] << 8) + rgb[2]);
+	color =  ((rgb.r << 16) + (rgb.g << 8) + rgb.b);
 	return (color);
 }
 
@@ -69,7 +69,7 @@ double 	length(t_point p)
 // magnitude
 double length_squared(t_point p)
 {
-	return sqrtf (length(p));
+	return sqrt (length(p));
 }
 
 /*

@@ -46,3 +46,5 @@ void    camera_matrix(t_Camera *_camera)
     up = normalizing(v_cross(_camera->ray.direction, right));
     _camera->matrix = new_matrix(right, up, _camera->ray.direction, _camera->ray.origin);
 }
+
+

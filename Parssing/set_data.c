@@ -26,11 +26,9 @@ void    set_cordinates(char const *cord, t_point *cordinate, t_minirt *mini)
 
 void    set_orientation(char const *colors, t_point *cordinate, t_minirt *mini)
 {
-    int     i;
     int     size;
     char    **arr;
     
-    i = -1;
     arr = ft_split(colors, ',');
     size = ft_arrylen(arr);
     if (size != 3)

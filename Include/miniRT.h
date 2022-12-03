@@ -39,20 +39,18 @@
 # define ZERO 29
 # define R_LEFT 43
 # define R_RIGHT 47
-// # define KEY_A 0
-// # define KEY_S 1
-// # define KEY_D 2
+# define PL 0
+# define SP 1
+# define CY 2
 // # define KEY_W 13
 // # define MOUSEMOVE  6
 # define DESTROY  53
+# define CLOSE 17
 typedef int COLOR;
 
-
-void		free_mini(t_minirt *mini);
+int check(int r);
+int		free_mini(t_minirt *mini);
 void		free_data(t_data *_data);
-void		free_Cylinder(t_Cylinder *_Cylinder);
-void		free_Plane(t_Plane *_Plane);
-void		free_Sphere(t_Sphere *_Sphere);
 void		my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color);
 t_Cylinder	*rt_last_Cylinder(t_Cylinder *Cylinder);
 t_Sphere	*rt_last_Sphere(t_Sphere *Sphere);
@@ -62,6 +60,8 @@ void		set_color(char const *colors, size_t *table, t_minirt *mini);
 void		set_orientation(char const *colors, t_point *cordinate, t_minirt *mini);
 void		set_cordinates(char const *cord, t_point *cordinate, t_minirt *mini);
 
+
+t_color add_color(const size_t *c);
 int         get_Light(t_minirt *mini, t_data *data);
 int         get_Camera(t_minirt *mini, t_data *data);
 int         get_Ambient_lightning(t_minirt *mini, t_data *data);
@@ -91,17 +91,23 @@ double		 	length_squared(t_point p);
 double			length(t_point p);
 t_point			unit_vector(t_point v);
 t_point			normalizing(t_point p);
-int			rgb(const size_t rgb[3]);
+int			rgb(const t_color rgb);
 /* ***		End Math Operations		** */
-
+void		ft_print_vector(const t_point p, int fd);
+t_color 	mul_color(t_color color, double s);
 /*
 	! ~ intersection test functions.
  */
+void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **oHit);
+bool	add_light(t_hit *pHit, t_minirt *rt, int *c);
+//bool	cylinder_intersection(t_minirt *rt, t_ray *ray, );
 t_ray	ray_generator(t_minirt *mini, int x, int y);
-bool 	intersectRaySphere(t_ray r, t_minirt *s, double *t, COLOR *color);
+//bool 	intersectRaySphere(t_ray r, t_minirt *s, double *t, COLOR *color);
+//
+//bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, COLOR *color);
 
-bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, COLOR *color);
-
+bool 	intersectRaySphere(t_ray r, t_minirt *s, double *t, t_hit *pHit);
+bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, t_hit *pHit);
 t_matrix	dir_matrix(void);
 void        camera_matrix(t_Camera *_camera);
 void    fill_plane_matrix(t_Plane *_plane);
@@ -119,5 +125,6 @@ void print_matrix(t_matrix matrix);
 void	rotation_plane(t_minirt *mini, int e);
 
 void intersection_over_objects(t_minirt *rt, t_ray ray);
+bool cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit);
 
 #endif

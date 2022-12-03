@@ -51,6 +51,31 @@ typedef struct	point {
 	double	z;
 }	t_point;
 
+
+typedef struct	s_color {
+
+	int	r;
+	int	g;
+	int	b;
+}	t_color;
+
+typedef struct s_material {
+	t_color	objColor;
+	t_color eff_color;
+	t_color diffuse_color;
+	t_color ambColor;
+	t_color	rgb;
+}	t_rgbMaterial;
+
+typedef struct s_p_intersect {
+	t_point hit_pos;
+	t_point normal;
+	double	hit_mag;
+	t_color	obj_color;
+} t_hit;
+    // t_point left_corner;
+    // t_point horizontal;
+    // t_point vertical;
 typedef struct	s_ray {
 
     t_point origin;
@@ -78,7 +103,12 @@ typedef struct _Camera
     t_ray	  ray;
     t_matrix  matrix;
 } t_Camera;
-
+typedef struct delta {
+	double a;
+	double b;
+	double c;
+	double delta;
+} t_delta;
 typedef struct _Light
 {
     t_point   cordinates;//x,y,z coordinates of the view
@@ -100,6 +130,7 @@ typedef struct _Plane
     size_t          repetition;
 	t_point			local_hit_point; // store the hit point
     t_matrix  matrix;
+    // struct _Plane   *next;
 } t_Plane;
 
 typedef struct _Sphere
@@ -108,6 +139,8 @@ typedef struct _Sphere
 	double			radius;
 	size_t			color[3];//R,G,B colors in range [0-255]: 255, 255, 255
 	size_t			repetition;
+
+    // struct _Sphere   *next;
 } t_Sphere;
 
 typedef struct _Cylinder
@@ -118,6 +151,7 @@ typedef struct _Cylinder
     double               redius;
     double               height;
     size_t              repetition;
+    // struct _Cylinder    *next;
 } t_Cylinder;
 
 typedef struct _minirt {
