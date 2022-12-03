@@ -148,30 +148,26 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, int *color)
 		// Clear 
 		// printf(top);
 		t_point X = v_sub(ray.origin, top);
-		double a = v_dot(ray.direction, ray.direction) - powf(v_dot(ray.direction, cy[i].orientation), 2);
-		double b = 2 * (v_dot(ray.direction, X) - (v_dot(ray.direction, cy[i].orientation) * v_dot(X, cy[i].orientation)));
-		double c = v_dot(X, X) - powf(v_dot(X, cy[i].orientation), 2) - powf(cy[i].redius, 2);
-		double discriminant = powf(b, 2) - (4 * a * c);
+		t_point hHat = normalizing(v_sub(top, v_adding(top, v_mul(cy[i].height, cy[i].orientation))));
+
+		double a = v_dot(ray.direction, ray.direction) - pow(v_dot(ray.direction, hHat), 2);
+		double b = 2 * (v_dot(ray.direction, X) - (v_dot(ray.direction, hHat) * v_dot(X, hHat)));
+		double c = v_dot(X, X) - pow(v_dot(X, hHat), 2) - pow(cy[i].redius, 2);
+		double discriminant = pow(b, 2) - (4 * a * c);
 		if (discriminant < EPSILON)
 			continue ;
 		t_min = get_root(discriminant, b, a);
 		double m = (v_dot(ray.direction, v_mul(t_min, cy[i].orientation))) + v_dot(X, cy[i].orientation);
 		if (m > EPSILON && m <= cy[i].height)
 		{
-			printf("hello\n");
-			t_point p = v_adding(ray.origin, v_mul(t_min, ray.direction));
-			t_point q = v_adding(top, v_mul(m, cy[i].orientation));
-			double stap1 = v_dot(v_sub(p, q), cy[i].orientation);
-			double stap2 = length_squared(v_sub(p, q));
-			// double solution = v_dot(v_sub(v_sub(p , top), v_mul(m, cy[i].orientation)), cy[i].orientation);
-	// printf ("soution[%f]\n", solution);
- 			if (fabs(stap2 - cy[i].redius) < EPSILON)
-			{
-			// if (t2 > EPSILON && t2 < h_2)
-			// 	t_min = t2;
-			// t2 = calc_root(v_dot(top, ro), v_dot(top, ray.direction), h_2, t2);
-			// if (fabs(b + a * t2) < sqrtf((b * b - a * c)))
-			// 	t_min = t1;
+//			t_point p = v_adding(ray.origin, v_mul(t_min, ray.direction));
+//			t_point q = v_adding(top, v_mul(m, cy[i].orientation));
+//			double stap1 = v_dot(v_sub(p, q), cy[i].orientation);
+//			double stap2 = length_squared(v_sub(p, q));
+//			// double solution = v_dot(v_sub(v_sub(p , top), v_mul(m, cy[i].orientation)), cy[i].orientation);
+//	// printf ("soution[%f]\n", solution);
+// 			if (fabs(stap2 - cy[i].redius) < EPSILON)
+//			{
 				if (t_min < *t)
 				{
 					*t= t_min;
@@ -179,7 +175,7 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, int *color)
 					if (rt->Mlx->mouse)
 						rt->Mlx->obj.index = i;
 				}
-			}
+//			}
 		}
 	}
 	if (*t == FLT_MAX)
