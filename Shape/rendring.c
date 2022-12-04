@@ -31,12 +31,6 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, double *t,  t_hit **oHit)
 		{
 			*t = t_t[i];
 			*oHit = &pHit[i];
-			if (i == PL)
-				rt->Mlx->obj.object = _PLANE;
-			else if (i == SP)
-				rt->Mlx->obj.object = _SEPHER;
-			else if (i == CY)
-				rt->Mlx->obj.object = _CYLINDER;
 		}
 	}
 }
