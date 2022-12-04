@@ -352,9 +352,9 @@ bool	add_light(t_hit *pHit, t_minirt *rt, int *c)
 	}
 	else
 	{
-		rgbMat->diffuse_color.r = (rt->Light->brightenss * pHit->obj_color.r);
-		rgbMat->diffuse_color.g = (rt->Light->brightenss * pHit->obj_color.g);
-		rgbMat->diffuse_color.b = (rt->Light->brightenss * pHit->obj_color.b);
+		rgbMat->diffuse_color.r = (int )(rt->Light->brightenss * pHit->obj_color.r);
+		rgbMat->diffuse_color.g = (int )(rt->Light->brightenss * pHit->obj_color.g);
+		rgbMat->diffuse_color.b = (int )(rt->Light->brightenss * pHit->obj_color.b);
 		rgbMat->diffuse_color = mul_color(rgbMat->diffuse_color, diffuse);
 	}
 	rgbMat->eff_color = addTwoColor(ambColor, rgbMat->diffuse_color);

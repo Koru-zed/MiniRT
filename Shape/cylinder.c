@@ -86,6 +86,7 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 	*t = FLT_MAX;
 	t_min = FLT_MAX;
 	t_Cylinder *cy=  rt->Cylinder;
+	ray.direction = normalizing(ray.direction);
 	while (++i < rt->Data->shape.cy)
 	{
 		// t_point A = v_mul(cy[i].height, cy[i].orientation); //to find orign of top
@@ -112,31 +113,40 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 		double discriminant = pow(b, 2) - (4 * a * c);
 		if (discriminant < EPSILON)
 			continue ;
-		t_min = get_root(discriminant, b, a);
-		double m = (v_dot(ray.direction, v_mul(t_min, cy[i].orientation))) + v_dot(X, cy[i].orientation);
+//		t_min = get_root(discriminant, b, a);
+		double	t1;
+		double	t2;
+		double	min;
+		double	max;
+
+		t1 = (-b + sqrt(discriminant)) / (2 * a);
+		t2 = (-b - sqrt(discriminant)) / (2 * a);
+		min = fmin(t1, t2);
+		max = fmax(t1, t2);
+		double m = (v_dot(ray.direction, v_mul(min, hHat))) + v_dot(X, hHat);
+		double m1 = (v_dot(ray.direction, v_mul(max, hHat))) + v_dot(X, hHat);
 		if (m > EPSILON && m <= cy[i].height)
 		{
-//			t_point p = v_adding(ray.origin, v_mul(t_min, ray.direction));
-//			t_point q = v_adding(top, v_mul(m, cy[i].orientation));
-//			double stap1 = v_dot(v_sub(p, q), cy[i].orientation);
-//			double stap2 = length_squared(v_sub(p, q));
-//			// double solution = v_dot(v_sub(v_sub(p , top), v_mul(m, cy[i].orientation)), cy[i].orientation);
-//	// printf ("soution[%f]\n", solution);
-// 			if (fabs(stap2 - cy[i].redius) < EPSILON)
-//			{
-				if (t_min < *t)
-				{
-					*t= t_min;
-					hit->obj_color = convet((int *)cy[i].color);
-//					*color = rgb(cy[i].color);
-					if (rt->Mlx->mouse)
-						rt->Mlx->obj.index = i;
-				}
-//			}
+			if (min < *t)
+			{
+				*t= min;
+				hit->obj_color = convet((int *)cy[i].color);
+				if (rt->Mlx->mouse)
+					rt->Mlx->obj.index = i;
+			}
+		}
+		else if (m1 > EPSILON && m1 <= cy[i].height)
+		{
+			if (max < *t)
+			{
+				*t= max;
+				hit->obj_color = convet((int *)cy[i].color);
+				if (rt->Mlx->mouse)
+					rt->Mlx->obj.index = i;
+			}
 		}
 	}
 	if (*t == FLT_MAX)
 		return false;
-	else
- 		return true;
+	return true;
 }
