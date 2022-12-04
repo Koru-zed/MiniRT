@@ -51,22 +51,38 @@ void print_point(t_point p)
 
 }
 
-double	get_root(double disc, double b, double a)
+void ft_swap(double *x, double *y)
 {
+	double z;
+
+	z = *x;
+	*x = *y;
+	*y = z;
+}
+
+double	git_root(t_Cylinder cy, t_point hHat, t_ray ray, double *m)
+{
+	double t;
 	double	t1;
 	double	t2;
-	double	t;
-	double	min;
-	double	max;
 
-	t1 = (-b + sqrt(disc)) / (2 * a);
-	t2 = (-b - sqrt(disc)) / (2 * a);
-	min = fmin(t1, t2);
-	max = fmax(t1, t2);
-	if (min >= EPSILON)
-		t = min;
-	else
-		t = max;
+	t = FLT_MAX;
+	t1 = (-cy.Q.b + cy.Q.sqrt_disc) / (2 * cy.Q.a);
+	t2 = (-cy.Q.b - cy.Q.sqrt_disc) / (2 * cy.Q.a);
+	if (t1 > t2)
+		ft_swap(&t1, &t2);
+	double m1 = (v_dot(ray.direction, v_mul(t1, hHat))) + v_dot(cy.X, hHat);
+	double m2 = (v_dot(ray.direction, v_mul(t2, hHat))) + v_dot(cy.X, hHat);
+	if (m1 > EPSILON && m1 <= cy.height)
+	{
+		t = t1;
+		*m = m1;
+	}
+	else if (m2 > EPSILON && m2 <= cy.height)
+	{
+		t = t2;
+		*m = m2;
+	}
 	return (t);
 }
 t_color convet(int *c)
@@ -82,61 +98,42 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 {
 	int i = -1;
 	double t_min;
+	double M;
+
+	t_point A;
+	t_point B;
+	t_point hHat;
 
 	*t = FLT_MAX;
 	t_min = FLT_MAX;
 	t_Cylinder *cy=  rt->Cylinder;
+	ray.direction = normalizing(ray.direction);
 	while (++i < rt->Data->shape.cy)
 	{
-		// t_point A = v_mul(cy[i].height, cy[i].orientation); //to find orign of top
-		// t_point B = normalizing(A); //to find direction of top
-		// t_point top = v_mul(cy[i].height, B); //find top point
-		// double h_2 = cy[i].height * cy[i].height;
-		// t_point ro = v_sub(ray.origin, cy[i].cordinates);
-		// double a = h_2 - v_dot(top, ray.direction) * v_dot(top, ray.direction);
-		// double b = h_2 * v_dot(ro, ray.direction) - v_dot(top, ro) * v_dot(top, ray.direction);
-		// double c = h_2 * v_dot(ro, ro) - v_dot(top, ro)
-		// 								* v_dot(top, ro) - (cy[i].redius) * (cy[i].redius) * h_2;
-
-		t_point A = v_mul(cy[i].height, cy[i].orientation); //to find orign of top
-		t_point B = normalizing(A); //to find direction of top
-		t_point top = v_mul(cy[i].height, B); //find top point
-		// Clear
-		// printf(top);
-		t_point X = v_sub(ray.origin, top);
-		t_point hHat = normalizing(v_sub(top, v_adding(top, v_mul(cy[i].height, cy[i].orientation))));
-
-		double a = v_dot(ray.direction, ray.direction) - pow(v_dot(ray.direction, hHat), 2);
-		double b = 2 * (v_dot(ray.direction, X) - (v_dot(ray.direction, hHat) * v_dot(X, hHat)));
-		double c = v_dot(X, X) - pow(v_dot(X, hHat), 2) - pow(cy[i].redius, 2);
-		double discriminant = pow(b, 2) - (4 * a * c);
-		if (discriminant < EPSILON)
+		A = v_mul(cy[i].height, cy[i].orientation); //to find orign of top
+		B = normalizing(A); //to find direction of top
+		cy[i].top = v_adding(v_mul(cy[i].height, B), cy[i].cordinates); //find top point
+		cy[i].X = v_sub(ray.origin, cy[i].top);
+		hHat = normalizing(v_sub(cy[i].top, v_adding(cy[i].top, v_mul(cy[i].height, cy[i].orientation))));
+		cy[i].Q.a = v_dot(ray.direction, ray.direction) - pow(v_dot(ray.direction, hHat), 2);
+		cy[i].Q.b = 2 * (v_dot(ray.direction, cy[i].X) - (v_dot(ray.direction, hHat) * v_dot(cy[i].X, hHat)));
+		cy[i].Q.c = v_dot(cy[i].X, cy[i].X) - pow(v_dot(cy[i].X, hHat), 2) - pow(cy[i].redius, 2);
+		cy[i].Q.discriminant = pow(cy[i].Q.b, 2) - (4 * cy[i].Q.a * cy[i].Q.c);
+		if (cy[i].Q.discriminant < EPSILON)
 			continue ;
-		t_min = get_root(discriminant, b, a);
-		double m = (v_dot(ray.direction, v_mul(t_min, cy[i].orientation))) + v_dot(X, cy[i].orientation);
-		if (m > EPSILON && m <= cy[i].height)
+		cy[i].Q.sqrt_disc = sqrt(cy[i].Q.discriminant);
+		t_min = git_root(cy[i], hHat, ray, &M);
+		if (t_min < *t)
 		{
-//			t_point p = v_adding(ray.origin, v_mul(t_min, ray.direction));
-//			t_point q = v_adding(top, v_mul(m, cy[i].orientation));
-//			double stap1 = v_dot(v_sub(p, q), cy[i].orientation);
-//			double stap2 = length_squared(v_sub(p, q));
-//			// double solution = v_dot(v_sub(v_sub(p , top), v_mul(m, cy[i].orientation)), cy[i].orientation);
-//	// printf ("soution[%f]\n", solution);
-// 			if (fabs(stap2 - cy[i].redius) < EPSILON)
-//			{
-				if (t_min < *t)
-				{
-					*t= t_min;
-					hit->obj_color = convet((int *)cy[i].color);
-//					*color = rgb(cy[i].color);
-					if (rt->Mlx->mouse)
-						rt->Mlx->obj.index = i;
-				}
-//			}
+			*t= t_min;
+			hit->obj_color = convet((int *)cy[i].color);
+			hit->hit_pos = v_adding(cy[i].top, v_mul(M, hHat));
+			hit->normal = normalizing(v_sub(hit->hit_pos, v_sub(cy[i].top, v_mul(M, hHat))));
+			if (rt->Mlx->mouse)
+				rt->Mlx->obj.index = i;
 		}
 	}
 	if (*t == FLT_MAX)
 		return false;
-	else
- 		return true;
+	return true;
 }

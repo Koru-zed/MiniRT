@@ -25,6 +25,15 @@ typedef struct s_mlx
     t_select     obj;
 }			t_mlx;
 
+typedef struct s_quadratic
+{
+    double    a;
+    double    b;
+    double    c;
+    double    discriminant;
+    double    sqrt_disc;
+}   t_quadratic;
+
 typedef struct _num_shape
 {
     int     A;
@@ -145,6 +154,9 @@ typedef struct _Sphere
 
 typedef struct _Cylinder
 {
+    t_point             X;
+    t_point             top;
+    t_quadratic         Q;
     t_point             cordinates;//x,y,z coordinates of the view
     t_point             orientation;//3d normalized orientation vector. In range [-1,1]
     size_t              color[3];//R,G,B colors in range [0-255]: 255, 255, 255
