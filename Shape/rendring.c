@@ -13,7 +13,7 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, double *t,  t_hit **oHit)
 {
 	int i;
 	double t_t[3];
-	t_hit pHit[3];
+	t_hit *pHit = malloc(sizeof(t_hit) * 3);
 	bool is[3];
 
 	i = -1;
@@ -99,12 +99,11 @@ void	ray_render(t_minirt *mini)
 			iterate_over_objects(mini, ray, &t, &hit);
 			if (hit) {
 				add_light(hit, mini, &color);
+				// if (mini->Mlx->obj.object == _CYLINDER)
+				// {
+				// 	color = rgb(hit->obj_color);
+				// }
 			}
-//			else if (mini->Mlx->obj.object == _CYLINDER)
-//			{
-//				printf("here \n");
-//				color = rgb(hit->obj_color);
-//			}
 			my_mlx_pixel_put(mini->Mlx, x, y, color);
 			x++;
 		}
