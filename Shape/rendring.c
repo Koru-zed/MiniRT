@@ -98,11 +98,11 @@ void	ray_render(t_minirt *mini)
 			color = BLACK;
 			iterate_over_objects(mini, ray, &t, &hit);
 			if (hit) {
-//				add_light(hit, mini, &color);
-				if (mini->Mlx->obj.object == _CYLINDER)
-				{
-					color = rgb(hit->obj_color);
-				}
+				add_light(hit, mini, &color);
+				// if (mini->Mlx->obj.object == _CYLINDER)
+				// {
+				// 	color = rgb(hit->obj_color);
+				// }
 			}
 			my_mlx_pixel_put(mini->Mlx, x, y, color);
 			x++;

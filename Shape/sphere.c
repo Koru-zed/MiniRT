@@ -22,11 +22,30 @@ t_color add_color(const size_t *c)
 	obj.b = (int)c[2];
 	return obj;
 }
+
+double	get_root(double sqrt_disc, double b, double a)
+{
+	double	t1;
+	double	t2;
+	double	t;
+	double	min;
+	double	max;
+
+	t1 = (-b + sqrt_disc) / (2 * a);
+	t2 = (-b - sqrt_disc) / (2 * a);
+	min = fmin(t1, t2);
+	max = fmax(t1, t2);
+	if (min >= EPSILON)
+		t = min;
+	else
+		t = max;
+	return (t);
+}
+
 bool 	intersectRaySphere(t_ray r, t_minirt *rt, double *t,t_hit *pHit)
 {
 
 	double t_min;
-	double t_max;
 	t_point dist;
 	double discriminant;
 	double C;
@@ -47,13 +66,12 @@ bool 	intersectRaySphere(t_ray r, t_minirt *rt, double *t,t_hit *pHit)
 		dist = v_sub(r.origin, s[i].center);
 		B = 2 * v_dot(r.direction, dist);
 		C = v_dot(dist, dist) - (s[i].radius * s[i].radius);
-		discriminant = B * B - 4.0f * A * C;
+		discriminant = pow(B, 2) - (4 * A * C);
+		if (discriminant < EPSILON)
+			continue ;
+		// printf("Sepher\n");
 		sqrt_discr = sqrt(discriminant);
-		t_min = (-B - sqrt_discr) / (2.0f * A);
-//		t_max = (-B + sqrt_discr) / (2.0f * A);
-//		if (t_max < t_min)
-//			t_min = t_max;
-//		printf("%f\n", t_min);
+		t_min = get_root(sqrt_discr, B, A);
 		if (t_min < hitDestance)
 		{
 			hitDestance = t_min;
@@ -62,7 +80,6 @@ bool 	intersectRaySphere(t_ray r, t_minirt *rt, double *t,t_hit *pHit)
 				rt->Mlx->obj.index = i;
 		}
 	}
-	*t = FLT_MAX;
 	if (!closestSphere)
 		return false;
 	*t = hitDestance;
