@@ -101,7 +101,7 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 
 		t_point A = v_mul(cy[i].height, cy[i].orientation); //to find orign of top
 		t_point B = normalizing(A); //to find direction of top
-		t_point top = v_mul(cy[i].height, B); //find top point
+		t_point top = v_adding(v_mul(cy[i].height, B), cy[i].cordinates); //find top point
 		// Clear
 		// printf(top);
 		t_point X = v_sub(ray.origin, top);
