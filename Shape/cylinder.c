@@ -191,14 +191,19 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 		t_min1 = git_root(cy[i], hHat, ray, &M);
 		cy[i].Disk_top.ray.origin = cy[i].top;
 		cy[i].Disk_top.ray.direction = hHat;
-		cy[i].Disk_bottom.ray.origin = v_sub(cy[i].top, v_mul((M/2), hHat));
-		cy[i].Disk_bottom.ray.direction = hHat;
+		// cy[i].Disk_bottom.ray.origin = v_sub(cy[i].top, v_mul(M, hHat));
+		// cy[i].Disk_bottom.ray.origin.y -= cy[i].height; 
+		// cy[i].Disk_bottom.ray.direction = hHat;
 		t_min2 = check_disk_cylinder(cy[i], ray);
-		if (t_min2 < t_min1){
-			t_min1 = t_min2;
-			// printf("disk\n");
+		if (t_min2 < t_min1 && t_min2 < *t){
+			*t= t_min2;
+			hit->obj_color = convet(cy[i].color);
+			hit->hit_pos = v_adding(ray.origin, v_mul(*t, ray.direction));
+			hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy[i].Disk_top.ray.origin), v_mul(*t, hHat)));
+			if (rt->Mlx->mouse)
+				rt->Mlx->obj.index = i;
 		}
-		if (t_min1 < *t)
+		else if (t_min1 < *t)
 		{
 			*t= t_min1;
 			hit->obj_color = convet(cy[i].color);
