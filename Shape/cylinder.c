@@ -106,6 +106,11 @@ bool	intersectPlaneDisk(t_Plane disk, t_ray ray, double *t)
 	hd = EPSILON;
 	ray.direction = normalizing(ray.direction);
 	double p = v_dot(disk.ray.direction, ray.direction);
+	// if (p < EPSILON)
+	// {
+	// 	*t = FLT_MAX;
+	// 	return false;
+	// }
 	t_point resultOfSub = v_sub(disk.ray.origin, ray.origin);
 	tmin = v_dot(resultOfSub, disk.ray.direction) / p;
 	if (tmin < EPSILON || tmin == FLT_MAX)
@@ -142,12 +147,12 @@ double check_disk_cylinder(t_Cylinder cy, t_ray ray)
 			// printf("disk\n");
 		return t;
 	}
-	else if (intersectDisk(cy.Disk_bottom, ray, cy.redius, &t))
-	{
-			// printf("disk\n");
+	// else if (intersectDisk(cy.Disk_bottom, ray, cy.redius, &t))
+	// {
+	// 		// printf("disk\n");
 
-		return t;
-	}
+	// 	return t;
+	// }
 	else
 		return (FLT_MAX);
 }
@@ -184,14 +189,15 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 				continue ;
 		cy[i].Q.sqrt_disc = sqrt(cy[i].Q.discriminant);
 		t_min1 = git_root(cy[i], hHat, ray, &M);
+		cy[i].Disk_top.ray.origin = cy[i].top;
 		cy[i].Disk_top.ray.direction = hHat;
-		cy[i].Disk_top.ray.origin = v_sub(cy[i].top, v_mul(M, hHat));
+		cy[i].Disk_bottom.ray.origin = v_sub(cy[i].top, v_mul((M/2), hHat));
 		cy[i].Disk_bottom.ray.direction = hHat;
-		// t_min2 = check_disk_cylinder(cy[i], ray);
-		// if (t_min2 < t_min1){
-		// 	t_min1 = t_min2;
-		// 	// printf("disk\n");
-		// }
+		t_min2 = check_disk_cylinder(cy[i], ray);
+		if (t_min2 < t_min1){
+			t_min1 = t_min2;
+			// printf("disk\n");
+		}
 		if (t_min1 < *t)
 		{
 			*t= t_min1;

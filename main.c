@@ -75,6 +75,22 @@ void edit_camera(t_minirt *mini, int key)
 		mini->Mlx->_do = 0; 
 }
 
+void edit_light(t_minirt *mini, int key)
+{
+	// printf("hello\n");
+	mini->Mlx->_do = 1;
+	if (key == KEYUP)
+		mini->Light->cordinates.y += 0.75;
+	else if (key == KEYDOWN)
+		mini->Light->cordinates.y -= 0.75;
+	else if (key == KEYLEFT)
+		mini->Light->cordinates.x += 0.75;
+	else if (key == KEYRIGHT)
+		mini->Light->cordinates.x -= 0.75;
+	else
+		mini->Mlx->_do = 0;
+}
+
 void edit_sepher(t_minirt *mini, int key)
 {
 	mini->Mlx->_do = 1;
@@ -127,16 +143,15 @@ void edit_mini(t_minirt *mini, int key)
 		edit_sepher(mini, key);
 	else if (mini->Mlx->obj.object == _PLANE)
 		edit_plane(mini, key);
+	else if (mini->Mlx->obj.object == _LIGHT)
+		edit_light(mini, key);
 	// else if (key == _CYLINDER)
 	// 	edit_cylinder(mini, key);
 	// mini->Mlx->addr = mlx_get_data_addr(mini->Mlx->img, &mini->Mlx->bits_per_pixel, &mini->Mlx->line_length, &mini->Mlx->endian);
 	if (mini->Mlx->_do)
 	{
-
 		mlx_clear_window(mini->Mlx->mlx, mini->Mlx->win);
-
 		ray_render(mini);
-
 	}
 
 }
@@ -170,6 +185,8 @@ int press_key(int key, t_minirt *mini)
 		edit_mini(mini, key);
 	else if (key == KEYRIGHT)
 		edit_mini(mini, key);
+	else if (key == _LIGHT)
+		mini->Mlx->obj.object = _LIGHT;
 	else if (key == DESTROY || key == CLOSE)
 		free_mini(mini);
 	else if (key == ZERO)
