@@ -12,3 +12,26 @@ pl 0.0,0.0,-30.0     0.0,1.0,0.0    255,120,98
 sp 0,0,0 5 255,0,0
 
 L   -20,8,-20 0.9
+
+bool check_disk_cylinder(t_Cylinder cy, t_ray ray, t_hit *hit, double *T)
+{
+	double t = FLT_MAX;
+
+	if (intersectDisk(cy.Disk_top, ray, cy.redius, &t))
+	{
+		if (t < *T){
+			hit->obj_color = convet(cy.color);
+			hit->hit_pos = v_adding(ray.origin, v_mul(t, ray.direction));
+			hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy.Disk_top.ray.origin), v_mul(t, cy.Disk_top.ray.direction)));
+			return true;
+		}
+	}
+	// else if (intersectDisk(cy.Disk_bottom, ray, cy.redius, &t))
+	// {
+	// 		// printf("disk\n");
+
+	// 	return t;
+	// }
+
+		return false;
+}

@@ -164,6 +164,7 @@ typedef struct _Cylinder
     size_t              color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     double               redius;
     double               height;
+    double t_min;
     size_t              repetition;
     // struct _Cylinder    *next;
 } t_Cylinder;

@@ -138,40 +138,64 @@ bool intersectDisk(t_Plane Disk, t_ray ray, double radius, double *t)
     return false; 
 } 
 
-double check_disk_cylinder(t_Cylinder cy, t_ray ray)
+// double check_disk_cylinder(t_Cylinder cy, t_ray ray)
+// {
+// 	double t = FLT_MAX;
+
+// 	if (intersectDisk(cy.Disk_top, ray, cy.redius, &t))
+// 	{
+// 			// printf("disk\n");
+// 		return t;
+// 	}
+// 	// else if (intersectDisk(cy.Disk_bottom, ray, cy.redius, &t))
+// 	// {
+// 	// 		// printf("disk\n");
+
+// 	// 	return t;
+// 	// }
+// 	else
+// 		return (FLT_MAX);
+// }
+
+bool check_disk_cylinder(t_Cylinder cy, t_ray ray, t_hit *hit, double *T)
 {
 	double t = FLT_MAX;
 
 	if (intersectDisk(cy.Disk_top, ray, cy.redius, &t))
 	{
-			// printf("disk\n");
-		return t;
+		if (t < *T && t < cy.t_min){
+			*T = t;
+			hit->obj_color = convet(cy.color);
+			hit->hit_pos = v_adding(ray.origin, v_mul(t, ray.direction));
+			hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy.Disk_top.ray.origin), v_mul(t, cy.Disk_top.ray.direction)));
+			return true;
+		}
 	}
 	// else if (intersectDisk(cy.Disk_bottom, ray, cy.redius, &t))
 	// {
-	// 		// printf("disk\n");
-
-	// 	return t;
+	// 	if (t < *T){
+	// 		*T = t;
+	// 		hit->obj_color = convet(cy.color);
+	// 		hit->hit_pos = v_adding(ray.origin, v_mul(t, ray.direction));
+	// 		hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy.Disk_bottom.ray.origin), v_mul(t, cy.Disk_bottom.ray.direction)));
+	// 		return true;
+	// 	}
 	// }
-	else
-		return (FLT_MAX);
+	return false;
 }
-
 
 
 bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 {
 	int i = -1;
-	double t_min1;
-	double t_min2;
 	double M;
-
+	double t_m;
 	t_point A;
 	t_point B;
 	t_point hHat;
 
 	*t = FLT_MAX;
-	t_min1 = FLT_MAX;
+	t_m = FLT_MAX;
 	t_Cylinder *cy=  rt->Cylinder;
 	ray.direction = normalizing(ray.direction);
 	while (++i < rt->Data->shape.cy)
@@ -188,24 +212,21 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 		if (cy[i].Q.discriminant < EPSILON)
 				continue ;
 		cy[i].Q.sqrt_disc = sqrt(cy[i].Q.discriminant);
-		t_min1 = git_root(cy[i], hHat, ray, &M);
+		t_m = git_root(cy[i], hHat, ray, &M);
+		cy[i].t_min = t_m;
 		cy[i].Disk_top.ray.origin = cy[i].top;
 		cy[i].Disk_top.ray.direction = hHat;
 		// cy[i].Disk_bottom.ray.origin = v_sub(cy[i].top, v_mul(M, hHat));
 		// cy[i].Disk_bottom.ray.origin.y -= cy[i].height; 
 		// cy[i].Disk_bottom.ray.direction = hHat;
-		t_min2 = check_disk_cylinder(cy[i], ray);
-		if (t_min2 < t_min1 && t_min2 < *t){
-			*t= t_min2;
-			hit->obj_color = convet(cy[i].color);
-			hit->hit_pos = v_adding(ray.origin, v_mul(*t, ray.direction));
-			hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy[i].Disk_top.ray.origin), v_mul(*t, hHat)));
+		// t_min2 =check_disk_cylinder(cy[i], ray);
+		if (check_disk_cylinder(cy[i], ray, hit, t)){
 			if (rt->Mlx->mouse)
 				rt->Mlx->obj.index = i;
 		}
-		else if (t_min1 < *t)
+		else if (t_m < *t)
 		{
-			*t= t_min1;
+			*t= cy[i].t_min;
 			hit->obj_color = convet(cy[i].color);
 			hit->hit_pos = v_adding(ray.origin, v_mul(*t, ray.direction));
 			hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy[i].top), v_mul(M, hHat)));
