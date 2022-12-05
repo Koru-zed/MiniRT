@@ -69,7 +69,7 @@ double 	length(t_point p)
 // magnitude
 double length_squared(t_point p)
 {
-	return sqrt (length(p));
+	return (sqrt(length(p)));
 }
 
 /*
