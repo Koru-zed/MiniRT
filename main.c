@@ -172,7 +172,10 @@ void edit_mini(t_minirt *mini, int key)
 	}
 
 }
-
+void		ft_print_vector(const t_point p)
+{
+	printf("p.x[%f] | p.y[%f] | p.z[%f]\n", p.x, p.y, p.z);
+}
 void	rotation_cylinder(t_minirt *mini, int key)
 {
 	int i;
@@ -194,10 +197,16 @@ void	rotation_plane(t_minirt *mini, int key)
 
 	i = mini->Mlx->obj.index;
 	if (key == KEYLEFT && mini->Mlx->rotate == ROTATE_X)
-		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_y(-3.6));
-	else if (key == KEYRIGHT && mini->Mlx->rotate == ROTATE_X)
-		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_y(3.6));
-	else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y)
+	{
+		ft_print_vector(mini->Plane[i].ray.direction);		
+		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_y(-1.8));
+		ft_print_vector(mini->Plane[i].ray.direction);
+	}else if (key == KEYRIGHT && mini->Mlx->rotate == ROTATE_X)
+	{
+		ft_print_vector(mini->Plane[i].ray.direction);		
+		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_y(1.8));
+		ft_print_vector(mini->Plane[i].ray.direction);
+	}else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y)
 		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_x(3.6));
 	else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y)
 		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_x(-3.6));

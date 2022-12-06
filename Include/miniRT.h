@@ -93,7 +93,7 @@ t_point			unit_vector(t_point v);
 t_point			normalizing(t_point p);
 int			rgb(const t_color rgb);
 /* ***		End Math Operations		** */
-void		ft_print_vector(const t_point p, int fd);
+void		ft_print_vector(const t_point p);
 t_color 	mul_color(t_color color, double s);
 /*
 	! ~ intersection test functions.
