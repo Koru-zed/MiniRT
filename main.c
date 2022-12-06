@@ -226,7 +226,7 @@ int press_key(int key, t_minirt *mini)
 		edit_mini(mini, key);
 	else if (key == _LIGHT)
 		mini->Mlx->obj.object = _LIGHT;
-	else if (key == DESTROY)
+	else if (key == DESTROY   )
 		free_mini(mini);
 	else if (key == ZERO)
 	{
