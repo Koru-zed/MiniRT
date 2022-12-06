@@ -199,12 +199,12 @@ void	rotation_plane(t_minirt *mini, int key)
 	if (key == KEYLEFT && mini->Mlx->rotate == ROTATE_X)
 	{
 		ft_print_vector(mini->Plane[i].ray.direction);		
-		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_y(-1.8));
+		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_y(-3.6));
 		ft_print_vector(mini->Plane[i].ray.direction);
 	}else if (key == KEYRIGHT && mini->Mlx->rotate == ROTATE_X)
 	{
 		ft_print_vector(mini->Plane[i].ray.direction);		
-		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_y(1.8));
+		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_y(3.86));
 		ft_print_vector(mini->Plane[i].ray.direction);
 	}else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y)
 		mini->Plane[i].ray.direction = mul_point_matrix(mini->Plane[i].ray.direction, update_matrix_x(3.6));
@@ -226,7 +226,7 @@ int press_key(int key, t_minirt *mini)
 		edit_mini(mini, key);
 	else if (key == _LIGHT)
 		mini->Mlx->obj.object = _LIGHT;
-	else if (key == DESTROY || key == CLOSE)
+	else if (key == DESTROY)
 		free_mini(mini);
 	else if (key == ZERO)
 	{
@@ -242,7 +242,9 @@ int press_key(int key, t_minirt *mini)
 
 int ft_mouse(int button, int x, int y, t_minirt *mini)
 {
+	int i;
 
+	i = mini->Mlx->obj.index;
 	mini->Mlx->_do = 0;
 	if (button  == 1)
 	{
@@ -252,15 +254,20 @@ int ft_mouse(int button, int x, int y, t_minirt *mini)
 		intersection_over_objects(mini, ray_generator(mini, x, y));
 		mini->Mlx->mouse = 0;
 		if (mini->Mlx->obj.object)
-			printf("mini->obj.object[%d] | mini->obj.index[%d]\n", mini->Mlx->obj.object, mini->Mlx->obj.index);
+			printf("mini->obj.object[%d] | mini->obj.index[%d]\n", mini->Mlx->obj.object, i);
 	}
 	else if (button  == 4)
     {
 		mini->Mlx->_do = 1;
 		if (!mini->Mlx->obj.object && mini->Camera->fov > 0)
 			mini->Camera->fov -= 5;
-		else if (mini->Mlx->obj.object == _SEPHER && mini->Sphere->radius > 0)
-			mini->Sphere->radius -= 0.5;
+		else if (mini->Mlx->obj.object == _SEPHER && (mini->Sphere[i].radius - 0.5) >EPSILON)
+			mini->Sphere[i].radius -= 0.5;
+		else if (mini->Mlx->obj.object == _CYLINDER && (mini->Cylinder[i].redius - 0.5) >= EPSILON && (mini->Cylinder[i].height - 1) >= EPSILON)
+		{
+			mini->Cylinder[i].redius -= 0.5;
+			mini->Cylinder[i].height -= 1; 
+		}
 	}
 	else if (button  == 5)
     {
@@ -268,7 +275,12 @@ int ft_mouse(int button, int x, int y, t_minirt *mini)
 		if (!mini->Mlx->obj.object && mini->Camera->fov <= 170)
 			mini->Camera->fov += 5;
 		else if (mini->Mlx->obj.object == _SEPHER)
-			mini->Sphere->radius += 0.5;
+			mini->Sphere[i].radius += 0.5;
+		else if (mini->Mlx->obj.object == _CYLINDER)
+		{
+			mini->Cylinder[i].redius += 0.5;
+			mini->Cylinder[i].height += 1;
+		}
 			
 	}
 	if (mini->Mlx->_do)
@@ -281,11 +293,11 @@ int ft_mouse(int button, int x, int y, t_minirt *mini)
 
 void	setup_controls(t_minirt *mini)
 {
-	mlx_mouse_hook(mini->Mlx->win, ft_mouse, mini);
 	mlx_hook(mini->Mlx->win, 17, 0, free_mini, mini);
 	mlx_hook(mini->Mlx->win, 4, 0, ft_mouse, mini);
 	mlx_hook(mini->Mlx->win, 5, 0, ft_mouse, mini);
 	mlx_key_hook(mini->Mlx->win, press_key, mini);
+	mlx_mouse_hook(mini->Mlx->win, ft_mouse, mini);
 }
 
 void print_matrix(t_matrix matrix)

@@ -19,6 +19,7 @@ void free_data(t_data *_data)
 
 int    free_mini(t_minirt *mini)
 {
+    printf("Hello\n");
     if (mini->Ambient)
         free(mini->Ambient);
     if (mini->Camera)
