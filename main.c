@@ -226,7 +226,7 @@ int ft_mouse(int button, int x, int y, t_minirt *mini)
 	else if (button  == 5)
     {
 		mini->Mlx->_do = 1;
-		if (!mini->Mlx->obj.object && mini->Camera->fov + 5 <= 180)
+		if (!mini->Mlx->obj.object && mini->Camera->fov <= 170)
 			mini->Camera->fov += 5;
 		else if (mini->Mlx->obj.object == _SEPHER)
 			mini->Sphere->radius += 0.5;

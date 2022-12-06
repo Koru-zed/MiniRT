@@ -171,16 +171,17 @@ bool check_disk_cylinder(t_Cylinder cy, t_ray ray, t_hit *hit, double *T)
 			return true;
 		}
 	}
-	// else if (intersectDisk(cy.Disk_bottom, ray, cy.redius, &t))
-	// {
-	// 	if (t < *T){
-	// 		*T = t;
-	// 		hit->obj_color = convet(cy.color);
-	// 		hit->hit_pos = v_adding(ray.origin, v_mul(t, ray.direction));
-	// 		hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy.Disk_bottom.ray.origin), v_mul(t, cy.Disk_bottom.ray.direction)));
-	// 		return true;
-	// 	}
-	// }
+	else if (intersectDisk(cy.Disk_bottom, ray, cy.redius, &t))
+	{
+		if (t < *T && t < cy.t_min){
+			*T = t;
+			hit->obj_color = convet(cy.color);
+			hit->hit_pos = v_adding(ray.origin, v_mul(t, ray.direction));
+			hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy.Disk_bottom.ray.origin), v_mul(t, cy.Disk_bottom.ray.direction)));
+			// printf("bottom\n");
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -189,6 +190,7 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 {
 	int i = -1;
 	double M;
+	t_point len;
 	double t_m;
 	t_point A;
 	t_point B;
@@ -216,9 +218,12 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 		cy[i].t_min = t_m;
 		cy[i].Disk_top.ray.origin = cy[i].top;
 		cy[i].Disk_top.ray.direction = hHat;
-		// cy[i].Disk_bottom.ray.origin = v_sub(cy[i].top, v_mul(M, hHat));
+		cy[i].Disk_bottom.ray.origin = v_sub(cy[i].top, v_mul(M, hHat));
+		len = v_sub(cy[i].top, cy[i].Disk_bottom.ray.origin);
+		// if (length_squared(len) == cy[i].height)
+		//       printf("hi\n");
+		cy[i].Disk_bottom.ray.direction = hHat;
 		// cy[i].Disk_bottom.ray.origin.y -= cy[i].height; 
-		// cy[i].Disk_bottom.ray.direction = hHat;
 		// t_min2 =check_disk_cylinder(cy[i], ray);
 		if (check_disk_cylinder(cy[i], ray, hit, t)){
 			if (rt->Mlx->mouse)
