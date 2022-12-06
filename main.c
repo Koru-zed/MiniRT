@@ -135,6 +135,23 @@ void edit_plane(t_minirt *mini, int key)
 		mini->Mlx->_do = 0; 
 }
 
+void edit_cylinder(t_minirt *mini, int key)
+{
+	mini->Mlx->_do = 1;
+	if (mini->Mlx->rotate)
+		rotation_cylinder(mini, key);
+	else if (key == KEYUP)
+		mini->Cylinder[mini->Mlx->obj.index].ray.origin.y += 0.75;
+	else if (key == KEYDOWN)
+		mini->Cylinder[mini->Mlx->obj.index].ray.origin.y -= 0.75;
+	else if (key == KEYLEFT)
+		mini->Cylinder[mini->Mlx->obj.index].ray.origin.x += 0.75;
+	else if (key == KEYRIGHT)
+		mini->Cylinder[mini->Mlx->obj.index].ray.origin.x -= 0.75;
+	else
+		mini->Mlx->_do = 0; 
+}
+
 void edit_mini(t_minirt *mini, int key)
 {
 	if (!mini->Mlx->obj.object)
@@ -143,10 +160,10 @@ void edit_mini(t_minirt *mini, int key)
 		edit_sepher(mini, key);
 	else if (mini->Mlx->obj.object == _PLANE)
 		edit_plane(mini, key);
+	else if (mini->Mlx->obj.object == _CYLINDER)
+		edit_cylinder(mini, key);
 	else if (mini->Mlx->obj.object == _LIGHT)
 		edit_light(mini, key);
-	// else if (key == _CYLINDER)
-	// 	edit_cylinder(mini, key);
 	// mini->Mlx->addr = mlx_get_data_addr(mini->Mlx->img, &mini->Mlx->bits_per_pixel, &mini->Mlx->line_length, &mini->Mlx->endian);
 	if (mini->Mlx->_do)
 	{
@@ -156,7 +173,20 @@ void edit_mini(t_minirt *mini, int key)
 
 }
 
+void	rotation_cylinder(t_minirt *mini, int key)
+{
+	int i;
 
+	i = mini->Mlx->obj.index;
+	if (key == KEYLEFT && mini->Mlx->rotate == ROTATE_X)
+		mini->Cylinder[i].ray.direction = mul_point_matrix(mini->Cylinder[i].ray.direction, update_matrix_y(-3.6));
+	else if (key == KEYRIGHT && mini->Mlx->rotate == ROTATE_X)
+		mini->Cylinder[i].ray.direction = mul_point_matrix(mini->Cylinder[i].ray.direction, update_matrix_y(3.6));
+	else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y)
+		mini->Cylinder[i].ray.direction = mul_point_matrix(mini->Cylinder[i].ray.direction, update_matrix_x(3.6));
+	else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y)
+		mini->Cylinder[i].ray.direction = mul_point_matrix(mini->Cylinder[i].ray.direction, update_matrix_x(-3.6));
+}
 
 void	rotation_plane(t_minirt *mini, int key)
 {

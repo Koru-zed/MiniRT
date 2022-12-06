@@ -161,27 +161,31 @@ bool check_disk_cylinder(t_Cylinder cy, t_ray ray, t_hit *hit, double *T)
 {
 	double t = FLT_MAX;
 
+	size_t color[3];
+	color[0] = 125;
+	color[1] = 0;
+	color[2] = 0;
 	if (intersectDisk(cy.Disk_top, ray, cy.redius, &t))
 	{
 		if (t < *T && t < cy.t_min){
 			*T = t;
-			hit->obj_color = convet(cy.color);
+			hit->obj_color = convet(color);
 			hit->hit_pos = v_adding(ray.origin, v_mul(t, ray.direction));
 			hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy.Disk_top.ray.origin), v_mul(t, cy.Disk_top.ray.direction)));
 			return true;
 		}
 	}
-	else if (intersectDisk(cy.Disk_bottom, ray, cy.redius, &t))
-	{
-		if (t < *T && t < cy.t_min){
-			*T = t;
-			hit->obj_color = convet(cy.color);
-			hit->hit_pos = v_adding(ray.origin, v_mul(t, ray.direction));
-			hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy.Disk_bottom.ray.origin), v_mul(t, cy.Disk_bottom.ray.direction)));
-			// printf("bottom\n");
-			return true;
-		}
-	}
+	// else if (intersectDisk(cy.Disk_bottom, ray, cy.redius, &t))
+	// {
+	// 	if (t < *T && t < cy.t_min){
+	// 		*T = t;
+	// 		hit->obj_color = convet(cy.color);
+	// 		hit->hit_pos = v_adding(ray.origin, v_mul(t, ray.direction));
+	// 		hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy.Disk_bottom.ray.origin), v_mul(t, cy.Disk_bottom.ray.direction)));
+	// 		// printf("bottom\n");
+	// 		return true;
+	// 	}
+	// }
 	return false;
 }
 
@@ -190,7 +194,6 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 {
 	int i = -1;
 	double M;
-	t_point len;
 	double t_m;
 	t_point A;
 	t_point B;
@@ -202,11 +205,11 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 	ray.direction = normalizing(ray.direction);
 	while (++i < rt->Data->shape.cy)
 	{
-		A = v_mul(cy[i].height, cy[i].orientation); //to find orign of top
+		A = v_mul(cy[i].height, cy[i].ray.direction); //to find orign of top
 		B = normalizing(A); //to find direction of top
-		cy[i].top = v_adding(v_mul(cy[i].height, B), cy[i].cordinates); //find top point
+		cy[i].top = v_adding(v_mul(cy[i].height, B), cy[i].ray.origin); //find top point
 		cy[i].X = v_sub(ray.origin, cy[i].top);
-		hHat = normalizing(v_sub(cy[i].top, v_adding(cy[i].top, v_mul(cy[i].height, cy[i].orientation))));
+		hHat = normalizing(v_sub(cy[i].top, v_adding(cy[i].top, v_mul(cy[i].height, cy[i].ray.direction))));
 		cy[i].Q.a = v_dot(ray.direction, ray.direction) - pow(v_dot(ray.direction, hHat), 2);
 		cy[i].Q.b = 2 * (v_dot(ray.direction, cy[i].X) - (v_dot(ray.direction, hHat) * v_dot(cy[i].X, hHat)));
 		cy[i].Q.c = v_dot(cy[i].X, cy[i].X) - pow(v_dot(cy[i].X, hHat), 2) - pow(cy[i].redius, 2);
@@ -219,12 +222,7 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 		cy[i].Disk_top.ray.origin = cy[i].top;
 		cy[i].Disk_top.ray.direction = hHat;
 		cy[i].Disk_bottom.ray.origin = v_sub(cy[i].top, v_mul(M, hHat));
-		len = v_sub(cy[i].top, cy[i].Disk_bottom.ray.origin);
-		// if (length_squared(len) == cy[i].height)
-		//       printf("hi\n");
 		cy[i].Disk_bottom.ray.direction = hHat;
-		// cy[i].Disk_bottom.ray.origin.y -= cy[i].height; 
-		// t_min2 =check_disk_cylinder(cy[i], ray);
 		if (check_disk_cylinder(cy[i], ray, hit, t)){
 			if (rt->Mlx->mouse)
 				rt->Mlx->obj.index = i;
