@@ -360,7 +360,7 @@ int main(int ac, char **av)
 		}
 		fill_data(miniRT->Data, &miniRT->Data->shape, miniRT->fd);
 		miniRT->Mlx = ft_calloc(1, sizeof(t_mlx));
-		fill_Info(miniRT);
+		fill_info(miniRT);
 		miniRT->Mlx->width = WIDTH;
 		miniRT->Mlx->height = HEIGHT;
 		miniRT->Mlx->mlx = mlx_init();

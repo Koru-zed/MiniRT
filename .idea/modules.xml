@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Minirt.iml" filepath="$PROJECT_DIR$/.idea/Minirt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/donemin.iml" filepath="$PROJECT_DIR$/.idea/donemin.iml" />
     </modules>
   </component>
 </project>

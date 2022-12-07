@@ -1,22 +1,22 @@
 #include "../Include/miniRT.h"
 
-size_t    check_data(t_minirt *mini, t_data *data)
+size_t	check_data(t_minirt *mini, t_data *data)
 {
 	if (!ft_strcmp(data->pars[0], AMBIENT))
-		get_Ambient_lightning(mini, data);
+		get_ambient_lightning(mini, data);
 	else if (!ft_strcmp(data->pars[0], CAMERA))
-		get_Camera(mini, data);
+		get_camera(mini, data);
 	else if (!ft_strcmp(data->pars[0], LIGHT))
-		get_Light(mini, data);
+		get_light(mini, data);
 	else if (!ft_strcmp(data->pars[0], SEPHER))
-		get_Sphere(mini, data);
+		get_sphere(mini, data);
 	else if (!ft_strcmp(data->pars[0], PLANE))
-		get_Plane(mini, data);
+		get_plane(mini, data);
 	else if (!ft_strcmp(data->pars[0], CYLINDER))
-		get_Cylinder(mini, data);
+		get_cylinder(mini, data);
 	else if (ft_strcmp(data->pars[0], "#"))
 		return (0);
-	return 1;
+	return (1);
 }
 
 void	alloc_mini(t_minirt *mini)
@@ -27,23 +27,22 @@ void	alloc_mini(t_minirt *mini)
 	mini->Sphere = ft_calloc(mini->Data->shape.sp, sizeof(t_Sphere));
 	mini->Plane = ft_calloc(mini->Data->shape.pl, sizeof(t_Plane));
 	mini->Cylinder = ft_calloc(mini->Data->shape.cy, sizeof(t_Cylinder));
-
 }
 
-void    fill_Info(t_minirt *mini)
+void	fill_info(t_minirt *mini)
 {
-    t_data *_data;
+	t_data	*_data;
 
-    _data = mini->Data;
+	_data = mini->Data;
 	alloc_mini(mini);
-    while (_data && _data->info)
-    {
-        if (!check_data(mini, _data))
-        {
-            free_mini(mini);
-            ft_putstr_fd("Error : Data not valid\n", 1);
-            exit(EXIT_FAILURE);
-        }
-        _data = _data->next;
-    }
+	while (_data && _data->info)
+	{
+		if (!check_data(mini, _data))
+		{
+			free_mini(mini);
+			ft_putstr_fd("Error : Data not valid\n", 1);
+			exit(EXIT_FAILURE);
+		}
+		_data = _data->next;
+	}
 }

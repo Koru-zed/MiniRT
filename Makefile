@@ -11,12 +11,13 @@ FILES := get_next_line/get_next_line.c \
 		 Dowing/camera.c \
 		 main.c \
 		 math_operations.c \
+		 math_utils.c \
 		Shape/rendring.c \
 		Shape/sphere.c \
 		Shape/plane.c \
 		Shape/Rotation.c \
 		Shape/cylinder.c \
-		color.c shade.c \
+		Shape/color.c Shape/shade.c \
 		ft_matrix.c
 
 OBJES := ${FILES:.c=.o}
