@@ -189,6 +189,14 @@ void	rotation_cylinder(t_minirt *mini, int key)
 		mini->Cylinder[i].ray.direction = mul_point_matrix(mini->Cylinder[i].ray.direction, update_matrix_x(3.6));
 	else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y)
 		mini->Cylinder[i].ray.direction = mul_point_matrix(mini->Cylinder[i].ray.direction, update_matrix_x(-3.6));
+	else if (key == KEYLEFT && mini->Mlx->rotate == ROTATE_X && !mini->Cylinder[i].ray.direction.y)
+		mini->Cylinder[i].ray.direction.y += (double)(2/360);
+	else if (key == KEYRIGHT && mini->Mlx->rotate == ROTATE_X && !mini->Cylinder[i].ray.direction.y)
+		mini->Cylinder[i].ray.direction.y -= (double)(2/360);
+	else if (key == KEYUP && mini->Mlx->rotate == ROTATE_Y && !mini->Cylinder[i].ray.direction.x)
+		mini->Cylinder[i].ray.direction.x += (double)(2/360);
+	else if (key == KEYDOWN && mini->Mlx->rotate == ROTATE_Y && !mini->Cylinder[i].ray.direction.x)
+		mini->Cylinder[i].ray.direction.x += (double)(2/360);
 }
 
 void	rotation_plane(t_minirt *mini, int key)

@@ -155,17 +155,14 @@ typedef struct _Sphere
 typedef struct _Cylinder
 {
     t_point             X;
-    t_point             top;
     t_quadratic         Q;
-    t_Plane             Disk_top;
-    t_Plane             Disk_bottom;            
     // t_point             cordinates;//x,y,z coordinates of the view
     // t_point             orientation;//3d normalized orientation vector. In range [-1,1]
     size_t              color[3];//R,G,B colors in range [0-255]: 255, 255, 255
     t_ray ray;
     double               redius;
     double               height;
-    double t_min;
+    // double t_min;
     size_t              repetition;
     // struct _Cylinder    *next;
 } t_Cylinder;
