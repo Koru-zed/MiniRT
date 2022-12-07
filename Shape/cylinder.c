@@ -81,6 +81,7 @@ void  calc_discrement(t_Cylinder *cy, t_ray ray)
 	cy->Q.b = 2 * (v_dot(ray.direction, cy->X) - (v_dot(ray.direction, cy->ray.direction) * v_dot(cy->X, cy->ray.direction)));
 	cy->Q.c = v_dot(cy->X, cy->X) - pow(v_dot(cy->X, cy->ray.direction), 2) - pow(cy->redius, 2);
 	cy->Q.discriminant = pow(cy->Q.b, 2) - (4 * cy->Q.a * cy->Q.c);
+	cy->Q.sqrt_disc = sqrt(cy->Q.discriminant);
 }
 
 bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
@@ -95,19 +96,19 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 	*t = FLT_MAX;
 	t_min = FLT_MAX;
 	t_Cylinder *cy=  rt->Cylinder;
+	ray.direction = normalizing(ray.direction);
 	while (++i < rt->Data->shape.cy)
 	{
 		calc_discrement(&cy[i], ray);
 		if (cy[i].Q.discriminant < EPSILON)
 			continue ;
-		cy[i].Q.sqrt_disc = sqrt(cy[i].Q.discriminant);
 		t_min = git_root(cy[i], ray, &M);
 		if (t_min < *t)
 		{
 			*t= t_min;
 			hit->obj_color = convet(cy[i].color);
-			hit->hit_pos = v_adding(cy[i].ray.origin, v_mul(M, cy[i].ray.direction));
-			hit->normal = normalizing(v_sub(hit->hit_pos, v_sub(cy[i].ray.origin, v_mul(M, cy[i].ray.direction))));
+			hit->hit_pos = v_adding(ray.origin, v_mul(*t, ray.direction));
+			hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy[i].ray.origin), v_mul(M, cy[i].ray.direction)));
 			if (rt->Mlx->mouse)
 				rt->Mlx->obj.index = i;
 		}
