@@ -110,8 +110,8 @@ t_color 	get_ambient_color(t_color ambColor, t_minirt *rt, t_color objColor)
 
 bool iterate(t_minirt *rt, t_ray ray, double *t)
 {
-	double t1 = FLT_MAX;
-	double t2 = FLT_MAX;
+	double t1 = DBL_MAX;
+	double t2 = DBL_MAX;
 	t_hit *pHit;
 	t_hit *pHit1;
 
@@ -127,7 +127,7 @@ bool iterate(t_minirt *rt, t_ray ray, double *t)
 		*t = t1;
 		return true;
 	}
-	if (intersectRaySphere(ray, rt, &t2, &pHit1))
+	if (intersect_r_sphere(ray, rt, &t2, &pHit1))
 	{
 		*t = t2;
 		return true;
@@ -161,7 +161,7 @@ bool	is_shadowed(t_minirt *rt, t_point hit, t_point normal)
 		if (t > EPSILON && len > t)
 			return true;
 	}
-//	if (intersectRaySphere(r, rt, &t, &h) && t < distance)
+//	if (intersect_r_sphere(r, rt, &t, &h) && t < distance)
 //
 	return false;
 }
@@ -322,7 +322,7 @@ bool	is_shadowed(t_minirt *rt, t_point hit, t_point normal)
 	iterate_over_objects(rt, ray, &t, &h);
 	if ((t > EPSILON && len > t) || fabs(len - t) < EPSILON)
 		return true;
-//	if (intersectRaySphere(r, rt, &t, &h) && t < distance)
+//	if (intersect_r_sphere(r, rt, &t, &h) && t < distance)
 //		return true;
 	return false;
 }

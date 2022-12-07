@@ -102,12 +102,12 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **oHit);
 bool	add_light(t_hit *pHit, t_minirt *rt, int *c);
 //bool	cylinder_intersection(t_minirt *rt, t_ray *ray, );
 t_ray	ray_generator(t_minirt *mini, int x, int y);
-//bool 	intersectRaySphere(t_ray r, t_minirt *s, double *t, COLOR *color);
+//bool 	intersect_r_sphere(t_ray r, t_minirt *s, double *t, COLOR *color);
 //
 //bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, COLOR *color);
 
-bool 	intersectRaySphere(t_ray r, t_minirt *s, double *t, t_hit *pHit);
-bool	intersectPlane(t_minirt *rt, t_ray ray, double *t, t_hit *pHit);
+bool 	intersect_r_sphere(t_ray r, t_minirt *s, double *t, t_hit *pHit);
+bool	intersect_plane(t_minirt *rt, t_ray ray, double *t, t_hit *pHit);
 t_matrix	dir_matrix(void);
 void        camera_matrix(t_Camera *_camera);
 void    fill_plane_matrix(t_Plane *_plane);

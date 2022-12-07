@@ -76,7 +76,7 @@ void	so(t_minirt *rt, t_ray r, t_quadratic qd, t_hit *p_hit)
 	}
 }
 
-bool	intersectRaySphere(t_ray r, t_minirt *rt, double *t, t_hit *p_hit)
+bool	intersect_r_sphere(t_ray r, t_minirt *rt, double *t, t_hit *p_hit)
 {
 	t_Sphere	*s;
 	t_quadratic	qd;

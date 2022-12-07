@@ -2,7 +2,7 @@
 
 bool intersectDisk(t_ray disk, t_ray ray, double radius) 
 { 
-    double t = FLT_MAX;
+    double t = DBL_MAX;
     if (intersectPlane()) { 
         t_point p = v_adding(ray.origin, v_mul(ray.direction, t)); 
         t_point v = v_sub(p, disk.origin); 
@@ -25,8 +25,8 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 	t_point B;
 	t_point hHat;
 
-	*t = FLT_MAX;
-	t_min = FLT_MAX;
+	*t = DBL_MAX;
+	t_min = DBL_MAX;
 	t_Cylinder *cy=  rt->Cylinder;
 	ray.direction = normalizing(ray.direction);
 	while (++i < rt->Data->shape.cy)
@@ -58,7 +58,7 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 				rt->Mlx->obj.index = i;
 		}
 	}
-	if (*t == FLT_MAX)
+	if (*t == DBL_MAX)
 		return false;
 	return true;
 }

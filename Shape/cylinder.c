@@ -44,7 +44,7 @@ double	git_root(t_Cylinder cy, t_point hHat, t_ray ray, double *m)
 	double	t1;
 	double	t2;
 
-	t = FLT_MAX;
+	t = DBL_MAX;
 	t1 = (-cy.Q.b + cy.Q.sqrt_disc) / (2 * cy.Q.a);
 	t2 = (-cy.Q.b - cy.Q.sqrt_disc) / (2 * cy.Q.a);
 	if (t1 > t2)
@@ -86,9 +86,9 @@ bool	intersectPlaneDisk(t_Plane disk, t_ray ray, double *t)
 	double p = v_dot(disk.ray.direction, ray.direction);
 	t_point resultOfSub = v_sub(disk.ray.origin, ray.origin);
 	tmin = v_dot(resultOfSub, disk.ray.direction) / p;
-	if (tmin < EPSILON || tmin == FLT_MAX)
+	if (tmin < EPSILON || tmin == DBL_MAX)
 	{
-		*t = FLT_MAX;
+		*t = DBL_MAX;
 		return false;
 	}
 	*t = tmin;
@@ -109,41 +109,46 @@ bool intersectDisk(t_Plane Disk, t_ray ray, double radius, double *t)
 
 bool check_disk_cylinder(t_Cylinder cy, t_ray ray, t_hit *hit, double *T, double M)
 {
-	double t = FLT_MAX;
+	double t = DBL_MAX;
 
-	size_t color[3];
 
-	if (intersectDisk(cy.Disk_top, ray, cy.redius, &t))
+	cy.Disk_bottom.ray.origin = v_sub(cy.top, v_mul(-cy.height, cy.Disk_top.ray.direction));
+	cy.Disk_bottom.ray.direction = cy.Disk_top.ray.direction;
+	if (intersectDisk(cy.Disk_bottom, ray, cy.redius, &t))
 	{
-		color[0] = 125;
-		color[1] = 0;
-		color[2] = 0;
-		if (t < *T && t < cy.t_min){
+		if (t < *T)
+		{
 			*T = t;
 			hit->obj_color = convet(cy.color);
 			hit->hit_pos = v_adding(ray.origin, v_mul(t, ray.direction));
-			hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy.Disk_top.ray.origin), v_mul(t, cy.Disk_top.ray.direction)));
+			hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy.Disk_bottom.ray.origin), v_mul(t, cy.Disk_bottom.ray.	direction)));
 			return true;
 		}
 	}
-	else
-	{
-		cy.Disk_bottom.ray.origin = v_sub(cy.top, v_mul(-cy.height, cy.Disk_top.ray.direction));
-		cy.Disk_bottom.ray.direction = cy.Disk_top.ray.direction;
-		if (intersectDisk(cy.Disk_bottom, ray, cy.redius, &t))
-		{
-			if (t < *T)
-            {
-				*T = t;
-				hit->obj_color = convet(cy.color);
-				hit->hit_pos = v_adding(ray.origin, v_mul(t, ray.direction));
-				hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy.Disk_bottom.ray.origin), v_mul(t, cy.Disk_bottom.ray.	direction)));
-			}
-		}
-	}
+//
+//	else if (intersectDisk(cy.Disk_top, ray, cy.redius, &t))
+//	{
+//		if (t < *T && t < cy.t_min){
+//			*T = t;
+//			hit->obj_color = convet(cy.color);
+//			hit->hit_pos = v_adding(ray.origin, v_mul(t, ray.direction));
+//			hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, cy.Disk_top.ray.origin), v_mul(t, cy.Disk_top.ray.direction)));
+//			return true;
+//		}
+//	}
+
+
 	return false;
 }
 
+void	quadratic_cal()
+{
+	cy[i].Q.a = v_dot(ray.direction, rrayay.direction) - pow(v_dot(ray.direction, hHat), 2);
+	cy[i].Q.b = 2 * (v_dot(ray.direction, cy[i].X) - (v_dot(ray.direction, hHat) * v_dot(cy[i].X, hHat)));
+	cy[i].Q.c = v_dot(cy[i].X, cy[i].X) - pow(v_dot(cy[i].X, hHat), 2) - pow(cy[i].redius, 2);
+	cy[i].Q.discriminant = pow(cy[i].Q.b, 2) - (4 * cy[i].Q.a * cy[i].Q.c);
+	return ;
+}
 
 bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 {
@@ -154,8 +159,8 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 	t_point B;
 	t_point hHat;
 
-	*t = FLT_MAX;
-	t_m = FLT_MAX;
+	*t = DBL_MAX;
+	t_m = DBL_MAX;
 	t_Cylinder *cy=  rt->Cylinder;
 	ray.direction = normalizing(ray.direction);
 	while (++i < rt->Data->shape.cy)
@@ -165,10 +170,7 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 		cy[i].top = v_adding(v_mul(cy[i].height, B), cy[i].ray.origin); //find top point
 		cy[i].X = v_sub(ray.origin, cy[i].top);
 		hHat = normalizing(v_sub(cy[i].top, v_adding(cy[i].top, v_mul(cy[i].height, cy[i].ray.direction))));
-		cy[i].Q.a = v_dot(ray.direction, ray.direction) - pow(v_dot(ray.direction, hHat), 2);
-		cy[i].Q.b = 2 * (v_dot(ray.direction, cy[i].X) - (v_dot(ray.direction, hHat) * v_dot(cy[i].X, hHat)));
-		cy[i].Q.c = v_dot(cy[i].X, cy[i].X) - pow(v_dot(cy[i].X, hHat), 2) - pow(cy[i].redius, 2);
-		cy[i].Q.discriminant = pow(cy[i].Q.b, 2) - (4 * cy[i].Q.a * cy[i].Q.c);
+
 		if (cy[i].Q.discriminant < EPSILON)
 				continue ;
 		cy[i].Q.sqrt_disc = sqrt(cy[i].Q.discriminant);
@@ -176,11 +178,7 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 		cy[i].t_min = t_m;
 		cy[i].Disk_top.ray.origin = cy[i].top;
 		cy[i].Disk_top.ray.direction = hHat;
-		if (check_disk_cylinder(cy[i], ray, hit, t, M)){
-			if (rt->Mlx->mouse)
-				rt->Mlx->obj.index = i;
-		}
-		else if (t_m < *t)
+		 if (t_m < *t)
 		{
 			*t= cy[i].t_min;
 			hit->obj_color = convet(cy[i].color);
@@ -189,8 +187,12 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 			if (rt->Mlx->mouse)
 				rt->Mlx->obj.index = i;
 		}
+		else if (check_disk_cylinder(cy[i], ray, hit, t, M)){
+			if (rt->Mlx->mouse)
+				rt->Mlx->obj.index = i;
+		}
 	}
-	if (*t == FLT_MAX)
+	if (*t == DBL_MAX)
 		return false;
 	return true;
 }

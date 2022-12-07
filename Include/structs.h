@@ -79,7 +79,7 @@ typedef struct s_material {
 typedef struct s_p_intersect {
 	t_point hit_pos;
 	t_point normal;
-	double	hit_mag;
+	double	hdest;
 	t_color	obj_color;
 } t_hit;
     // t_point left_corner;

@@ -17,13 +17,13 @@ void iterate_over_objects(t_minirt *rt, t_ray ray, double *t,  t_hit **oHit)
 	bool is[3];
 
 	i = -1;
-	*t = FLT_MAX;
+	*t = DBL_MAX;
 	*oHit = NULL;
-	t_t[0] = FLT_MAX;
-	t_t[1] = FLT_MAX;
-	t_t[2] = FLT_MAX;
-	is[PL] = intersectPlane(rt, ray, &t_t[PL], &pHit[PL]);
-	is[SP] = intersectRaySphere(ray, rt, &t_t[SP], &pHit[SP]);
+	t_t[0] = DBL_MAX;
+	t_t[1] = DBL_MAX;
+	t_t[2] = DBL_MAX;
+	is[PL] = intersect_plane(rt, ray, &t_t[PL], &pHit[PL]);
+	is[SP] = intersect_r_sphere(ray, rt, &t_t[SP], &pHit[SP]);
 	is[CY] = cylinder_intersection(rt, ray, &t_t[CY], &pHit[CY]);
 	while (++i < 3)
 	{
@@ -46,12 +46,12 @@ void intersection_over_objects(t_minirt *rt, t_ray ray)
 	bool is[3];
 
 	i = -1;
-	t = FLT_MAX;
-	t_t[0] = FLT_MAX;
-	t_t[1] = FLT_MAX;
-	t_t[2] = FLT_MAX;
-	is[PL] = intersectPlane(rt, ray, &t_t[PL], &pHit[PL]);
-	is[SP] = intersectRaySphere(ray, rt, &t_t[SP], &pHit[SP]);
+	t = DBL_MAX;
+	t_t[0] = DBL_MAX;
+	t_t[1] = DBL_MAX;
+	t_t[2] = DBL_MAX;
+	is[PL] = intersect_plane(rt, ray, &t_t[PL], &pHit[PL]);
+	is[SP] = intersect_r_sphere(ray, rt, &t_t[SP], &pHit[SP]);
 	is[CY] = cylinder_intersection(rt, ray, &t_t[CY], &pHit[CY]);
 	while (++i < 3)
 	{
@@ -91,13 +91,8 @@ void	ray_render(t_minirt *mini)
 			ray = ray_generator(mini, x, y);
 			color = BLACK;
 			iterate_over_objects(mini, ray, &t, &hit);
-			if (hit) {
+			if (hit)
 				add_light(hit, mini, &color);
-				// if (mini->Mlx->obj.object == _CYLINDER)
-				// {
-				// 	color = rgb(hit->obj_color);
-				// }
-			}
 			my_mlx_pixel_put(mini->Mlx, x, y, color);
 			x++;
 		}

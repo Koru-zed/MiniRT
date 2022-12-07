@@ -349,8 +349,15 @@ int main(int ac, char **av)
 	miniRT->Data = ft_calloc(1, sizeof(t_data));
 	if (ac > 1)
 	{
-		miniRT->file = av[1];
+		miniRT->file = av[1]; // todo check for the extension  ".rt"
 		miniRT->fd = open(miniRT->file, O_RDONLY);
+		if (miniRT->fd == -1)
+		{
+			perror(miniRT->file);
+			free(miniRT->Data);
+			free(miniRT);
+			return (EXIT_FAILURE);
+		}
 		fill_data(miniRT->Data, &miniRT->Data->shape, miniRT->fd);
 		miniRT->Mlx = ft_calloc(1, sizeof(t_mlx));
 		fill_Info(miniRT);
