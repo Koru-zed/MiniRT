@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:04:34 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:05:47 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 21:20:39 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,8 @@ typedef struct Cylinder
 {
 	t_point		x;
 	t_quadratic	q;
+	t_point		top;
+	t_point		h_hat;
 	t_ray		ray;
 	double		redius;
 	double		height;

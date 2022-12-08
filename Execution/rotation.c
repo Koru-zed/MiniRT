@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:03:55 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 18:13:04 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 22:28:04 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,12 @@ void	rotate_camera(t_minirt *mini, int key)
 
 	direction = mini->camera->ray.direction;
 	if (key == KEYLEFT && mini->mlx->rotate == ROTATE_X)
-		direction = mul_point_matrix(direction, update_matrix_y(-3.6));
-	else if (key == KEYRIGHT && mini->mlx->rotate == ROTATE_X)
 		direction = mul_point_matrix(direction, update_matrix_y(3.6));
-	else if (key == KEYUP && mini->mlx->rotate == ROTATE_Y && \
-			direction.z > EPSILON)
-		direction = mul_point_matrix(direction, update_matrix_x(-3.6));
-	else if (key == KEYDOWN && mini->mlx->rotate == ROTATE_Y && \
-			direction.z > EPSILON)
+	else if (key == KEYRIGHT && mini->mlx->rotate == ROTATE_X)
+		direction = mul_point_matrix(direction, update_matrix_y(-3.6));
+	else if (key == KEYUP && mini->mlx->rotate == ROTATE_Y)
 		direction = mul_point_matrix(direction, update_matrix_x(3.6));
-	else if (key == KEYUP && mini->mlx->rotate == ROTATE_Y && \
-			direction.z < EPSILON)
-		direction = mul_point_matrix(direction, update_matrix_x(3.6));
-	else if (key == KEYDOWN && mini->mlx->rotate == ROTATE_Y && \
-			direction.z < EPSILON)
+	else if (key == KEYDOWN && mini->mlx->rotate == ROTATE_Y)
 		direction = mul_point_matrix(direction, update_matrix_x(-3.6));
 	else
 		return ;

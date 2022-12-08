@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 12:33:08 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 19:32:01 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 21:04:42 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static void	check_valid(int *check)
 {
 	*check = -1;
-	ft_putstr_fd("\033[1;91m# Bad value #", 1);
+	ft_putstr_fd("\033[1;91mError\n# Bad value #", 1);
 }
 
 static char	*ft_at_d(char *str, double *signe, double *value)

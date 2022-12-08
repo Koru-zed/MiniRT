@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:03:38 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 19:16:54 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 22:14:12 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ void	edit_camera(t_minirt *mini, int key)
 	if (!mini->mlx->rotate)
 	{
 		if (key == KEYUP)
-			mini->camera->ray.origin.y -= 0.5;
-		else if (key == KEYDOWN)
 			mini->camera->ray.origin.y += 0.5;
+		else if (key == KEYDOWN)
+			mini->camera->ray.origin.y -= 0.5;
 		else if (key == KEYLEFT)
 			mini->camera->ray.origin.x += 0.5;
 		else if (key == KEYRIGHT)

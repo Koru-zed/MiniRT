@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 15:26:06 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 15:24:13 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 21:50:13 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_str_begin_to_fin(char *str, int begin, int fin);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 int		ft_atoi(const char *str);
+int		ft_my_atoi(const char *str, int *check);
 double	ft_atod(const char *str, int *index);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *s1);

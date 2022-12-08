@@ -31,7 +31,7 @@ FOBJS := ./objs
 
 LIBFT := libft/libft
 
-CFLAGS := -Wall -Wextra -Werror #-fsanitize=address -g3
+CFLAGS := -Wall -Wextra -Werror
 
 FRAMWORK = -lmlx -framework OpenGL -framework AppKit
 
@@ -49,7 +49,6 @@ RED = \033[1;91m
 all : ${NAME}
 
 ${NAME} : ${OBJES} ${LIBFT}
-# @ mkdir -p ${FOBJS}
 	@ ${CC} ${CFLAGS} ${LIBFT} ${FRAMWORK} $^ -o $@
 	@ echo "       ${YELLOW}}}}.....${GREEN}!Compile :-> ${NAME} <-: Successe!${YELLOW}.....{{{${WHITE}"
 

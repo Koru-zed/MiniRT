@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:03:05 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 19:47:50 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 21:04:29 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_check_file(t_minirt *mini)
 	}
 	if (mini->check == -1)
 	{
-		ft_putstr_fd("\033[1;91mPath not valid", 2);
+		ft_putstr_fd("\033[1;91mError\nPath not valid", 2);
 		exit(EXIT_FAILURE);
 	}
 	mini->check = 0;

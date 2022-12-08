@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:04:55 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:51:22 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 21:31:24 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ double	git_root(t_Cylinder cy, t_ray ray, double *mm)
 	t[1] = (-cy.q.b - cy.q.sqrt_disc) / (2 * cy.q.a);
 	if (t[0] > t[1])
 		ft_swap_double(&t[0], &t[1]);
-	m[0] = (v_dot(ray.direction, v_mul(t[0], cy.ray.direction))) \
-		+ v_dot(cy.x, cy.ray.direction);
-	m[1] = (v_dot(ray.direction, v_mul(t[1], cy.ray.direction))) \
-		+ v_dot(cy.x, cy.ray.direction);
+	m[0] = (v_dot(ray.direction, v_mul(t[0], cy.h_hat))) \
+		+ v_dot(cy.x, cy.h_hat);
+	m[1] = (v_dot(ray.direction, v_mul(t[1], cy.h_hat))) \
+		+ v_dot(cy.x, cy.h_hat);
 	if (m[0] > EPSILON && m[0] <= cy.height)
 	{
 		tt = t[0];
@@ -52,13 +52,19 @@ t_color	convet(size_t *c)
 
 void	calc_discrement(t_Cylinder *cy, t_ray ray)
 {
-	cy->x = v_sub(ray.origin, cy->ray.origin);
+	t_point	d_norm;
+
+	d_norm = normalizing(v_mul(cy->height, cy->ray.direction));
+	cy->top = v_adding(v_mul(cy->height, d_norm), cy->ray.origin);
+	cy->x = v_sub(ray.origin, cy->top);
+	cy->h_hat = normalizing(v_sub(cy->top, v_adding(cy->top, \
+		v_mul(cy->height, cy->ray.direction))));
 	cy->q.a = v_dot(ray.direction, ray.direction) - \
-		pow(v_dot(ray.direction, cy->ray.direction), 2);
+		pow(v_dot(ray.direction, cy->h_hat), 2);
 	cy->q.b = 2 * (v_dot(ray.direction, cy->x) \
-		- (v_dot(ray.direction, cy->ray.direction) \
-			* v_dot(cy->x, cy->ray.direction)));
-	cy->q.c = v_dot(cy->x, cy->x) - pow(v_dot(cy->x, cy->ray.direction), 2) \
+		- (v_dot(ray.direction, cy->h_hat) \
+			* v_dot(cy->x, cy->h_hat)));
+	cy->q.c = v_dot(cy->x, cy->x) - pow(v_dot(cy->x, cy->h_hat), 2) \
 		- pow(cy->redius, 2);
 	cy->q.discriminant = pow(cy->q.b, 2) - (4 * cy->q.a * cy->q.c);
 	cy->q.sqrt_disc = sqrt(cy->q.discriminant);
@@ -77,7 +83,7 @@ bool	get_hit(t_Cylinder cy, t_ray ray, t_hit *hit, double *t)
 		hit->obj_color = convet(cy.color);
 		hit->hit_pos = v_adding(ray.origin, v_mul(*t, ray.direction));
 		hit->normal = normalizing(v_sub(v_sub(hit->hit_pos, \
-		cy.ray.origin), v_mul(max, cy.ray.direction)));
+		cy.top), v_mul(max, cy.h_hat)));
 		return (true);
 	}
 	return (false);

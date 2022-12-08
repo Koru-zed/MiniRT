@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:02:54 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 19:44:56 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 21:58:06 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	alloc_mini(t_minirt *mini)
 {
 	if (!mini->data->pars)
 	{
-		ft_putstr_fd("\033[1;91mEmpty file", 2);
+		ft_putstr_fd("\033[1;91mError\nEmpty file", 2);
 		free_mini(mini);
 	}
 	mini->ambient = ft_calloc(mini->data->shape.a, sizeof(t_Ambient));
@@ -54,9 +54,9 @@ void	fill_info(t_minirt *mini)
 	alloc_mini(mini);
 	while (_data && _data->info)
 	{
-		if (!check_data(mini, _data))
+		if (mini->check == -1 || !check_data(mini, _data))
 		{
-			ft_putstr_fd("\033[1;91mError : Data not valid\n", 1);
+			ft_putstr_fd("\033[1;91mError\nData not valid\n", 1);
 			free_mini(mini);
 		}
 		_data = _data->next;

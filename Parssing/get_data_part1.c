@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:03:07 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 19:32:49 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 22:08:45 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ int	get_ambient_lightning(t_minirt *mini, t_data *data)
 			|| !(mini->ambient->ratio >= 0.0f && mini->ambient->ratio <= 1.0f))
 		{
 			if (mini->check != -1)
-				ft_putstr_fd("\033[1;91mError : out of range [0.0;1.0]", 1);
+				ft_putstr_fd("\033[1;91mError\nout of range [0.0;1.0]", 1);
 			free_mini(mini);
 		}
 		set_color(data->pars[2], mini->ambient->color, mini);
 		return (1);
 	}
-	ft_putstr_fd("\033[1;91mMunltiple Ambient", 1);
+	ft_putstr_fd("\033[1;91mError\nMunltiple Ambient", 1);
 	free_mini(mini);
 	return (-1);
 }
@@ -50,15 +50,15 @@ int	get_camera(t_minirt *mini, t_data *data)
 		}
 		set_cordinates(data->pars[1], &mini->camera->ray.origin, mini);
 		set_orientation(data->pars[2], &mini->camera->ray.direction, mini);
-		mini->camera->fov = ft_atoi(data->pars[3]);
-		if (mini->check || mini->camera->fov > 180)
+		mini->camera->fov = ft_my_atoi(data->pars[3], &mini->check);
+		if (mini->check == -1 || mini->camera->fov > 180)
 		{
-			ft_putstr_fd("\033[1;91mError : out of range [0;180]", 1);
+			ft_putstr_fd("\033[1;91mError\nout of range [0;180]", 1);
 			free_mini(mini);
 		}
 		return (1);
 	}
-	ft_putstr_fd("\033[1;91mMunltiple Camera", 1);
+	ft_putstr_fd("\033[1;91mError\nMunltiple Camera", 1);
 	free_mini(mini);
 	return (-1);
 }
@@ -79,12 +79,12 @@ int	get_light(t_minirt *mini, t_data *data)
 				&& mini->light->brightenss > 1.0f))
 		{
 			if (mini->check != -1)
-				ft_putstr_fd("\033[1;91mError : out of range [0.0;1.0]", 1);
+				ft_putstr_fd("\033[1;91mError\nout of range [0.0;1.0]", 1);
 			free_mini(mini);
 		}
 		return (1);
 	}
-	ft_putstr_fd("\033[1;91mMunltiple Light", 1);
+	ft_putstr_fd("\033[1;91mError\nMunltiple Light", 1);
 	free_mini(mini);
 	return (-1);
 }

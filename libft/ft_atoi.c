@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 18:12:07 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 13:12:06 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 21:49:51 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_n_max_min(int i)
 	return (-1);
 }
 
-int	ft_atoi(const char *str)
+int	ft_my_atoi(const char *str, int *check)
 {
 	int				signe;
 	unsigned long	n;
@@ -39,5 +39,7 @@ int	ft_atoi(const char *str)
 			return (ft_n_max_min(signe));
 		str++;
 	}
+	if (*str)
+		*check = -1;
 	return (n * signe);
 }
