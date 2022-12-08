@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:04:52 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:04:53 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:51:44 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	intersect_sp(t_minirt *rt, t_ray r, t_quadratic qd, t_hit *p_hit)
 
 bool	intersect_r_sphere(t_ray r, t_minirt *rt, double *t, t_hit *p_hit)
 {
-	t_Sphere	*s;
 	t_quadratic	qd;
 
 	r.direction = normalizing(r.direction);

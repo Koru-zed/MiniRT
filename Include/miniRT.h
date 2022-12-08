@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 10:43:03 by ael-mous          #+#    #+#             */
-/*   Updated: 2022/12/08 15:59:37 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:29:17 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_color		mul_color(t_color color, double s);
 /*
 	! ~ intersection test functions.
  */
-void		iterate_over_objects(t_minirt *rt, t_ray r, double *t, t_hit **Hit);
+void		iterate_over_objects(t_minirt *rt, t_ray r, double *t, t_hit *Hit);
 int			add_light(t_hit *pHit, t_minirt *rt);
 t_ray		ray_generator(t_minirt *mini, int x, int y);
 bool		intersect_r_sphere(t_ray r, t_minirt *s, double *t, t_hit *pHit);
@@ -137,4 +137,5 @@ void		edit_plane(t_minirt *mini, int key);
 void		edit_cylinder(t_minirt *mini, int key);
 void		edit_mini(t_minirt *mini, int key);
 void		edit_camera(t_minirt *mini, int key);
+void		name_obj(t_minirt *rt);
 #endif

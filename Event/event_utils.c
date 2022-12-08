@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:03:36 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:03:37 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:22:40 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ int	press_key(int key, t_minirt *mini)
 	else if (key == KEYRIGHT)
 		edit_mini(mini, key);
 	else if (key == _LIGHT)
+	{
 		mini->mlx->obj.object = _LIGHT;
+		ft_putstr_fd("Light selected\n", 2);
+	}
 	else if (key == DESTROY)
 		free_mini(mini);
 	else if (key == ZERO)

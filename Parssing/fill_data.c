@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:02:51 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:02:52 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:22:05 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	checker_valid_data(t_data *data, t_num_shape *_shape)
 	{
 		printf("{%s}\n", data->pars[0]);
 		ft_putstr_fd("Error : Data not valid\n", 1);
-		exit(EXIT_FAILURE);
+		free_data(data);
 	}
 }
 
@@ -55,15 +55,22 @@ int	ft_check_valid(char *filename, t_data *data, t_num_shape *_shape)
 
 void	fill_data(t_data *n_data, t_num_shape *n_shape, int fd)
 {
-	n_data->check_empty = ft_check_valid(get_next_line(fd), n_data, n_shape);
+	char	*s;
+
+	s = get_next_line(fd);
+	n_data->check_empty = ft_check_valid(s, n_data, n_shape);
 	if (n_data->check_empty == -1)
 		return ;
 	if (n_data->info)
 	{
 		n_data->next = ft_calloc(1, sizeof(t_data));
 		fill_data(n_data->next, n_shape, fd);
+		free(s);
 		return ;
 	}
 	else
+	{
 		fill_data(n_data, n_shape, fd);
+		free(s);
+	}
 }

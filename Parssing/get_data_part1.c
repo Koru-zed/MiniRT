@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:03:07 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:03:08 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:28:19 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ int	get_ambient_lightning(t_minirt *mini, t_data *data)
 			if (mini->check != -1)
 				ft_putstr_fd("Error : out of range [0.0;1.0]", 1);
 			free_mini(mini);
-			exit(EXIT_FAILURE);
 		}
 		set_color(data->pars[2], mini->ambient->color, mini);
 		return (1);
 	}
 	ft_putstr_fd("Munltiple Ambient", 1);
 	free_mini(mini);
-	exit(EXIT_FAILURE);
+	return (-1);
 }
 
 int	get_camera(t_minirt *mini, t_data *data)
@@ -56,13 +55,12 @@ int	get_camera(t_minirt *mini, t_data *data)
 		{
 			ft_putstr_fd("Error : out of range [0;180]", 1);
 			free_mini(mini);
-			exit(EXIT_FAILURE);
 		}
 		return (1);
 	}
 	ft_putstr_fd("Munltiple Camera", 1);
 	free_mini(mini);
-	exit(EXIT_FAILURE);
+	return (-1);
 }
 
 int	get_light(t_minirt *mini, t_data *data)
@@ -83,11 +81,10 @@ int	get_light(t_minirt *mini, t_data *data)
 			if (mini->check != -1)
 				ft_putstr_fd("Error : out of range [0.0;1.0]", 1);
 			free_mini(mini);
-			exit(EXIT_FAILURE);
 		}
 		return (1);
 	}
 	ft_putstr_fd("Munltiple Light", 1);
 	free_mini(mini);
-	exit(EXIT_FAILURE);
+	return (-1);
 }

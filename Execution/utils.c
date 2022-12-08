@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:05:02 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:05:03 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:29:01 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,14 @@ t_color	add_color(const size_t *c)
 	obj.g = (int)c[1];
 	obj.b = (int)c[2];
 	return (obj);
+}
+
+void	name_obj(t_minirt *rt)
+{
+	if (rt->mlx->obj.object == _PLANE)
+		ft_putstr_fd("Plane selected\n", 2);
+	else if (rt->mlx->obj.object == _SEPHER)
+		ft_putstr_fd("Sepher selected\n", 2);
+	else if (rt->mlx->obj.object == _CYLINDER)
+		ft_putstr_fd("Cylinder selected\n", 2);
 }

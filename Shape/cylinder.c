@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:04:55 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:04:56 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:51:22 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	calc_discrement(t_Cylinder *cy, t_ray ray)
 
 bool	get_hit(t_Cylinder cy, t_ray ray, t_hit *hit, double *t)
 {
-	int		i;
 	double	max;
 	double	t_min;
 

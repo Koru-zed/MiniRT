@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:02:54 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:02:55 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:28:38 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ void	fill_info(t_minirt *mini)
 	{
 		if (!check_data(mini, _data))
 		{
-			free_mini(mini);
 			ft_putstr_fd("Error : Data not valid\n", 1);
-			exit(EXIT_FAILURE);
+			free_mini(mini);
 		}
 		_data = _data->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:05:05 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:05:06 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:14:44 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ bool	is_shadowed(t_minirt *rt, t_point hit, t_point normal)
 	ray.origin = v_adding(hit, v_mul(EPSILON, normal));
 	ray.direction = l_dit;
 	h = malloc(sizeof(t_hit));
-	iterate_over_objects(rt, ray, &t, &h);
+	iterate_over_objects(rt, ray, &t, h);
+	free(h);
 	if ((t > EPSILON && len > t) || fabs(len - t) < EPSILON)
 		return (true);
 	return (false);

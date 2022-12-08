@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:03:23 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:03:24 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:53:22 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,13 @@ void	set_cordinates(char const *cord, t_point *cordinate, t_minirt *mini)
 	{
 		ft_putstr_fd("Error : Unknown information", 1);
 		free_mini(mini);
-		exit(EXIT_FAILURE);
 	}
 	cordinate->x = ft_atod(arr[0], &mini->check);
 	cordinate->y = ft_atod(arr[1], &mini->check);
 	cordinate->z = ft_atod(arr[2], &mini->check);
 	if (mini->check == -1)
-	{
 		free_mini(mini);
-		exit(EXIT_FAILURE);
-	}
+	ft_free_array(arr);
 }
 
 void	set_orientation(char const *colors, t_point *cordinate, t_minirt *mini)
@@ -46,7 +43,6 @@ void	set_orientation(char const *colors, t_point *cordinate, t_minirt *mini)
 	{
 		ft_putstr_fd("Error : Unknown information", 1);
 		free_mini(mini);
-		exit(EXIT_FAILURE);
 	}
 	cordinate->x = ft_atod(arr[0], &mini->check);
 	cordinate->y = ft_atod(arr[1], &mini->check);
@@ -57,8 +53,8 @@ void	set_orientation(char const *colors, t_point *cordinate, t_minirt *mini)
 	{
 		ft_putstr_fd("Error : out of range [-1.0;1.0]", 1);
 		free_mini(mini);
-		exit(EXIT_FAILURE);
 	}
+	ft_free_array(arr);
 }
 
 void	set_color(char const *colors, size_t *table, t_minirt *mini)
@@ -72,7 +68,6 @@ void	set_color(char const *colors, size_t *table, t_minirt *mini)
 	{
 		ft_putstr_fd("Error : Unknown information", 1);
 		free_mini(mini);
-		exit(EXIT_FAILURE);
 	}
 	table[0] = ft_atoi(arr[0]);
 	table[1] = ft_atoi(arr[1]);
@@ -81,6 +76,6 @@ void	set_color(char const *colors, size_t *table, t_minirt *mini)
 	{
 		ft_putstr_fd("Error : out of range [0;255]", 1);
 		free_mini(mini);
-		exit(EXIT_FAILURE);
 	}
+	ft_free_array(arr);
 }

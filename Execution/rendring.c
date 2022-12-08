@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:03:53 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:03:54 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:28:56 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **hit)
+void	iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 {
 	int		i;
 	double	t_t[3];
@@ -30,7 +30,6 @@ void	iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **hit)
 	p_hit = malloc(sizeof(t_hit) * 3);
 	i = -1;
 	*t = DBL_MAX;
-	*hit = NULL;
 	t_t[0] = DBL_MAX;
 	t_t[1] = DBL_MAX;
 	t_t[2] = DBL_MAX;
@@ -42,9 +41,10 @@ void	iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **hit)
 		if (is[i] && t_t[i] > EPSILON && t_t[i] < *t)
 		{
 			*t = t_t[i];
-			*hit = &p_hit[i];
+			*hit = p_hit[i];
 		}
 	}
+	free(p_hit);
 }
 
 void	intescte_obj(t_minirt *rt, int i)
@@ -81,6 +81,7 @@ void	intersection_over_objects(t_minirt *rt, t_ray ray)
 			intescte_obj(rt, i);
 		}
 	}
+	name_obj(rt);
 }
 
 void	ray_render(t_minirt *mini)
@@ -98,12 +99,14 @@ void	ray_render(t_minirt *mini)
 		x = -1;
 		while (++x < WIDTH)
 		{
+			hit = ft_calloc(sizeof(t_hit), 1);
 			ray = ray_generator(mini, x, y);
-			iterate_over_objects(mini, ray, &t, &hit);
+			iterate_over_objects(mini, ray, &t, hit);
 			if (hit)
 				my_mlx_pixel_put(mini->mlx, x, y, add_light(hit, mini));
 			else
 				my_mlx_pixel_put(mini->mlx, x, y, BLACK);
+			free(hit);
 		}
 	}
 	mlx_put_image_to_window(mini->mlx->_mlx, mini->mlx->win, \
