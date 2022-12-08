@@ -45,10 +45,10 @@ bool	intersect_plane(t_minirt *rt, t_ray ray, double *t, t_hit *p_hit)
 	t_Plane	*plane;
 
 	i = -1;
-	plane = rt->Plane;
+	plane = rt->plane;
 	*t = FLT_MAX;
 	ray.direction = normalizing(ray.direction);
-	while (++i < rt->Data->shape.pl)
+	while (++i < rt->data->shape.pl)
 	{
 		tmin = find_t(ray, plane, i);
 		if (tmin > EPSILON)
@@ -57,8 +57,8 @@ bool	intersect_plane(t_minirt *rt, t_ray ray, double *t, t_hit *p_hit)
 			{
 				*t = tmin;
 				update_data(t, p_hit, plane[i], ray);
-				if (rt->Mlx->mouse)
-					rt->Mlx->obj.index = i;
+				if (rt->mlx->mouse)
+					rt->mlx->obj.index = i;
 			}
 		}
 	}

@@ -3,11 +3,11 @@
 void	checker_valid_data(t_data *data, t_num_shape *_shape)
 {
 	if (!ft_strcmp(data->pars[0], AMBIENT))
-		_shape->A++;
+		_shape->a++;
 	else if (!ft_strcmp(data->pars[0], CAMERA))
-		_shape->C++;
+		_shape->c++;
 	else if (!ft_strcmp(data->pars[0], LIGHT))
-		_shape->L++;
+		_shape->l++;
 	else if (!ft_strcmp(data->pars[0], SEPHER))
 		_shape->sp++;
 	else if (!ft_strcmp(data->pars[0], PLANE))

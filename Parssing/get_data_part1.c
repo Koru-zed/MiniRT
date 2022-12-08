@@ -2,24 +2,24 @@
 
 int	get_ambient_lightning(t_minirt *mini, t_data *data)
 {
-	if (!mini->Ambient->repetition)
+	if (!mini->ambient->repetition)
 	{
-		mini->Ambient->repetition = 1;
+		mini->ambient->repetition = 1;
 		if (ft_arrylen(data->pars) != 3)
 		{
 			mini->check = -1;
 			return (-1);
 		}
-		mini->Ambient->ratio = ft_atod(data->pars[1], &mini->check);
+		mini->ambient->ratio = ft_atod(data->pars[1], &mini->check);
 		if (mini->check == -1
-			|| !(mini->Ambient->ratio >= 0.0f && mini->Ambient->ratio <= 1.0f))
+			|| !(mini->ambient->ratio >= 0.0f && mini->ambient->ratio <= 1.0f))
 		{
 			if (mini->check != -1)
 				ft_putstr_fd("Error : out of range [0.0;1.0]", 1);
 			free_mini(mini);
 			exit(EXIT_FAILURE);
 		}
-		set_color(data->pars[2], mini->Ambient->color, mini);
+		set_color(data->pars[2], mini->ambient->color, mini);
 		return (1);
 	}
 	ft_putstr_fd("Munltiple Ambient", 1);
@@ -29,18 +29,18 @@ int	get_ambient_lightning(t_minirt *mini, t_data *data)
 
 int	get_camera(t_minirt *mini, t_data *data)
 {
-	if (!mini->Camera->repetition)
+	if (!mini->camera->repetition)
 	{
-		mini->Camera->repetition = 1;
+		mini->camera->repetition = 1;
 		if (ft_arrylen(data->pars) != 4)
 		{
 			mini->check = -1;
 			return (-1);
 		}
-		set_cordinates(data->pars[1], &mini->Camera->ray.origin, mini);
-		set_orientation(data->pars[2], &mini->Camera->ray.direction, mini);
-		mini->Camera->fov = ft_atoi(data->pars[3]);
-		if (mini->check || mini->Camera->fov > 180)
+		set_cordinates(data->pars[1], &mini->camera->ray.origin, mini);
+		set_orientation(data->pars[2], &mini->camera->ray.direction, mini);
+		mini->camera->fov = ft_atoi(data->pars[3]);
+		if (mini->check || mini->camera->fov > 180)
 		{
 			ft_putstr_fd("Error : out of range [0;180]", 1);
 			free_mini(mini);
@@ -55,18 +55,18 @@ int	get_camera(t_minirt *mini, t_data *data)
 
 int	get_light(t_minirt *mini, t_data *data)
 {
-	if (!mini->Light->repetition)
+	if (!mini->light->repetition)
 	{
-		mini->Light->repetition = 1;
+		mini->light->repetition = 1;
 		if (ft_arrylen(data->pars) != 3)
 		{
 			mini->check = -1;
 			return (-1);
 		}
-		set_cordinates(data->pars[1], &mini->Light->cordinates, mini);
-		mini->Light->brightenss = ft_atod(data->pars[2], &mini->check);
-		if (mini->check || (mini->Light->brightenss < 0.0f
-				&& mini->Light->brightenss > 1.0f))
+		set_cordinates(data->pars[1], &mini->light->cordinates, mini);
+		mini->light->brightenss = ft_atod(data->pars[2], &mini->check);
+		if (mini->check || (mini->light->brightenss < 0.0f
+				&& mini->light->brightenss > 1.0f))
 		{
 			if (mini->check != -1)
 				ft_putstr_fd("Error : out of range [0.0;1.0]", 1);

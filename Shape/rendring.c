@@ -59,18 +59,18 @@ void intersection_over_objects(t_minirt *rt, t_ray ray)
 		{
 			t = t_t[i];
 			if (i == PL)
-				rt->Mlx->obj.object = _PLANE;
+				rt->mlx->obj.object = _PLANE;
 			else if (i == SP)
-				rt->Mlx->obj.object = _SEPHER;
+				rt->mlx->obj.object = _SEPHER;
 			else if (i == CY)
-				rt->Mlx->obj.object = _CYLINDER;
+				rt->mlx->obj.object = _CYLINDER;
 		}
 	}
 }
 
 void	ray_render(t_minirt *mini)
 {
-	COLOR color;
+	int color;
 	t_ray	ray;
 	t_hit *hit = NULL;
 	int y, x;
@@ -78,7 +78,7 @@ void	ray_render(t_minirt *mini)
 
 	double t;
 	// printf("camera_matrix\n");
-	camera_matrix(mini->Camera);
+	camera_matrix(mini->camera);
 	// print_matrix(mini->Camera->matrix);
 	// printf("***********************************************\n");
 	// print_matrix(mini->Camera->matrix);
@@ -93,10 +93,10 @@ void	ray_render(t_minirt *mini)
 			iterate_over_objects(mini, ray, &t, &hit);
 			if (hit)
 				add_light(hit, mini, &color);
-			my_mlx_pixel_put(mini->Mlx, x, y, color);
+			my_mlx_pixel_put(mini->mlx, x, y, color);
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(mini->Mlx->mlx, mini->Mlx->win, mini->Mlx->img, 0, 0);
+	mlx_put_image_to_window(mini->mlx->mlx, mini->mlx->win, mini->mlx->img, 0, 0);
 }

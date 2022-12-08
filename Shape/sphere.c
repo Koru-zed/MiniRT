@@ -55,8 +55,8 @@ void	so(t_minirt *rt, t_ray r, t_quadratic qd, t_hit *p_hit)
 	int			i;
 
 	i = -1;
-	s = rt->Sphere;
-	while (++i < rt->Data->shape.sp)
+	s = rt->sphere;
+	while (++i < rt->data->shape.sp)
 	{
 		dist = v_sub(r.origin, s[i].center);
 		qd.b = 2 * v_dot(r.direction, dist);
@@ -70,8 +70,8 @@ void	so(t_minirt *rt, t_ray r, t_quadratic qd, t_hit *p_hit)
 		{
 			p_hit->hdest = t_min;
 			p_hit = get_hit_data(r, p_hit->hdest, p_hit, s[i]);
-			if (rt->Mlx->mouse)
-				rt->Mlx->obj.index = i;
+			if (rt->mlx->mouse)
+				rt->mlx->obj.index = i;
 		}
 	}
 }

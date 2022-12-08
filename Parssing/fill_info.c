@@ -21,19 +21,19 @@ size_t	check_data(t_minirt *mini, t_data *data)
 
 void	alloc_mini(t_minirt *mini)
 {
-	mini->Ambient = ft_calloc(mini->Data->shape.A, sizeof(t_Ambient));
-	mini->Camera = ft_calloc(mini->Data->shape.C, sizeof(t_Camera));
-	mini->Light = ft_calloc(mini->Data->shape.L, sizeof(t_Light));
-	mini->Sphere = ft_calloc(mini->Data->shape.sp, sizeof(t_Sphere));
-	mini->Plane = ft_calloc(mini->Data->shape.pl, sizeof(t_Plane));
-	mini->Cylinder = ft_calloc(mini->Data->shape.cy, sizeof(t_Cylinder));
+	mini->ambient = ft_calloc(mini->data->shape.a, sizeof(t_Ambient));
+	mini->camera = ft_calloc(mini->data->shape.c, sizeof(t_Camera));
+	mini->light = ft_calloc(mini->data->shape.l, sizeof(t_Light));
+	mini->sphere = ft_calloc(mini->data->shape.sp, sizeof(t_Sphere));
+	mini->plane = ft_calloc(mini->data->shape.pl, sizeof(t_Plane));
+	mini->cylinder = ft_calloc(mini->data->shape.cy, sizeof(t_Cylinder));
 }
 
 void	fill_info(t_minirt *mini)
 {
 	t_data	*_data;
 
-	_data = mini->Data;
+	_data = mini->data;
 	alloc_mini(mini);
 	while (_data && _data->info)
 	{

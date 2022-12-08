@@ -1,5 +1,17 @@
-#ifndef  MINIRT_H  
-# define MINIRT_H 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   miniRT.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-mous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/08 10:43:03 by ael-mous          #+#    #+#             */
+/*   Updated: 2022/12/08 10:43:06 by ael-mous         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef  MINIRT_H
+# define MINIRT_H
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -21,7 +33,6 @@
 # define WIDTH 1080
 # define EPSILON 1.0e-4f
 # define BLACK 0x000000
-# define _INFINITE 1.0e30f
 # define KEYDOWN  125
 # define KEYUP  126
 # define KEYLEFT  123
@@ -46,7 +57,6 @@
 // # define MOUSEMOVE  6
 # define DESTROY  53
 # define CLOSE 17
-typedef int COLOR;
 
 t_color		add_2colors(t_color obj, t_color obj2);
 void		mix_color(t_minirt *rt, t_hit *pHit, t_rgbMaterial *rgbMat);
@@ -55,10 +65,8 @@ int			free_mini(t_minirt *mini);
 void		free_data(t_data *_data);
 void		my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color);
 void		set_color(char const *colors, size_t *table, t_minirt *mini);
-void		set_orientation(char const *colors, t_point *cordinate, t_minirt *mini);
-void		set_cordinates(char const *cord, t_point *cordinate, t_minirt *mini);
-
-
+void		set_orientation(char const *colors, t_point *cord, t_minirt *mini);
+void		set_cordinates(char const *cord, t_point *cordinate, t_minirt *rt);
 t_color		add_color(const size_t *c);
 int			get_light(t_minirt *mini, t_data *data);
 int			get_camera(t_minirt *mini, t_data *data);
@@ -72,34 +80,32 @@ int			ft_check_valid(char *filename, t_data *data, t_num_shape *_shape);
 
 size_t		check_data(t_minirt *mini, t_data *data);
 void		fill_info(t_minirt *mini);
-void 		ray_render(t_minirt *minirt);
+void		ray_render(t_minirt *minirt);
 t_color		creat_color(size_t r, size_t g, size_t b);
 t_point		new_point(double x, double y, double z);
 
 /* ***		Math Operations		** */
 double		v_dot(const t_point u, const t_point v);
 t_point		v_cross(const t_point u, const t_point v);
-t_point		v_mul(const double t,  t_point p);
+t_point		v_mul(const double t, t_point p);
 t_point		v_division(t_point p, double t);
 t_point		v_adding(t_point p, t_point v);
 t_point		v_sub(t_point center, t_point origin);
 
 double		length_squared(t_point p);
-double		length(t_point p);
-t_point		unit_vector(t_point v);
 t_point		normalizing(t_point p);
-int			rgb(const t_color rgb);
+int			rgb(t_color rgb);
 
 /* ***		End Math Operations		** */
 void		ft_print_vector(const t_point p);
-t_color 	mul_color(t_color color, double s);
+t_color		mul_color(t_color color, double s);
 /*
 	! ~ intersection test functions.
  */
-void		iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **oHit);
+void		iterate_over_objects(t_minirt *rt, t_ray r, double *t, t_hit **Hit);
 bool		add_light(t_hit *pHit, t_minirt *rt, int *c);
 t_ray		ray_generator(t_minirt *mini, int x, int y);
-bool 		intersect_r_sphere(t_ray r, t_minirt *s, double *t, t_hit *pHit);
+bool		intersect_r_sphere(t_ray r, t_minirt *s, double *t, t_hit *pHit);
 bool		intersect_plane(t_minirt *rt, t_ray ray, double *t, t_hit *pHit);
 t_matrix	dir_matrix(void);
 void		camera_matrix(t_Camera *_camera);
@@ -116,6 +122,6 @@ void		rotation_plane(t_minirt *mini, int e);
 
 void		rotation_cylinder(t_minirt *mini, int key);
 void		intersection_over_objects(t_minirt *rt, t_ray ray);
-bool		cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit);
+bool		cylinder_intersection(t_minirt *rt, t_ray r, double *t, t_hit *hit);
 
 #endif

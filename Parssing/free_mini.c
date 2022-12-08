@@ -19,19 +19,19 @@ void	free_data(t_data *_data)
 
 int	free_mini(t_minirt *mini)
 {
-	if (mini->Ambient)
-		free(mini->Ambient);
-	if (mini->Camera)
-		free(mini->Camera);
-	if (mini->Light)
-		free(mini->Light);
-	if (mini->Sphere)
-		free(mini->Sphere);
-	if (mini->Plane)
-		free(mini->Plane);
-	if (mini->Cylinder)
-		free(mini->Cylinder);
-	free_data(mini->Data);
+	if (mini->ambient)
+		free(mini->ambient);
+	if (mini->camera)
+		free(mini->camera);
+	if (mini->light)
+		free(mini->light);
+	if (mini->sphere)
+		free(mini->sphere);
+	if (mini->plane)
+		free(mini->plane);
+	if (mini->cylinder)
+		free(mini->cylinder);
+	free_data(mini->data);
 	free(mini);
 	exit(EXIT_SUCCESS);
 }

@@ -7,10 +7,10 @@ t_matrix update_matrix_x(double theta)
 
 	_radian = (double)(theta * M_PI / 180);
 	matrix = dir_matrix();
-	matrix.M[1][1] = cos(_radian);
-	matrix.M[1][2] = sin(_radian);
-	matrix.M[2][1] = -sin(_radian);
-	matrix.M[2][2] = cos(_radian);
+	matrix.m[1][1] = cos(_radian);
+	matrix.m[1][2] = sin(_radian);
+	matrix.m[2][1] = -sin(_radian);
+	matrix.m[2][2] = cos(_radian);
 	// print_matrix(matrix);	printf("dir_matrix\n");
 	// print_matrix(matrix);
 	// printf("---------------------------------------------------\n");
@@ -27,10 +27,10 @@ t_matrix update_matrix_y(double theta)
 	// print_matrix(matrix);
 	// printf("---------------------------------------------------\n");
 
-	matrix.M[0][0] = cos(_radian);
-	matrix.M[0][2] = -sin(_radian);
-	matrix.M[2][0] = sin(_radian);
-	matrix.M[2][2] = cos(_radian);
+	matrix.m[0][0] = cos(_radian);
+	matrix.m[0][2] = -sin(_radian);
+	matrix.m[2][0] = sin(_radian);
+	matrix.m[2][2] = cos(_radian);
 	// printf("dir_matrix\n");
 	// print_matrix(matrix);
 	// printf("---------------------------------------------------\n");
@@ -44,10 +44,10 @@ t_matrix update_matrix_z(double theta)
 
 	_radian = theta * M_PI / 180;
 	matrix = dir_matrix();
-	matrix.M[0][0] = cos(_radian);
-	matrix.M[0][1] = sin(_radian);
-	matrix.M[1][0] = -sin(_radian);
-	matrix.M[1][1] = cos(_radian);
+	matrix.m[0][0] = cos(_radian);
+	matrix.m[0][1] = sin(_radian);
+	matrix.m[1][0] = -sin(_radian);
+	matrix.m[1][1] = cos(_radian);
 	// printf("dir_matrix\n");
 	// print_matrix(matrix);
 	// printf("---------------------------------------------------\n");

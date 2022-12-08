@@ -19,31 +19,31 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 {
 	int i = -1;
 	double t_min;
-	double M;
+	double m;
 
-	t_point A;
+	t_point a;
 	t_point B;
 	t_point hHat;
 
 	*t = DBL_MAX;
 	t_min = DBL_MAX;
-	t_Cylinder *cy=  rt->Cylinder;
+	t_Cylinder *cy=  rt->cylinder;
 	ray.direction = normalizing(ray.direction);
-	while (++i < rt->Data->shape.cy)
+	while (++i < rt->data->shape.cy)
 	{
-		A = v_mul(cy[i].height, cy[i].orientation); //to find orign of top
-		B = normalizing(A); //to find direction of top
+		a = v_mul(cy[i].height, cy[i].orientation); //to find orign of top
+		B = normalizing(a); //to find direction of top
 		cy[i].top = v_adding(v_mul(cy[i].height, B), cy[i].cordinates); //find top point
-		cy[i].X = v_sub(ray.origin, cy[i].top);
+		cy[i].x = v_sub(ray.origin, cy[i].top);
 		hHat = normalizing(v_sub(cy[i].top, v_adding(cy[i].top, v_mul(cy[i].height, cy[i].orientation))));
-		cy[i].Q.a = v_dot(ray.direction, ray.direction) - pow(v_dot(ray.direction, hHat), 2);
-		cy[i].Q.b = 2 * (v_dot(ray.direction, cy[i].X) - (v_dot(ray.direction, hHat) * v_dot(cy[i].X, hHat)));
-		cy[i].Q.c = v_dot(cy[i].X, cy[i].X) - pow(v_dot(cy[i].X, hHat), 2) - pow(cy[i].redius, 2);
-		cy[i].Q.discriminant = pow(cy[i].Q.b, 2) - (4 * cy[i].Q.a * cy[i].Q.c);
-		if (cy[i].Q.discriminant < EPSILON)
+		cy[i].q.a = v_dot(ray.direction, ray.direction) - pow(v_dot(ray.direction, hHat), 2);
+		cy[i].q.b = 2 * (v_dot(ray.direction, cy[i].x) - (v_dot(ray.direction, hHat) * v_dot(cy[i].x, hHat)));
+		cy[i].q.c = v_dot(cy[i].x, cy[i].x) - pow(v_dot(cy[i].x, hHat), 2) - pow(cy[i].redius, 2);
+		cy[i].q.discriminant = pow(cy[i].q.b, 2) - (4 * cy[i].q.a * cy[i].q.c);
+		if (cy[i].q.discriminant < EPSILON)
 			continue ;
-		cy[i].Q.sqrt_disc = sqrt(cy[i].Q.discriminant);
-		t_min = git_root(cy[i], hHat, ray, &M);
+		cy[i].q.sqrt_disc = sqrt(cy[i].q.discriminant);
+		t_min = git_root(cy[i], hHat, ray, &m);
 		cy[i].top_Disk.ray.origin = top;
 		cy[i].top_Disk.ray.direction = hHat;
 		if (intersectDisk(cy[i].top_Disk.ray, ray, cy[i].redius))
@@ -52,10 +52,10 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 		{
 			*t= t_min;
 			hit->obj_color = convet((int *)cy[i].color);
-			hit->hit_pos = v_adding(cy[i].top, v_mul(M, hHat));
-			hit->normal = normalizing(v_sub(hit->hit_pos, v_sub(cy[i].top, v_mul(M, hHat))));
-			if (rt->Mlx->mouse)
-				rt->Mlx->obj.index = i;
+			hit->hit_pos = v_adding(cy[i].top, v_mul(m, hHat));
+			hit->normal = normalizing(v_sub(hit->hit_pos, v_sub(cy[i].top, v_mul(m, hHat))));
+			if (rt->mlx->mouse)
+				rt->mlx->obj.index = i;
 		}
 	}
 	if (*t == DBL_MAX)

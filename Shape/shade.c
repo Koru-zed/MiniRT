@@ -22,9 +22,9 @@ t_color	get_ambient_color(t_color ambColor, t_minirt *rt, t_color objColor)
 {
 	t_color	eff_color;
 
-	eff_color.r = (int)(rt->Ambient->ratio * ambColor.r * objColor.r) / 255;
-	eff_color.g = (int)(rt->Ambient->ratio * ambColor.g * objColor.g) / 255;
-	eff_color.b = (int)(rt->Ambient->ratio * ambColor.b * objColor.b) / 255;
+	eff_color.r = (int)(rt->ambient->ratio * ambColor.r * objColor.r) / 255;
+	eff_color.g = (int)(rt->ambient->ratio * ambColor.g * objColor.g) / 255;
+	eff_color.b = (int)(rt->ambient->ratio * ambColor.b * objColor.b) / 255;
 	return (eff_color);
 }
 
@@ -36,7 +36,7 @@ bool	is_shadowed(t_minirt *rt, t_point hit, t_point normal)
 	double	t;
 	double	len;
 
-	l_dit = v_sub(rt->Light->cordinates, hit);
+	l_dit = v_sub(rt->light->cordinates, hit);
 	len = length_squared(l_dit);
 	ray.origin = v_adding(hit, v_mul(EPSILON, normal));
 	ray.direction = l_dit;
@@ -54,11 +54,11 @@ bool	add_light(t_hit *pHit, t_minirt *rt, int *c)
 	t_point			l_dit;
 	double			diffuse;
 
-	amb_color = convert_array2color(rt->Ambient->color);
+	amb_color = convert_array2color(rt->ambient->color);
 	rgb_mat = malloc(sizeof(t_rgbMaterial));
 	if (!rgb_mat)
 		exit(EXIT_FAILURE);
-	l_dit = normalizing(v_sub(rt->Light->cordinates, pHit->hit_pos));
+	l_dit = normalizing(v_sub(rt->light->cordinates, pHit->hit_pos));
 	amb_color = get_ambient_color(amb_color, rt, pHit->obj_color);
 	diffuse = get_diffuse(l_dit, pHit->normal);
 	if (is_shadowed(rt, pHit->hit_pos, pHit->normal) || diffuse < EPSILON)

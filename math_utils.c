@@ -26,10 +26,10 @@ t_matrix	cross_matrix(t_matrix m1, t_matrix m2)
 		j = 0;
 		while (j < 4)
 		{
-			m12.M[i][j] = m1.M[i][0] * m2.M[0][j] + \
-					m1.M[i][1] * m2.M[1][j] + \
-					m1.M[i][2] * m2.M[2][j] + \
-					m1.M[i][3] * m2.M[3][j];
+			m12.m[i][j] = m1.m[i][0] * m2.m[0][j] + \
+					m1.m[i][1] * m2.m[1][j] + \
+					m1.m[i][2] * m2.m[2][j] + \
+					m1.m[i][3] * m2.m[3][j];
 			j++;
 		}
 		i++;
@@ -41,9 +41,9 @@ t_point	mul_point_matrix(t_point p, t_matrix m)
 {
 	t_point	point;
 
-	point.x = p.x * m.M[0][0] + p.y * m.M[1][0] + p.z * m.M[2][0] + m.M[3][0];
-	point.y = p.x * m.M[0][1] + p.y * m.M[1][1] + p.z * m.M[2][1] + m.M[3][1];
-	point.z = p.x * m.M[0][2] + p.y * m.M[1][2] + p.z * m.M[2][2] + m.M[3][2];
+	point.x = p.x * m.m[0][0] + p.y * m.m[1][0] + p.z * m.m[2][0] + m.m[3][0];
+	point.y = p.x * m.m[0][1] + p.y * m.m[1][1] + p.z * m.m[2][1] + m.m[3][1];
+	point.z = p.x * m.m[0][2] + p.y * m.m[1][2] + p.z * m.m[2][2] + m.m[3][2];
 	return (point);
 }
 
