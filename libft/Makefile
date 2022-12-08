@@ -6,7 +6,7 @@
 #    By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 01:39:45 by mait-jao          #+#    #+#              #
-#    Updated: 2022/10/16 10:45:41 by mait-jao         ###   ########.fr        #
+#    Updated: 2022/12/08 15:31:05 by mait-jao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ FILES =	ft_atoi.c\
 		ft_strtrim.c\
 		ft_substr.c\
 		ft_tolower.c\
-		ft_toupper.c
+		ft_toupper.c \
+		ft_swap_double.c
 
 BONUS = ft_lstnew_bonus.c\
 		ft_lstadd_front_bonus.c\

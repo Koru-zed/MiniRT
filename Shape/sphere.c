@@ -1,25 +1,5 @@
 #include "../Include/miniRT.h"
 
-t_point	new_point(double x, double y, double z)
-{
-	t_point	pos;
-
-	pos.x = x;
-	pos.y = y;
-	pos.z = z;
-	return (pos);
-}
-
-t_color	add_color(const size_t *c)
-{
-	t_color	obj;
-
-	obj.r = (int)c[0];
-	obj.g = (int)c[1];
-	obj.b = (int)c[2];
-	return (obj);
-}
-
 double	get_root(double sqrt_disc, double b, double a)
 {
 	double	t1;
@@ -44,10 +24,10 @@ t_hit	*get_hit_data(t_ray r, double hdest, t_hit *p_hit, t_Sphere sphere)
 	(p_hit)->hit_pos = v_adding(r.origin, v_mul(hdest, r.direction));
 	(p_hit)->obj_color = add_color(sphere.color);
 	(p_hit)->normal = normalizing(v_sub((p_hit)->hit_pos, sphere.center));
-	return p_hit;
+	return (p_hit);
 }
 
-void	so(t_minirt *rt, t_ray r, t_quadratic qd, t_hit *p_hit)
+void	intersect_sp(t_minirt *rt, t_ray r, t_quadratic qd, t_hit *p_hit)
 {
 	double		t_min;
 	t_point		dist;
@@ -84,7 +64,7 @@ bool	intersect_r_sphere(t_ray r, t_minirt *rt, double *t, t_hit *p_hit)
 	r.direction = normalizing(r.direction);
 	qd.a = v_dot(r.direction, r.direction);
 	p_hit->hdest = FLT_MAX;
-	so(rt, r, qd, p_hit);
+	intersect_sp(rt, r, qd, p_hit);
 	if (p_hit->hdest == FLT_MAX)
 		return (false);
 	*t = p_hit->hdest;

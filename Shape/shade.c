@@ -47,8 +47,9 @@ bool	is_shadowed(t_minirt *rt, t_point hit, t_point normal)
 	return (false);
 }
 
-bool	add_light(t_hit *pHit, t_minirt *rt, int *c)
+int	add_light(t_hit *pHit, t_minirt *rt)
 {
+	int				color;
 	t_color			amb_color;
 	t_rgbMaterial	*rgb_mat;
 	t_point			l_dit;
@@ -69,7 +70,7 @@ bool	add_light(t_hit *pHit, t_minirt *rt, int *c)
 		rgb_mat->diffuse_color = mul_color(rgb_mat->diffuse_color, diffuse);
 	}
 	rgb_mat->eff_color = add_2colors(amb_color, rgb_mat->diffuse_color);
-	*c = rgb(rgb_mat->eff_color);
+	color = rgb(rgb_mat->eff_color);
 	free(rgb_mat);
-	return (true);
+	return (color);
 }

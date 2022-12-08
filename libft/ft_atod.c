@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 12:33:08 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 13:18:01 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:28:23 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 #include <math.h>
 #include <stdio.h>
 
-static char	*ft_at_d(char *str, int *signe, int *value)
+static void	check_valid(int *check)
+{
+	*check = -1;
+	ft_putstr_fd("# Bad value #", 1);
+}
+
+static char	*ft_at_d(char *str, double *signe, double *value)
 {
 	while (*str == '-' || *str == '+')
 	{
@@ -32,6 +38,7 @@ static char	*ft_at_d(char *str, int *signe, int *value)
 
 double	ft_atod(const char *str, int *check)
 {
+	char	*s;
 	double	value;
 	double	power;
 	double	signe;
@@ -39,23 +46,19 @@ double	ft_atod(const char *str, int *check)
 	value = 0.0;
 	power = 1.0;
 	signe = 1.0;
-	str = ft_at_d(str, &signe, &value);
-	if (*str == '.' && *(str + 1))
+	s = ft_at_d((char *)str, &signe, &value);
+	if (*s == '.' && *(s + 1))
 	{
-		str++;
-		while (*str && ft_isdigit(*str))
+		s++;
+		while (*s && ft_isdigit(*s))
 		{
-			value = (value * 10.0) + (*str - '0');
+			value = (value * 10.0) + (*s - '0');
 			power++;
-			str++;
+			s++;
 		}
 	}
-	if (*str)
-	{
-		*check = -1;
-		ft_putstr_fd("# Bad value #", 1);
-		exit(EXIT_FAILURE);
-	}
+	if (*s)
+		check_valid(check);
 	return (value * pow(10.0, -(power - 1)) * signe);
 }
 // Converet string to double and return indice of last char converted to double
