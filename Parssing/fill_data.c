@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:02:51 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 19:32:22 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:51:12 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ void	checker_valid_data(t_data *data, t_num_shape *_shape)
 		_shape->cy++;
 	else if (ft_strcmp(data->pars[0], "#"))
 	{
-		printf("{%s}\n", data->pars[0]);
+		printf("\033[1;97m{\033[1;93m%s\033[1;97m}\n", data->pars[0]);
 		ft_putstr_fd("\033[1;91mError : Data not valid\n", 1);
 		free_data(data);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -59,7 +60,7 @@ void	fill_data(t_data *n_data, t_num_shape *n_shape, int fd)
 
 	s = get_next_line(fd);
 	n_data->check_empty = ft_check_valid(s, n_data, n_shape);
-	if (n_data->check_empty == -1)
+	if (!n_data || n_data->check_empty == -1)
 		return ;
 	if (n_data->info)
 	{

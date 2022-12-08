@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 10:43:03 by ael-mous          #+#    #+#             */
-/*   Updated: 2022/12/08 18:34:23 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:46:25 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int			get_plane(t_minirt *mini, t_data *data);
 int			get_sphere(t_minirt *mini, t_data *data);
 int			get_cylinder(t_minirt *mini, t_data *data);
 
+void		ft_check_file(t_minirt *mini);
 void		fill_data(t_data *n_data, t_num_shape *n_shape, int fd);
 int			ft_check_valid(char *filename, t_data *data, t_num_shape *_shape);
 

@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:02:54 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 19:32:26 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:44:56 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ size_t	check_data(t_minirt *mini, t_data *data)
 
 void	alloc_mini(t_minirt *mini)
 {
+	if (!mini->data->pars)
+	{
+		ft_putstr_fd("\033[1;91mEmpty file", 2);
+		free_mini(mini);
+	}
 	mini->ambient = ft_calloc(mini->data->shape.a, sizeof(t_Ambient));
 	mini->camera = ft_calloc(mini->data->shape.c, sizeof(t_Camera));
 	mini->light = ft_calloc(mini->data->shape.l, sizeof(t_Light));

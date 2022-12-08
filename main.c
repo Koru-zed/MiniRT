@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:04:49 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 19:35:08 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:45:51 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,28 +64,6 @@ void	init_mlx(t_minirt *mini)
 	mini->mlx->addr = mlx_get_data_addr(mini->mlx->img, \
 		&mini->mlx->bits_per_pixel, &mini->mlx->line_length, \
 			&mini->mlx->endian);
-}
-
-void	ft_check_file(t_minirt *mini)
-{
-    int		i;
-	char	*str;
-
-	str = mini->file;
-	i = ft_strlen(str);
-	mini->check = -1;
-	if (i > 3 && str[i - 1] == 't' && str[i - 2] == 'r' && str[i - 3] == '.')
-	{
-		mini->fd = open(str, O_RDONLY);
-		if (mini->fd > 0)
-			mini->check = 1;
-	}
-	if (mini->check == -1)
-	{
-		ft_putstr_fd("\033[1;91mPath not valid", 2);
-		exit(EXIT_FAILURE);
-	}
-	mini->check = 0;
 }
 
 int	main(int ac, char **av)
