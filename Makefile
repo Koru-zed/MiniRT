@@ -45,7 +45,6 @@ GREEN = \033[1;92m
 WHITE = \033[1;97m
 RED = \033[1;91m
 
-
 all : ${NAME}
 
 ${NAME} : ${OBJES} ${LIBFT}
