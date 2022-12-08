@@ -122,4 +122,19 @@ void		rotation_cylinder(t_minirt *mini, int key);
 void		intersection_over_objects(t_minirt *rt, t_ray ray);
 bool		cylinder_intersection(t_minirt *rt, t_ray r, double *t, t_hit *hit);
 
+/*    ****   event and rotation */
+void	rotation_cylinder(t_minirt *mini, int key);
+void	rotation_plane(t_minirt *mini, int key);
+void	rotate_camera(t_minirt *mini, int key);
+int		rotation_key(int key, t_minirt *mini);
+int		press_key(int key, t_minirt *mini);
+int		ft_mouse(int scroll, int x, int y, t_minirt *mini);
+void	scroll_down(t_minirt *mini);
+void	scroll_up(t_minirt *mini);
+void	edit_light(t_minirt *mini, int key);
+void	edit_sphere(t_minirt *mini, int key);
+void	edit_plane(t_minirt *mini, int key);
+void	edit_cylinder(t_minirt *mini, int key);
+void	edit_mini(t_minirt *mini, int key);
+void	edit_camera(t_minirt *mini, int key);
 #endif

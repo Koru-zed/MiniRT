@@ -38,11 +38,11 @@ t_color	add_2colors(t_color obj, t_color obj2)
 void	mix_color(t_minirt *rt, t_hit *pHit, t_rgbMaterial *rgbMat)
 {
 	rgbMat->diffuse_color.r = (int )(rt->light->brightenss \
- * pHit->obj_color.r);
+		* pHit->obj_color.r);
 	rgbMat->diffuse_color.g = (int )(rt->light->brightenss \
- * pHit->obj_color.g);
+		* pHit->obj_color.g);
 	rgbMat->diffuse_color.b = (int )(rt->light->brightenss \
- * pHit->obj_color.b);
+		* pHit->obj_color.b);
 }
 
 t_color	creat_color(size_t r, size_t g, size_t b)

@@ -1,0 +1,3 @@
+/Users/ael-mous/Desktop/donemin/cmake-build-debug/CMakeFiles/donemin.dir
+/Users/ael-mous/Desktop/donemin/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/ael-mous/Desktop/donemin/cmake-build-debug/CMakeFiles/rebuild_cache.dir

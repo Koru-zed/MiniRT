@@ -1,0 +1,4 @@
+/goinfre/ael-mous/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/goinfre/ael-mous/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja -S /Users/ael-mous/Desktop/donemin -B /Users/ael-mous/Desktop/donemin/cmake-build-debug
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/ael-mous/Desktop/donemin/cmake-build-debug

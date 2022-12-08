@@ -17,7 +17,10 @@ FILES := get_next_line/get_next_line.c \
 		Shape/Rotation.c \
 		Shape/cylinder.c \
 		Shape/color.c Shape/shade.c \
-		ft_matrix.c
+		ft_matrix.c \
+		event.c \
+		event_utils.c \
+		rotation_utils.c
 
 OBJES := ${FILES:.c=.o}
 
