@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 10:43:03 by ael-mous          #+#    #+#             */
-/*   Updated: 2022/12/08 18:29:17 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:34:23 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,5 +137,5 @@ void		edit_plane(t_minirt *mini, int key);
 void		edit_cylinder(t_minirt *mini, int key);
 void		edit_mini(t_minirt *mini, int key);
 void		edit_camera(t_minirt *mini, int key);
-void		name_obj(t_minirt *rt);
+void		name_obj(t_minirt *rt, double t);
 #endif

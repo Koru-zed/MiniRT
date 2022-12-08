@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:03:05 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:03:06 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:36:20 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	free_mini(t_minirt *mini)
 		free(mini->plane);
 	if (mini->cylinder)
 		free(mini->cylinder);
-	free_data(mini->data);
 	free(mini);
 	exit(EXIT_SUCCESS);
 }

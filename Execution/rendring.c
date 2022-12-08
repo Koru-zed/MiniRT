@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:03:53 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 18:28:56 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:33:50 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	intescte_obj(t_minirt *rt, int i)
 		rt->mlx->obj.object = _SEPHER;
 	else if (i == CY)
 		rt->mlx->obj.object = _CYLINDER;
+	else
+		rt->mlx->obj.object = 0;
 }
 
 void	intersection_over_objects(t_minirt *rt, t_ray ray)
@@ -81,7 +83,7 @@ void	intersection_over_objects(t_minirt *rt, t_ray ray)
 			intescte_obj(rt, i);
 		}
 	}
-	name_obj(rt);
+	name_obj(rt, t);
 }
 
 void	ray_render(t_minirt *mini)
