@@ -102,7 +102,7 @@ t_color		mul_color(t_color color, double s);
 /*
 	! ~ intersection test functions.
  */
-void		iterate_over_objects(t_minirt *rt, t_ray r, t_hit **Hit);
+void		iterate_over_objects(t_minirt *rt, t_ray r, double *t, t_hit **Hit);
 bool		add_light(t_hit *pHit, t_minirt *rt, int *c);
 t_ray		ray_generator(t_minirt *mini, int x, int y);
 bool		intersect_r_sphere(t_ray r, t_minirt *s, double *t, t_hit *pHit);

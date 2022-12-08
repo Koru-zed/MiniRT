@@ -8,17 +8,16 @@ void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	iterate_over_objects(t_minirt *rt, t_ray ray, t_hit **hit)
+void	iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **hit)
 {
 	int		i;
-	double	t;
 	double	t_t[3];
 	bool	is[3];
 	t_hit	*p_hit;
 
 	p_hit = malloc(sizeof(t_hit) * 3);
 	i = -1;
-	t = DBL_MAX;
+	*t = DBL_MAX;
 	*hit = NULL;
 	t_t[0] = DBL_MAX;
 	t_t[1] = DBL_MAX;
@@ -28,9 +27,9 @@ void	iterate_over_objects(t_minirt *rt, t_ray ray, t_hit **hit)
 	is[CY] = cylinder_intersection(rt, ray, &t_t[CY], &p_hit[CY]);
 	while (++i < 3)
 	{
-		if (is[i] && t_t[i] > EPSILON && t_t[i] < t)
+		if (is[i] && t_t[i] > EPSILON && t_t[i] < *t)
 		{
-			t = t_t[i];
+			*t = t_t[i];
 			*hit = &p_hit[i];
 		}
 	}
@@ -69,29 +68,28 @@ void	intersection_over_objects(t_minirt *rt, t_ray ray)
 
 void	ray_render(t_minirt *mini)
 {
-	int		color;
+	int color;
 	t_ray	ray;
 	t_hit	*hit;
 	int		y;
 	int		x;
+	double	t;
 
-	y = 0;
+	y = -1;
 	camera_matrix(mini->camera);
-	while (y < HEIGHT)
+	while (++y < HEIGHT)
 	{
-		x = 0;
-		while (x < WIDTH)
+		x = -1;
+		while (++x < WIDTH)
 		{
 			ray = ray_generator(mini, x, y);
 			color = BLACK;
-			iterate_over_objects(mini, ray, &hit);
+			iterate_over_objects(mini, ray, &t, &hit);
 			if (hit)
 				add_light(hit, mini, &color);
 			my_mlx_pixel_put(mini->mlx, x, y, color);
-			x++;
 		}
-		y++;
 	}
-	mlx_put_image_to_window(mini->mlx->mlx, mini->mlx->win, \
+	mlx_put_image_to_window(mini->mlx->_mlx, mini->mlx->win, \
 		mini->mlx->img, 0, 0);
 }

@@ -10,9 +10,7 @@
     <option name="reloaded" value="true" />
   </component>
   <component name="CMakeRunConfigurationManager">
-    <generated>
-      <config projectName="donemin" targetName="donemin" />
-    </generated>
+    <generated />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -21,29 +19,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e83402a5-b9fe-4e7c-b617-132f721d787b" name="Changes" comment="w">
+      <change afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Base" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Include/miniRT.h" beforeDir="false" afterPath="$PROJECT_DIR$/Include/miniRT.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shape/Rotation.c" beforeDir="false" afterPath="$PROJECT_DIR$/Shape/Rotation.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shape/cylinder.c" beforeDir="false" afterPath="$PROJECT_DIR$/Shape/cylinder.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Include/structs.h" beforeDir="false" afterPath="$PROJECT_DIR$/Include/structs.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Shape/rendring.c" beforeDir="false" afterPath="$PROJECT_DIR$/Shape/rendring.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/colors_hexa.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/debug.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/1pl1sp.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/1pl1sp.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/3plan1s.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/3plan1s.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/art.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/art.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/bonhomme_neige.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/bonhomme_neige.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/column.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/column.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/cy_in_room.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/cy_in_room.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/cache-v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/cmakeFiles-v1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/codemodel-v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/toolchains-v1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-cbe002d98e93b4433349.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-ee41ca98f32fdc7552b4.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-4a48b22ab7547ea55a3a.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/directory-.-Debug-f5ebdc15457944623624.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2022-12-08T09-36-20-0053.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-donemin-Debug-6738268dcd443930a058.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-501b304f510d0e4af5c7.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.24.2/CMakeCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.24.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.24.2/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.24.2/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/rt_files/cy_into_pl.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/cy_into_pl.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/diag_cy.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/diag_cy.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/front_side_cy.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/front_side_cy.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/mickey_mouse.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/mickey_mouse.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/pinky_room.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/pinky_room.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/spacy.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/spacy.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/spheres.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/spheres.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/top_cy.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/top_cy.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rt_files/top_side_cy.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/top_side_cy.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.rt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +67,9 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Shape/cylinder.c" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -106,11 +120,6 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="donemin" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="donemin" TARGET_NAME="donemin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="donemin" RUN_TARGET_NAME="donemin">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -129,7 +138,7 @@
       <workItem from="1670446142935" duration="58000" />
       <workItem from="1670446210623" duration="3669000" />
       <workItem from="1670454022852" duration="2260000" />
-      <workItem from="1670491723647" duration="5594000" />
+      <workItem from="1670491723647" duration="6209000" />
     </task>
     <task id="LOCAL-00001" summary="w">
       <created>1670428216194</created>
@@ -149,7 +158,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
