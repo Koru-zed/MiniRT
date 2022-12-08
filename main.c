@@ -31,14 +31,6 @@ t_ray	ray_generator(t_minirt *mini, int x, int y)
 	return (ray);
 }
 
-
-void	ft_print_vector(const t_point p)
-{
-	printf("p.x[%f] | p.y[%f] | p.z[%f]\n", p.x, p.y, p.z);
-}
-
-
-
 void	setup_controls(t_minirt *mini)
 {
 	mlx_hook(mini->mlx->win, 17, 0, free_mini, mini);
