@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:04:49 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 17:59:40 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:35:08 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_point	ray_pixel_to_world(t_minirt *mini, int x, int y)
 	half_width = half_hight * aspect_ratio;
 	ps_x = (double)(2 * (x + 0.5) / mini->mlx->width - 1) * half_width;
 	ps_y = (double)(1 - 2 * (y + 0.5) / mini->mlx->height) * half_hight;
-	return (new_point(ps_x, ps_y, 1));
+	return (new_point(-ps_x, ps_y, 1));
 }
 
 t_ray	ray_generator(t_minirt *mini, int x, int y)
@@ -59,11 +59,33 @@ void	init_mlx(t_minirt *mini)
 	mini->mlx->height = HEIGHT;
 	mini->mlx->_mlx = mlx_init();
 	mini->mlx->win = mlx_new_window(mini->mlx->_mlx, WIDTH, \
-		HEIGHT, "mini_rt");
+		HEIGHT, "MINI_RT");
 	mini->mlx->img = mlx_new_image(mini->mlx->_mlx, WIDTH, HEIGHT);
 	mini->mlx->addr = mlx_get_data_addr(mini->mlx->img, \
 		&mini->mlx->bits_per_pixel, &mini->mlx->line_length, \
 			&mini->mlx->endian);
+}
+
+void	ft_check_file(t_minirt *mini)
+{
+    int		i;
+	char	*str;
+
+	str = mini->file;
+	i = ft_strlen(str);
+	mini->check = -1;
+	if (i > 3 && str[i - 1] == 't' && str[i - 2] == 'r' && str[i - 3] == '.')
+	{
+		mini->fd = open(str, O_RDONLY);
+		if (mini->fd > 0)
+			mini->check = 1;
+	}
+	if (mini->check == -1)
+	{
+		ft_putstr_fd("\033[1;91mPath not valid", 2);
+		exit(EXIT_FAILURE);
+	}
+	mini->check = 0;
 }
 
 int	main(int ac, char **av)
@@ -75,7 +97,7 @@ int	main(int ac, char **av)
 	if (ac > 1)
 	{
 		mini_rt->file = av[1];
-		mini_rt->fd = open(mini_rt->file, O_RDONLY);
+		ft_check_file(mini_rt);
 		fill_data(mini_rt->data, &mini_rt->data->shape, mini_rt->fd);
 		fill_info(mini_rt);
 		init_mlx(mini_rt);

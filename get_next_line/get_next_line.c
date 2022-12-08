@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 16:03:29 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 16:03:30 by mait-jao         ###   ########.fr       */
+/*   Created: 2021/11/22 17:03:52 by mait-jao          #+#    #+#             */
+/*   Updated: 2022/12/08 19:23:43 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,3 @@ char	*get_next_line(int fd)
 	str_line = ft_left(str_line, '\n');
 	return (s_line);
 }
-
-// #include <fcntl.h>
-// #include <stdio.h>
-
-// int main()
-// {
-//     int fd = open("../test.rt", O_RDWR);
-//     printf("%s", get_next_line(fd));
-// }

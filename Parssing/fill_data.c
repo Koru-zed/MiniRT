@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:02:51 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/12/08 17:22:05 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:32:22 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	checker_valid_data(t_data *data, t_num_shape *_shape)
 	else if (ft_strcmp(data->pars[0], "#"))
 	{
 		printf("{%s}\n", data->pars[0]);
-		ft_putstr_fd("Error : Data not valid\n", 1);
+		ft_putstr_fd("\033[1;91mError : Data not valid\n", 1);
 		free_data(data);
 	}
 }
