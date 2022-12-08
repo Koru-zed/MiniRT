@@ -3,22 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-mous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ael-mous <ael-mous@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 16:56:55 by ael-mous          #+#    #+#             */
-/*   Updated: 2022/12/07 16:57:04 by ael-mous         ###   ########.fr       */
+/*   Updated: 2022/12/08 22:40:24 by ael-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/miniRT.h"
 
-/*
- ?  for the plane configuration :
- * ∗ x,y,z coordinates: 0.0, 0.0, -10.0
- *		∗ 3d normalized orientation vector. In range [-1,1] for each x,y,z axis:
- *		0.0, 0.0, 1.0
- *		∗ R,G,B colors in range [0-255]: 0, 0, 255
- */
 void	update_data(double *t, t_hit *p_hit, t_Plane plane, t_ray ray)
 {
 	(p_hit)->obj_color = add_color(plane.color);
