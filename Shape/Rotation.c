@@ -1,9 +1,9 @@
-# include "../Include/miniRT.h"
+#include "../Include/miniRT.h"
 
-t_matrix update_matrix_x(double theta)
+t_matrix	update_matrix_x(double theta)
 {
-	double _radian;
-	t_matrix matrix;
+	double		_radian;
+	t_matrix	matrix;
 
 	_radian = (double)(theta * M_PI / 180);
 	matrix = dir_matrix();
@@ -11,36 +11,27 @@ t_matrix update_matrix_x(double theta)
 	matrix.m[1][2] = sin(_radian);
 	matrix.m[2][1] = -sin(_radian);
 	matrix.m[2][2] = cos(_radian);
-	// print_matrix(matrix);	printf("dir_matrix\n");
-	// print_matrix(matrix);
-	// printf("---------------------------------------------------\n");
 	return (matrix);
 }
 
-t_matrix update_matrix_y(double theta)
+t_matrix	update_matrix_y(double theta)
 {
-	double _radian;
-	t_matrix matrix;
+	double		_radian;
+	t_matrix	matrix;
 
 	_radian = theta * M_PI / 180;
 	matrix = dir_matrix();
-	// print_matrix(matrix);
-	// printf("---------------------------------------------------\n");
-
 	matrix.m[0][0] = cos(_radian);
 	matrix.m[0][2] = -sin(_radian);
 	matrix.m[2][0] = sin(_radian);
 	matrix.m[2][2] = cos(_radian);
-	// printf("dir_matrix\n");
-	// print_matrix(matrix);
-	// printf("---------------------------------------------------\n");
 	return (matrix);
 }
 
-t_matrix update_matrix_z(double theta)
+t_matrix	update_matrix_z(double theta)
 {
-	double _radian;
-	t_matrix matrix;
+	double		_radian;
+	t_matrix	matrix;
 
 	_radian = theta * M_PI / 180;
 	matrix = dir_matrix();
@@ -48,8 +39,5 @@ t_matrix update_matrix_z(double theta)
 	matrix.m[0][1] = sin(_radian);
 	matrix.m[1][0] = -sin(_radian);
 	matrix.m[1][1] = cos(_radian);
-	// printf("dir_matrix\n");
-	// print_matrix(matrix);
-	// printf("---------------------------------------------------\n");
 	return (matrix);
 }

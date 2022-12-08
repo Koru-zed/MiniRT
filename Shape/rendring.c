@@ -5,54 +5,53 @@ void	my_mlx_pixel_put(t_mlx *Mlx, int x, int y, int color)
 	char	*dst;
 
 	dst = Mlx->addr + (y * Mlx->line_length + x * (Mlx->bits_per_pixel >> 3));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
-
-void iterate_over_objects(t_minirt *rt, t_ray ray, double *t,  t_hit **oHit)
+void	iterate_over_objects(t_minirt *rt, t_ray ray, t_hit **hit)
 {
-	int i;
-	double t_t[3];
-	t_hit *pHit = malloc(sizeof(t_hit) * 3);
-	bool is[3];
+	int		i;
+	double	t;
+	double	t_t[3];
+	bool	is[3];
+	t_hit	*p_hit;
 
+	p_hit = malloc(sizeof(t_hit) * 3);
 	i = -1;
-	*t = DBL_MAX;
-	*oHit = NULL;
+	t = DBL_MAX;
+	*hit = NULL;
 	t_t[0] = DBL_MAX;
 	t_t[1] = DBL_MAX;
 	t_t[2] = DBL_MAX;
-	is[PL] = intersect_plane(rt, ray, &t_t[PL], &pHit[PL]);
-	is[SP] = intersect_r_sphere(ray, rt, &t_t[SP], &pHit[SP]);
-	is[CY] = cylinder_intersection(rt, ray, &t_t[CY], &pHit[CY]);
+	is[PL] = intersect_plane(rt, ray, &t_t[PL], &p_hit[PL]);
+	is[SP] = intersect_r_sphere(ray, rt, &t_t[SP], &p_hit[SP]);
+	is[CY] = cylinder_intersection(rt, ray, &t_t[CY], &p_hit[CY]);
 	while (++i < 3)
 	{
-		if (is[i] && t_t[i] > EPSILON && t_t[i] < *t)
+		if (is[i] && t_t[i] > EPSILON && t_t[i] < t)
 		{
-			*t = t_t[i];
-			*oHit = &pHit[i];
+			t = t_t[i];
+			*hit = &p_hit[i];
 		}
 	}
 }
 
-
-void intersection_over_objects(t_minirt *rt, t_ray ray)
+void	intersection_over_objects(t_minirt *rt, t_ray ray)
 {
-
-	int i;
-	double t;
-	double t_t[3];
-	t_hit pHit[3];
-	bool is[3];
+	int		i;
+	double	t;
+	double	t_t[3];
+	t_hit	hit[3];
+	bool	is[3];
 
 	i = -1;
 	t = DBL_MAX;
 	t_t[0] = DBL_MAX;
 	t_t[1] = DBL_MAX;
 	t_t[2] = DBL_MAX;
-	is[PL] = intersect_plane(rt, ray, &t_t[PL], &pHit[PL]);
-	is[SP] = intersect_r_sphere(ray, rt, &t_t[SP], &pHit[SP]);
-	is[CY] = cylinder_intersection(rt, ray, &t_t[CY], &pHit[CY]);
+	is[PL] = intersect_plane(rt, ray, &t_t[PL], &hit[PL]);
+	is[SP] = intersect_r_sphere(ray, rt, &t_t[SP], &hit[SP]);
+	is[CY] = cylinder_intersection(rt, ray, &t_t[CY], &hit[CY]);
 	while (++i < 3)
 	{
 		if (is[i] && t_t[i] > EPSILON && t_t[i] < t)
@@ -70,19 +69,14 @@ void intersection_over_objects(t_minirt *rt, t_ray ray)
 
 void	ray_render(t_minirt *mini)
 {
-	int color;
+	int		color;
 	t_ray	ray;
-	t_hit *hit = NULL;
-	int y, x;
+	t_hit	*hit;
+	int		y;
+	int		x;
+
 	y = 0;
-
-	double t;
-	// printf("camera_matrix\n");
 	camera_matrix(mini->camera);
-	// print_matrix(mini->Camera->matrix);
-	// printf("***********************************************\n");
-	// print_matrix(mini->Camera->matrix);
-
 	while (y < HEIGHT)
 	{
 		x = 0;
@@ -90,7 +84,7 @@ void	ray_render(t_minirt *mini)
 		{
 			ray = ray_generator(mini, x, y);
 			color = BLACK;
-			iterate_over_objects(mini, ray, &t, &hit);
+			iterate_over_objects(mini, ray, &hit);
 			if (hit)
 				add_light(hit, mini, &color);
 			my_mlx_pixel_put(mini->mlx, x, y, color);
@@ -98,5 +92,6 @@ void	ray_render(t_minirt *mini)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(mini->mlx->mlx, mini->mlx->win, mini->mlx->img, 0, 0);
+	mlx_put_image_to_window(mini->mlx->mlx, mini->mlx->win, \
+		mini->mlx->img, 0, 0);
 }

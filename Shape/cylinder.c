@@ -1,37 +1,16 @@
 #include "../Include/miniRT.h"
 
-double	calc_root(double top_roco, double toprd, double h_2, double t)
-{
-	double	root;
-
-	if (t < 0)
-		root = -top_roco / toprd;
-	else
-		root = (h_2 - top_roco) / toprd;
-	return (root);
-}
-
-double	vec_dot(t_point u, t_point v)
-{
-	double	distance;
-
-	distance = (u.x * v.x) + (u.y * v.y) + (u.z * v.z);
-	return (distance);
-}
-
-
-void print_point(t_point p)
+void	print_point(t_point p)
 {
 	printf("p.x = [%f] | ", p.x);
 	printf("p.y = [%f] | ", p.y);
 	printf("p.z = [%f]\n", p.z);
 	printf("************************************************\n");
-
 }
 
-void ft_swap(double *x, double *y)
+void	ft_swap(double *x, double *y)
 {
-	double z;
+	double	z;
 
 	z = *x;
 	*x = *y;
@@ -40,8 +19,10 @@ void ft_swap(double *x, double *y)
 
 double	git_root(t_Cylinder cy, t_ray ray, double *m)
 {
-	double t;
+	double	t;
 	double	t1;
+	double	m1;
+	double m2;
 	double	t2;
 
 	t = FLT_MAX;
@@ -49,8 +30,10 @@ double	git_root(t_Cylinder cy, t_ray ray, double *m)
 	t2 = (-cy.q.b - cy.q.sqrt_disc) / (2 * cy.q.a);
 	if (t1 > t2)
 		ft_swap(&t1, &t2);
-	double m1 = (v_dot(ray.direction, v_mul(t1, cy.ray.direction))) + v_dot(cy.x, cy.ray.direction);
-	double m2 = (v_dot(ray.direction, v_mul(t2, cy.ray.direction))) + v_dot(cy.x, cy.ray.direction);
+	m1 = (v_dot(ray.direction, v_mul(t1, cy.ray.direction))) \
+		+ v_dot(cy.x, cy.ray.direction);
+	m2 = (v_dot(ray.direction, v_mul(t2, cy.ray.direction))) \
+		+ v_dot(cy.x, cy.ray.direction);
 	if (m1 > EPSILON && m1 <= cy.height)
 	{
 		t = t1;
@@ -64,21 +47,23 @@ double	git_root(t_Cylinder cy, t_ray ray, double *m)
 	return (t);
 }
 
-t_color convet(size_t *c)
+t_color	convet(size_t *c)
 {
-	t_color re;
+	t_color	re;
 
 	re.r = (int)c[0];
 	re.g = (int)c[1];
 	re.b = (int)c[2];
-	return re;
+	return (re);
 }
 
-void  calc_discrement(t_Cylinder *cy, t_ray ray)
+void	calc_discrement(t_Cylinder *cy, t_ray ray)
 {
 	cy->x = v_sub(ray.origin, cy->ray.origin);
 	cy->q.a = v_dot(ray.direction, ray.direction) - pow(v_dot(ray.direction, cy->ray.direction), 2);
-	cy->q.b = 2 * (v_dot(ray.direction, cy->x) - (v_dot(ray.direction, cy->ray.direction) * v_dot(cy->x, cy->ray.direction)));
+	cy->q.b = 2 * (v_dot(ray.direction, cy->x) \
+		- (v_dot(ray.direction, cy->ray.direction) \
+			* v_dot(cy->x, cy->ray.direction)));
 	cy->q.c = v_dot(cy->x, cy->x) - pow(v_dot(cy->x, cy->ray.direction), 2) - pow(cy->redius, 2);
 	cy->q.discriminant = pow(cy->q.b, 2) - (4 * cy->q.a * cy->q.c);
 	cy->q.sqrt_disc = sqrt(cy->q.discriminant);
@@ -89,9 +74,6 @@ bool	cylinder_intersection(t_minirt *rt, t_ray ray, double *t, t_hit *hit)
 	int i = -1;
 	double t_min;
 	double M;
-
-	t_point A;
-	t_point B;
 
 	*t = FLT_MAX;
 	t_min = FLT_MAX;

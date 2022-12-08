@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="donemin" targetName="donemin" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e83402a5-b9fe-4e7c-b617-132f721d787b" name="Changes" comment="w">
+      <change beforePath="$PROJECT_DIR$/Include/miniRT.h" beforeDir="false" afterPath="$PROJECT_DIR$/Include/miniRT.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shape/Rotation.c" beforeDir="false" afterPath="$PROJECT_DIR$/Shape/Rotation.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shape/cylinder.c" beforeDir="false" afterPath="$PROJECT_DIR$/Shape/cylinder.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shape/rendring.c" beforeDir="false" afterPath="$PROJECT_DIR$/Shape/rendring.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/colors_hexa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/debug.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/1pl1sp.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/1pl1sp.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/3plan1s.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/3plan1s.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/art.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/art.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/bonhomme_neige.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/bonhomme_neige.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/column.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/column.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/cy_in_room.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/cy_in_room.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/cy_into_pl.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/cy_into_pl.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/diag_cy.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/diag_cy.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/front_side_cy.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/front_side_cy.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/mickey_mouse.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/mickey_mouse.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/pinky_room.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/pinky_room.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/spacy.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/spacy.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/spheres.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/spheres.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/top_cy.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/top_cy.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rt_files/top_side_cy.rt" beforeDir="false" afterPath="$PROJECT_DIR$/rt_files/top_side_cy.rt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.rt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2022" />
+    <option name="minorVersion" value="2.4" />
+  </component>
+  <component name="ProjectId" id="2IaLrKAWEbYTxWmvZOv6fwSKmSM" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+    <option name="sortByType" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "/Users/ael-mous/Desktop/donemin",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "structure.view.defaults.are.configured": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Shape" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="donemin" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="donemin" TARGET_NAME="donemin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="donemin" RUN_TARGET_NAME="donemin">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e83402a5-b9fe-4e7c-b617-132f721d787b" name="Changes" comment="" />
+      <created>1670414945035</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1670414945035</updated>
+      <workItem from="1670414946440" duration="1703000" />
+      <workItem from="1670423225647" duration="2763000" />
+      <workItem from="1670428993566" duration="1484000" />
+      <workItem from="1670439473224" duration="168000" />
+      <workItem from="1670443382349" duration="820000" />
+      <workItem from="1670445424177" duration="676000" />
+      <workItem from="1670446142935" duration="58000" />
+      <workItem from="1670446210623" duration="3669000" />
+      <workItem from="1670454022852" duration="2260000" />
+      <workItem from="1670491723647" duration="5594000" />
+    </task>
+    <task id="LOCAL-00001" summary="w">
+      <created>1670428216194</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1670428216194</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="w" />
+    <option name="LAST_COMMIT_MESSAGE" value="w" />
+  </component>
+</project>
