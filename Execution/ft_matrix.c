@@ -1,4 +1,16 @@
-#include "Include/miniRT.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_matrix.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/08 16:03:42 by mait-jao          #+#    #+#             */
+/*   Updated: 2022/12/08 16:03:43 by mait-jao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../Include/miniRT.h"
 
 t_matrix	new_matrix(t_point r, t_point up, t_point forwd, t_point org)
 {

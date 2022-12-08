@@ -1,6 +1,6 @@
 NAME := miniRT
 
-FILES := get_next_line/get_next_line.c \
+FILES := Get_next_line/get_next_line.c \
 		 Parssing/fill_data.c \
 		 Parssing/free_mini.c \
 		 Parssing/fill_info.c \
@@ -8,20 +8,21 @@ FILES := get_next_line/get_next_line.c \
 		 Parssing/rt_last_node.c \
 		 Parssing/get_data_part1.c \
 		 Parssing/get_data_part2.c \
-		 main.c \
-		 math_operations.c \
-		 math_utils.c \
-		Shape/rendring.c \
-		Shape/sphere.c \
-		Shape/plane.c \
-		Shape/Rotation.c \
-		Shape/cylinder.c \
-		Shape/utils.c \
-		Shape/color.c Shape/shade.c \
-		ft_matrix.c \
-		event.c \
-		event_utils.c \
-		rotation_utils.c
+		 Execution/utils.c \
+		 Execution/color.c \
+		 Execution/shade.c \
+		 Execution/rotation.c \
+		 Execution/rendring.c \
+		 Execution/ft_matrix.c \
+		 Execution/math_utils.c \
+		 Execution/update_matrix.c \
+		 Execution/math_operations.c \
+		 Shape/cylinder.c \
+		 Shape/sphere.c \
+		 Shape/plane.c \
+		 Event/event.c \
+		 Event/event_utils.c \
+		 main.c
 
 OBJES := ${FILES:.c=.o}
 

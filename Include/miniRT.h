@@ -6,7 +6,7 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 10:43:03 by ael-mous          #+#    #+#             */
-/*   Updated: 2022/12/08 15:14:39 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:59:37 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <mlx.h>
-# include "../get_next_line/get_next_line.h"
+# include "../Get_next_line/get_next_line.h"
 # include "structs.h"
 # include <sys/time.h>
 # include <stdbool.h>
