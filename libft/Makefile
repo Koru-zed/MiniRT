@@ -6,7 +6,7 @@
 #    By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 01:39:45 by mait-jao          #+#    #+#              #
-#    Updated: 2022/12/08 15:31:05 by mait-jao         ###   ########.fr        #
+#    Updated: 2022/12/08 16:15:25 by mait-jao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ all : ${NAME}
 
 ${NAME}: ${OBJECTS}
 	@ ar -rc ${NAME} ${OBJECTS}
-	@ echo "       ${YELLOW}}}}.....${GREEN}!Create :-> ${NAME} <-: Successe!${YELLOW}.....{{{${WHITE}"
+	@ echo "       ${YELLOW}}}}.....${GREEN}!Create :-> ${NAME} <-: Successe!${YELLOW}.....{{{${WHITE}\n"
 
 bonus: ${OBJECTS} ${OBJS_BONUS}
 	@ ar -rc ${NAME} ${OBJECTS} ${OBJS_BONUS}

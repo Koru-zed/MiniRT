@@ -5,7 +5,6 @@ FILES := Get_next_line/get_next_line.c \
 		 Parssing/free_mini.c \
 		 Parssing/fill_info.c \
 		 Parssing/set_data.c \
-		 Parssing/rt_last_node.c \
 		 Parssing/get_data_part1.c \
 		 Parssing/get_data_part2.c \
 		 Execution/utils.c \
@@ -46,10 +45,11 @@ GREEN = \033[1;92m
 WHITE = \033[1;97m
 RED = \033[1;91m
 
+
 all : ${NAME}
 
 ${NAME} : ${OBJES} ${LIBFT}
-	@ mkdir -p ${FOBJS}
+# @ mkdir -p ${FOBJS}
 	@ ${CC} ${CFLAGS} ${LIBFT} ${FRAMWORK} $^ -o $@
 	@ echo "       ${YELLOW}}}}.....${GREEN}!Compile :-> ${NAME} <-: Successe!${YELLOW}.....{{{${WHITE}"
 
@@ -57,8 +57,12 @@ ${NAME} : ${OBJES} ${LIBFT}
 	@ echo "${BLUE}Generating Minishell objects... ${PURPLE}" $@ "${WHITE}"
 	@$(CC) $(CFLAGS) -Imlx -c $< -o $@ 
 
+lib :	
+	@ $(MAKE) -C ./Libft
+	@ $(MAKE) clean -C ./Libft
+
 clean : 
-	@ ${RM} ${OBJES} had.txt
+	@ ${RM} ${OBJES} 
 	@ echo "${YELLOW}-> ${PURPLE}Delete the object files.....${WHITE}"
 
 fclean : clean
