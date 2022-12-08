@@ -12,7 +12,7 @@ typedef struct _select
 
 typedef struct s_mlx
 {
-	void		*mlx;
+	void		*_mlx;
 	void		*win;
 	void		*img;
 	char		*addr;
@@ -110,12 +110,7 @@ typedef struct Camera
 	t_matrix	matrix;
 }	t_Camera;
 
-//typedef struct delta {
-//	double a;
-//	double b;
-//	double c;
-//	double delta;
-//}	t_delta;
+
 typedef struct Light
 {
 	t_point	cordinates;

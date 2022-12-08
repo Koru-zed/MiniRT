@@ -77,12 +77,7 @@ void	ray_render(t_minirt *mini)
 	y = 0;
 
 	double t;
-	// printf("camera_matrix\n");
 	camera_matrix(mini->camera);
-	// print_matrix(mini->Camera->matrix);
-	// printf("***********************************************\n");
-	// print_matrix(mini->Camera->matrix);
-
 	while (y < HEIGHT)
 	{
 		x = 0;
@@ -98,5 +93,5 @@ void	ray_render(t_minirt *mini)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(mini->mlx->mlx, mini->mlx->win, mini->mlx->img, 0, 0);
+	mlx_put_image_to_window(mini->mlx->_mlx, mini->mlx->win, mini->mlx->img, 0, 0);
 }
