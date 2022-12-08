@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-mous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 10:43:03 by ael-mous          #+#    #+#             */
-/*   Updated: 2022/12/08 10:43:06 by ael-mous         ###   ########.fr       */
+/*   Updated: 2022/12/08 13:09:07 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@
 # define KEYUP  126
 # define KEYLEFT  123
 # define KEYRIGHT  124
-# define _SEPHER 1 //s
-# define _PLANE 35 //p
-# define _LIGHT 37 //l
-# define _CYLINDER 8 // c
-# define _CAMERA 9 //v
+# define _SEPHER 1
+# define _PLANE 35
+# define _LIGHT 37
+# define _CYLINDER 8
+# define _CAMERA 9
 # define MOUSEDOWN  4
 # define MOUSEUP  5
 # define ROTATE_X 7
@@ -53,9 +53,7 @@
 # define PL 0
 # define SP 1
 # define CY 2
-// # define KEY_W 13
-// # define MOUSEMOVE  6
-# define DESTROY  53
+# define DESTROY 53
 # define CLOSE 17
 
 t_color		add_2colors(t_color obj, t_color obj2);

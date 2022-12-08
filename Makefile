@@ -8,7 +8,6 @@ FILES := get_next_line/get_next_line.c \
 		 Parssing/rt_last_node.c \
 		 Parssing/get_data_part1.c \
 		 Parssing/get_data_part2.c \
-		 Dowing/camera.c \
 		 main.c \
 		 math_operations.c \
 		 math_utils.c \

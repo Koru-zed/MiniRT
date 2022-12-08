@@ -1,2 +1,0 @@
-#include "../Include/miniRT.h"
-

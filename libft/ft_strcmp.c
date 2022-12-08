@@ -6,15 +6,15 @@
 /*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 09:32:36 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/10/09 09:33:47 by mait-jao         ###   ########.fr       */
+/*   Updated: 2022/12/08 13:20:38 by mait-jao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-    size_t			i;
+	size_t			i;
 	unsigned char	*d1;
 	unsigned char	*d2;
 

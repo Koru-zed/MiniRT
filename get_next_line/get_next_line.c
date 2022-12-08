@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mait-jao <mait-jao@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 17:03:52 by mait-jao          #+#    #+#             */
-/*   Updated: 2022/10/08 17:42:23 by mait-jao         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
 
 char	*ft_read_str(int fd, char *str_line)
@@ -56,11 +44,6 @@ char	*ft_re_line(char *str)
 		s_line[j] = str[j];
 		j++;
 	}
-	// if (str[j] == '\n')//for ignor \n in split with spacce
-	// {
-	// 	s_line[j] = str[j];
-	// 	j++;
-	// }
 	s_line[j] = '\0';
 	return (s_line);
 }

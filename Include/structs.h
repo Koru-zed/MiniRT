@@ -110,7 +110,6 @@ typedef struct Camera
 	t_matrix	matrix;
 }	t_Camera;
 
-
 typedef struct Light
 {
 	t_point	cordinates;
@@ -119,12 +118,14 @@ typedef struct Light
 	size_t	repetition;
 }	t_Light;
 
-typedef struct s_intersect {
+typedef struct s_intersect
+{
 	double	tmin;
 	t_point	closestpoint;
 	size_t	*color;
 
 }	t_intersect;
+
 typedef struct Plane
 {
 	t_ray		ray;
@@ -166,6 +167,6 @@ typedef struct minirt
 	t_Cylinder	*cylinder;
 	t_data		*data;
 	t_mlx		*mlx;
-}  	t_minirt;
+}	t_minirt;
 
 #endif
