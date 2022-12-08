@@ -1,7 +1,5 @@
 #include "../Include/miniRT.h"
 
-//int *getColorAmbient()
-
 int	check(int r)
 {
 	if (r > 255)

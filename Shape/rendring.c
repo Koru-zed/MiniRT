@@ -35,6 +35,16 @@ void	iterate_over_objects(t_minirt *rt, t_ray ray, double *t, t_hit **hit)
 	}
 }
 
+void	intescte_obj(t_minirt *rt, int i)
+{
+	if (i == PL)
+		rt->mlx->obj.object = _PLANE;
+	else if (i == SP)
+		rt->mlx->obj.object = _SEPHER;
+	else if (i == CY)
+		rt->mlx->obj.object = _CYLINDER;
+}
+
 void	intersection_over_objects(t_minirt *rt, t_ray ray)
 {
 	int		i;
@@ -56,24 +66,18 @@ void	intersection_over_objects(t_minirt *rt, t_ray ray)
 		if (is[i] && t_t[i] > EPSILON && t_t[i] < t)
 		{
 			t = t_t[i];
-			if (i == PL)
-				rt->mlx->obj.object = _PLANE;
-			else if (i == SP)
-				rt->mlx->obj.object = _SEPHER;
-			else if (i == CY)
-				rt->mlx->obj.object = _CYLINDER;
+			intescte_obj(rt, i);
 		}
 	}
 }
 
 void	ray_render(t_minirt *mini)
 {
-	int color;
-	t_ray	ray;
-	t_hit	*hit;
-	int		y;
 	int		x;
+	int		y;
 	double	t;
+	t_hit	*hit;
+	t_ray	ray;
 
 	y = -1;
 	camera_matrix(mini->camera);
@@ -83,11 +87,11 @@ void	ray_render(t_minirt *mini)
 		while (++x < WIDTH)
 		{
 			ray = ray_generator(mini, x, y);
-			color = BLACK;
 			iterate_over_objects(mini, ray, &t, &hit);
 			if (hit)
-				add_light(hit, mini, &color);
-			my_mlx_pixel_put(mini->mlx, x, y, color);
+				my_mlx_pixel_put(mini->mlx, x, y, add_light(hit, mini));
+			else
+				my_mlx_pixel_put(mini->mlx, x, y, BLACK);
 		}
 	}
 	mlx_put_image_to_window(mini->mlx->_mlx, mini->mlx->win, \
