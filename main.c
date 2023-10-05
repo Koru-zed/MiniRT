@@ -46,9 +46,10 @@ t_ray	ray_generator(t_minirt *mini, int x, int y)
 void	setup_controls(t_minirt *mini)
 {
 	mlx_hook(mini->mlx->win, 17, 0, free_mini, mini);
+	mlx_hook(mini->mlx->win, 2, 1L << 0, press_key, mini);
 	mlx_hook(mini->mlx->win, 4, 0, ft_mouse, mini);
 	mlx_hook(mini->mlx->win, 5, 0, ft_mouse, mini);
-	mlx_key_hook(mini->mlx->win, press_key, mini);
+	// mlx_key_hook(mini->mlx->win, press_key, mini);
 	mlx_mouse_hook(mini->mlx->win, ft_mouse, mini);
 }
 

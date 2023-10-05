@@ -51,10 +51,10 @@ void	scroll_down(t_minirt *mini)
 
 int	ft_mouse(int scroll, int x, int y, t_minirt *mini)
 {
-	int	i;
+	// int	i;
 
 	mini->mlx->_do = 0;
-	i = mini->mlx->obj.index;
+	// i = mini->mlx->obj.index;
 	if (scroll == 1)
 	{
 		mini->mlx->mouse = 1;
@@ -95,6 +95,7 @@ void	edit_mini(t_minirt *mini, int key)
 
 int	press_key(int key, t_minirt *mini)
 {
+	printf("%d\n", key);
 	if (key == KEYUP)
 		edit_mini(mini, key);
 	else if (key == KEYDOWN)

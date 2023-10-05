@@ -25,15 +25,15 @@ FILES := Get_next_line/get_next_line.c \
 
 OBJES := ${FILES:.c=.o}
 
-CC := cc -g3
+CC := cc  -o3
 
 FOBJS := ./objs
 
-LIBFT := libft/libft
+LIBFT := Libft/libft
 
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := #-Wall -Wextra -Werror
 
-FRAMWORK = -lmlx -framework OpenGL -framework AppKit
+FRAMWORK = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 RM := /bin/rm -rf
 
@@ -47,15 +47,17 @@ RED = \033[1;91m
 
 all : ${NAME}
 
-${NAME} : ${OBJES} ${LIBFT}
-	@ ${CC} ${CFLAGS} ${LIBFT} ${FRAMWORK} $^ -o $@
+${NAME} : ${OBJES} ${LIBFT} 
+	@ echo "${BLUE}here ${PURPLE}" $@ "${WHITE}"
+	@ ${CC} ${CFLAGS} ${LIBFT} $^ -o $@ ${FRAMWORK}
 	@ echo "       ${YELLOW}}}}.....${GREEN}!Compile :-> ${NAME} <-: Successe!${YELLOW}.....{{{${WHITE}"
 
 %.o : %.c
-	@ echo "${BLUE}Generating Minishell objects... ${PURPLE}" $@ "${WHITE}"
-	@$(CC) $(CFLAGS) -Imlx -c $< -o $@ 
+	@ echo "${BLUE}Generating MiniRT objects... ${PURPLE}" $@ "${WHITE}"
+	@$(CC) $(CFLAGS) -I/usr/include ${FRAMWORK} -c $< -o $@ 
 
-lib :	
+lib :
+	@ echo "       ${YELLOW}}}}.....${GREEN}!Compile :-> ${NAME} <-: dddSuccesse!${YELLOW}.....{{{${WHITE}"	
 	@ $(MAKE) -C ./Libft
 	@ $(MAKE) clean -C ./Libft
 

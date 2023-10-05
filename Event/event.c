@@ -78,10 +78,10 @@ void	edit_cylinder(t_minirt *mini, int key)
 
 void	edit_camera(t_minirt *mini, int key)
 {
-	t_matrix	matrix;
+	// t_matrix	matrix;
 
 	mini->mlx->_do = 1;
-	matrix = mini->camera->matrix;
+	// matrix = mini->camera->matrix;
 	if (!mini->mlx->rotate)
 	{
 		if (key == KEYUP)

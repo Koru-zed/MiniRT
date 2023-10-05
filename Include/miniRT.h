@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
-# include <math.h>
+#include <math.h>
 # include <mlx.h>
 # include "../Get_next_line/get_next_line.h"
 # include "structs.h"
@@ -33,15 +33,15 @@
 # define WIDTH 1080
 # define EPSILON 1.0e-4f
 # define BLACK 0x000000
-# define KEYDOWN  125
-# define KEYUP  126
-# define KEYLEFT  123
-# define KEYRIGHT  124
+# define KEYDOWN  65364
+# define KEYUP  65362
+# define KEYLEFT  65361
+# define KEYRIGHT  65363
 # define _SEPHER 1
 # define _PLANE 35
-# define _LIGHT 37
+# define _LIGHT 108
 # define _CYLINDER 8
-# define _CAMERA 9
+# define _CAMERA 99
 # define MOUSEDOWN  4
 # define MOUSEUP  5
 # define ROTATE_X 7
