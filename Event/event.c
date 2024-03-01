@@ -76,7 +76,7 @@ void	edit_cylinder(t_minirt *mini, int key)
 		mini->mlx->_do = 0;
 }
 
-void	edit_camera(t_minirt *mini, int key)
+void	edit_view(t_minirt *mini, int key)
 {
 	// t_matrix	matrix;
 
@@ -94,7 +94,7 @@ void	edit_camera(t_minirt *mini, int key)
 			mini->camera->ray.origin.x -= 0.5;
 	}
 	else if (mini->mlx->rotate)
-		rotate_camera(mini, key);
+		rotate_view(mini, key);
 	else
 		mini->mlx->_do = 0;
 }

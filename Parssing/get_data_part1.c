@@ -38,7 +38,7 @@ int	get_ambient_lightning(t_minirt *mini, t_data *data)
 	return (-1);
 }
 
-int	get_camera(t_minirt *mini, t_data *data)
+int	get_view(t_minirt *mini, t_data *data)
 {
 	if (!mini->camera->repetition)
 	{

@@ -120,7 +120,7 @@ typedef struct Camera
 	size_t		repetition;
 	t_ray		ray;
 	t_matrix	matrix;
-}	t_Camera;
+}	t_View;
 
 typedef struct Light
 {
@@ -174,7 +174,7 @@ typedef struct minirt
 	int			check;
 	char		*file;
 	t_Ambient	*ambient;
-	t_Camera	*camera;
+	t_View	*camera;
 	t_Light		*light;
 	t_Sphere	*sphere;
 	t_Plane		*plane;

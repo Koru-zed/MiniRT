@@ -16,8 +16,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
-#include <math.h>
-# include <mlx.h>
+# include <math.h>
+# include "../mlx_linux/mlx.h"
 # include "../Get_next_line/get_next_line.h"
 # include "structs.h"
 # include <sys/time.h>
@@ -37,23 +37,23 @@
 # define KEYUP  65362
 # define KEYLEFT  65361
 # define KEYRIGHT  65363
-# define _SEPHER 1
-# define _PLANE 35
+# define _SEPHER 115
+# define _PLANE 112
 # define _LIGHT 108
-# define _CYLINDER 8
-# define _CAMERA 99
+# define _CYLINDER 99
+# define _VIEW 118
 # define MOUSEDOWN  4
 # define MOUSEUP  5
-# define ROTATE_X 7
-# define ROTATE_Y 16
-# define ROTATE_Z 6
-# define ZERO 29
-# define R_LEFT 43
-# define R_RIGHT 47
+# define ROTATE_X 120 
+# define ROTATE_Y 121 
+# define ROTATE_Z 122 
 # define PL 0
-# define SP 1
-# define CY 2
-# define DESTROY 53
+# define SP 1 
+# define CY 2 
+# define ZERO 48
+# define R_LEFT 44
+# define R_RIGHT 46
+# define DESTROY 65307
 # define CLOSE 17
 
 t_color		add_2colors(t_color obj, t_color obj2);
@@ -67,7 +67,7 @@ void		set_orientation(char const *colors, t_point *cord, t_minirt *mini);
 void		set_cordinates(char const *cord, t_point *cordinate, t_minirt *rt);
 t_color		add_color(const size_t *c);
 int			get_light(t_minirt *mini, t_data *data);
-int			get_camera(t_minirt *mini, t_data *data);
+int			get_view(t_minirt *mini, t_data *data);
 int			get_ambient_lightning(t_minirt *mini, t_data *data);
 int			get_plane(t_minirt *mini, t_data *data);
 int			get_sphere(t_minirt *mini, t_data *data);
@@ -107,7 +107,7 @@ t_ray		ray_generator(t_minirt *mini, int x, int y);
 bool		intersect_r_sphere(t_ray r, t_minirt *s, double *t, t_hit *pHit);
 bool		intersect_plane(t_minirt *rt, t_ray ray, double *t, t_hit *pHit);
 t_matrix	dir_matrix(void);
-void		camera_matrix(t_Camera *_camera);
+void		camera_matrix(t_View *_view);
 void		fill_plane_matrix(t_Plane *_plane);
 t_matrix	new_matrix(t_point u, t_point v, t_point w, t_point T);
 t_matrix	update_matrix_x(double theta);
@@ -126,7 +126,7 @@ bool		cylinder_intersection(t_minirt *rt, t_ray r, double *t, t_hit *hit);
 /*    ****   event and rotation */
 void		rotation_cylinder(t_minirt *mini, int key);
 void		rotation_plane(t_minirt *mini, int key);
-void		rotate_camera(t_minirt *mini, int key);
+void		rotate_view(t_minirt *mini, int key);
 int			rotation_key(int key, t_minirt *mini);
 int			press_key(int key, t_minirt *mini);
 int			ft_mouse(int scroll, int x, int y, t_minirt *mini);
@@ -137,6 +137,6 @@ void		edit_sphere(t_minirt *mini, int key);
 void		edit_plane(t_minirt *mini, int key);
 void		edit_cylinder(t_minirt *mini, int key);
 void		edit_mini(t_minirt *mini, int key);
-void		edit_camera(t_minirt *mini, int key);
+void		edit_view(t_minirt *mini, int key);
 void		name_obj(t_minirt *rt, double t);
 #endif

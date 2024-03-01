@@ -77,7 +77,7 @@ int	ft_mouse(int scroll, int x, int y, t_minirt *mini)
 void	edit_mini(t_minirt *mini, int key)
 {
 	if (!mini->mlx->obj.object)
-		edit_camera(mini, key);
+		edit_view(mini, key);
 	else if (mini->mlx->obj.object == _SEPHER)
 		edit_sphere(mini, key);
 	else if (mini->mlx->obj.object == _PLANE)

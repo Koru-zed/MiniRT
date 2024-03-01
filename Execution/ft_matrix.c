@@ -49,13 +49,13 @@ t_matrix	dir_matrix(void)
 	return (new_matrix(right, up, forward, origin));
 }
 
-void	camera_matrix(t_Camera *_camera)
+void	camera_matrix(t_View *_view)
 {
 	t_point	right;
 	t_point	up;
 
-	right = normalizing(v_cross(new_point(0, 1, 0), _camera->ray.direction));
-	up = normalizing(v_cross(_camera->ray.direction, right));
-	_camera->matrix = new_matrix(right, up, \
-		_camera->ray.direction, _camera->ray.origin);
+	right = normalizing(v_cross(new_point(0, 1, 0), _view->ray.direction));
+	up = normalizing(v_cross(_view->ray.direction, right));
+	_view->matrix = new_matrix(right, up, \
+		_view->ray.direction, _view->ray.origin);
 }

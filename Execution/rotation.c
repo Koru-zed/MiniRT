@@ -52,7 +52,7 @@ void	rotation_plane(t_minirt *mini, int key)
 	mini->plane[i].ray.direction = direction;
 }
 
-void	rotate_camera(t_minirt *mini, int key)
+void	rotate_view(t_minirt *mini, int key)
 {
 	t_point	direction;
 

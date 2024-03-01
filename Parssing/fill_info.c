@@ -17,7 +17,7 @@ size_t	check_data(t_minirt *mini, t_data *data)
 	if (!ft_strcmp(data->pars[0], AMBIENT))
 		get_ambient_lightning(mini, data);
 	else if (!ft_strcmp(data->pars[0], CAMERA))
-		get_camera(mini, data);
+		get_view(mini, data);
 	else if (!ft_strcmp(data->pars[0], LIGHT))
 		get_light(mini, data);
 	else if (!ft_strcmp(data->pars[0], SEPHER))
@@ -39,7 +39,7 @@ void	alloc_mini(t_minirt *mini)
 		free_mini(mini);
 	}
 	mini->ambient = ft_calloc(mini->data->shape.a, sizeof(t_Ambient));
-	mini->camera = ft_calloc(mini->data->shape.c, sizeof(t_Camera));
+	mini->camera = ft_calloc(mini->data->shape.c, sizeof(t_View));
 	mini->light = ft_calloc(mini->data->shape.l, sizeof(t_Light));
 	mini->sphere = ft_calloc(mini->data->shape.sp, sizeof(t_Sphere));
 	mini->plane = ft_calloc(mini->data->shape.pl, sizeof(t_Plane));

@@ -48,6 +48,8 @@ RED = \033[1;91m
 all : ${NAME}
 
 ${NAME} : ${OBJES} ${LIBFT} 
+	@ make -C ./Libft --no-print-directory
+	@ make -C ./mlx_linux --no-print-directory
 	@ echo "${BLUE}here ${PURPLE}" $@ "${WHITE}"
 	@ ${CC} ${CFLAGS} ${LIBFT} $^ -o $@ ${FRAMWORK}
 	@ echo "       ${YELLOW}}}}.....${GREEN}!Compile :-> ${NAME} <-: Successe!${YELLOW}.....{{{${WHITE}"
@@ -63,6 +65,8 @@ lib :
 
 clean : 
 	@ ${RM} ${OBJES} 
+	@ make clean -C ./Libft --no-print-directory
+	@ make clean -C ./mlx_linux --no-print-directory
 	@ echo "${YELLOW}-> ${PURPLE}Delete the object files.....${WHITE}"
 
 fclean : clean
